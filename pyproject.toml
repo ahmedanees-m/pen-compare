@@ -1,0 +1,122 @@
+[project]
+name = "pen-compare"
+version = "0.1.0"
+description = "Hierarchical Certification Framework for Non-Destructive Genome Editors"
+authors = [{name = "Anees Ahmed Mahaboob Ali", email = "ahmedaneesm@gmail.com"}]
+license = {text = "MIT"}
+requires-python = ">=3.10"
+readme = "README.md"
+keywords = ["genome-engineering", "bridge-recombinase", "IS110", "writer-not-scissors", "PEN-STACK"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+]
+
+dependencies = [
+    # === Upstream PEN-STACK packages (PINNED - v3-compat versions) ===
+    # Do NOT loosen these bounds without a corresponding pre-registration amendment.
+    "genome-atlas>=0.7.2,<0.8.0",     # v0.7.2: ISCro4 canonical naming
+    "mech-class>=0.5.4,<0.6.0",       # v0.5.4: ISCro4 OOD holdout probe
+    "pen-score>=0.1.3,<0.2.0",        # v0.1.3: get_editor_metadata() API with 2 new boolean fields
+    "pen-assemble>=0.5.2,<0.6.0",     # v0.5.2: catalog with inherited intrinsic_cargo + cell_based
+
+    # === Core scientific stack ===
+    "numpy>=1.24",
+    "pandas>=2.0",
+    "scipy>=1.10",
+    "scikit-learn>=1.3",
+    "pyyaml>=6.0",
+    "pyarrow>=14.0",
+    "click>=8.0",
+    "tqdm>=4.66",
+    "joblib>=1.3",
+    "pydantic>=2.5",
+]
+
+[project.optional-dependencies]
+# === RAG / LLM (local via Ollama; embeddings via sentence-transformers) ===
+rag = [
+    "ollama>=0.1.7",                   # Python client for local Ollama server
+    "sentence-transformers>=2.5",      # Local embeddings (CPU)
+    "chromadb>=0.4.20",                # Vector DB
+    "requests>=2.31",                  # HF Inference / Groq fallbacks
+]
+
+# === Literature evidence ===
+literature = [
+    "biopython>=1.83",                 # NCBI fetching
+    # Europe PMC accessed via requests (REST API) - no pip package needed
+]
+
+# === Dev / test / docs ===
+dev = [
+    "pytest>=7.4",
+    "pytest-cov>=4.1",
+    "pytest-asyncio>=0.23",
+    "ruff>=0.4",
+    "mypy>=1.8",
+    "pre-commit>=3.5",
+]
+docs = [
+    "sphinx>=7.2",
+    "sphinx-rtd-theme>=2.0",
+    "myst-parser>=2.0",
+    "sphinx-copybutton>=0.5",
+]
+
+# === Convenience meta-extras ===
+all-papers = [
+    "pen-compare[rag,literature]",
+]
+everything = [
+    "pen-compare[rag,literature,dev,docs]",
+]
+
+[project.scripts]
+pen-compare = "pen_compare.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/ahmedanees-m/pen-compare"
+Documentation = "https://ahmedanees-m.github.io/pen-compare"
+Repository = "https://github.com/ahmedanees-m/pen-compare"
+Issues = "https://github.com/ahmedanees-m/pen-compare/issues"
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["pen_compare*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "C4", "SIM"]
+ignore = ["E501", "C408", "B905"]  # line length; dict() style; zip strict= noise
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101", "SIM117", "B011"]  # assert ok in tests
+"scripts/**" = ["B007", "E701", "E702", "E741"]  # utility scripts
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-v --tb=short --strict-markers"
+
+[tool.coverage.run]
+omit = [
+    "pen_compare/core/universe.py", # Data pipeline (87 stmts, requires upstream packages)
+    "pen_compare/rag/qa.py",        # RAG pipeline (78 stmts, requires chromadb+ollama)
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "if __name__ == .__main__.:",
+]
