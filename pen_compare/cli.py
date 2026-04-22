@@ -1,14 +1,15 @@
-""CLI for pen-compare.""
+"""CLI for pen-compare."""
 from __future__ import annotations
 
 import click
 
+
 @click.group()
 @click.version_option()
 def main() -> int:
-    ""$repo CLI.""
+    """pen-compare CLI."""
     return 0
 
-if __name__ == '__main__':
-    main()
 
+if __name__ == "__main__":
+    main()
