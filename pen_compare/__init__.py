@@ -1,4 +1,4 @@
-﻿""$desc.""
+""$desc.""
 
 try:
     from pen_compare._version import __version__

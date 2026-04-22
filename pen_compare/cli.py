@@ -1,4 +1,4 @@
-﻿""CLI for pen-compare.""
+""CLI for pen-compare.""
 from __future__ import annotations
 
 import click
