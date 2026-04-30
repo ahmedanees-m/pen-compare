@@ -1,0 +1,121 @@
+# prereg/predictions_v3.yaml
+# PRE-REGISTERED - SHA-256 locked.
+# DO NOT EDIT AFTER LOCK.
+#
+# Pairs with: config/gates_v3.yaml, prereg/methodology_v3.md
+
+schema_version: "3.2"
+prereg_date: "2026-05-26"
+prereg_author: "Anees Ahmed Mahaboob Ali"
+prereg_affiliation: "VIT University, Vellore"
+
+publication_policy:
+  "4_of_5_pass": "Bioinformatics Application Note"
+  "3_of_5_pass": "Bioinformatics Application Note (reframed contributions)"
+  "2_or_below":  "halt and rework"
+
+predictions:
+
+  - id: P1
+    statement: |
+      Among natural (non-engineered) editors in the unified editor universe,
+      exactly 1 will be classified TRUE_WRITER (ISCro4). No other natural
+      editor will reach TRUE_WRITER tier under default thresholds.
+    measurable_outcome: |
+      n_natural_TRUE == 1 AND "ISCro4" in true_writer_natural_editors
+    threshold: "n_natural_TRUE == 1"
+    risk_rationale: |
+      Could fail if:
+      (a) evoCAST also passes all 4 qualifying gates + has cell_based evidence -
+          possible since Gate 6 (Walker A/B) was dropped in v3, removing the
+          previous CAST exclusion
+      (b) ISCro4 fails Gate 3 (cargo) due to edge case in catalog inheritance
+      (c) Gate 5 evidence threshold not met for an editor previously expected
+          to fail it
+    confidence: medium
+    test_script: "scripts/12_test_pred_P1.py"
+    revision_note: |
+      Revised from original v1.0 prediction (">= 50 TRUE_WRITERs") which was
+      architecturally incompatible with v3.2's cell_based_evidence requirement.
+      v3.2 prediction is MORE falsifiable: predicts uniqueness of ISCro4.
+
+  - id: P2
+    statement: |
+      Zero pen-assemble designs (n=1029) will be classified TRUE_WRITER.
+      All designs that beat IS621's PenScore lockpoint (0.929) will cap at
+      PROBABLE_WRITER due to the cell_based_evidence requirement for TRUE_WRITER.
+      Computational designs have no cell-based evidence by definition.
+    measurable_outcome: |
+      n_design_TRUE == 0
+    threshold: "n_design_TRUE == 0"
+    risk_rationale: |
+      Could fail if:
+      (a) A design inherits cell_based_evidence=True from parent - would indicate
+          a data-pipeline bug in pen-assemble v0.5.2 (all designs must have False)
+      (b) Tier rules accidentally allow TRUE_WRITER without cell_based flag
+    confidence: high
+    test_script: "scripts/13_test_pred_P2.py"
+    revision_note: |
+      Revised from original v1.0 (">= 1 Strategy D design is TRUE_WRITER").
+      v3.2 predicts framework strictness (computational designs cannot earn
+      TRUE_WRITER because they lack cell-based evidence by construction).
+
+  - id: P3
+    statement: |
+      Cross-pipeline triangulation will flag >= 5 mechanism discrepancies
+      in the unified universe. A discrepancy is defined as any of:
+      (1) MECH-CLASS Tier-A prediction disagrees with PFAM evidence in genome-atlas,
+      (2) pen-score S_DSB axis value contradicts mech-class Tier-A gate decision,
+      (3) pen-score S_Energy axis value contradicts mech-class mechanism class.
+    measurable_outcome: |
+      n_discrepancies >= 5
+    threshold: "n_discrepancies >= 5"
+    risk_rationale: |
+      Could fail if:
+      (a) Upstream packages are better calibrated than expected - n < 5
+          (still publishable: "ecosystem is internally consistent")
+      (b) Triangulation rules are too strict and miss real discrepancies
+      (c) Universe contains fewer editors with cross-package coverage than expected
+    confidence: medium
+    test_script: "scripts/19_test_pred_P3.py"
+
+  - id: P4
+    statement: |
+      The local-LLM RAG (Ollama Llama 3.1 8B Instruct via llama3.1:8b-instruct-q4_K_M)
+      correctly answers >= 80% of a curated 50-question PEN-STACK benchmark with
+      gold answers derived from Papers 1-4 documentation and supplementary text.
+      Accuracy measured as exact-match or semantic-match per gold answer key.
+    measurable_outcome: |
+      accuracy >= 0.80
+    threshold: "accuracy >= 0.80"
+    risk_rationale: |
+      Could fail if:
+      (a) 8B-parameter model is insufficient for technical PEN-STACK content
+      (b) RAG retrieval misses relevant passages (chunk size / overlap issues)
+      (c) Benchmark question phrasing doesn't match documentation style
+      Fallback: evaluate Phi-3.5 Mini and Llama 3.3 70B (Groq); report all 3.
+    confidence: medium
+    test_script: "scripts/22_test_pred_P4.py"
+
+
+# ============================================================
+# CONFIRMATION CRITERIA
+# ============================================================
+
+confirmation_criteria:
+  per_prediction: "match if measurable_outcome evaluates True under default parameters"
+  publication_ladder: "see publication_policy above"
+  stopping_rules:
+    P1_fails: |
+      Report actual count and identity of natural TRUE_WRITERs; no threshold
+      tuning permitted post-lock.
+    P2_fails: |
+      Investigate data-pipeline bug in pen-assemble v0.5.2 cell_based inheritance;
+      file issue on pen-assemble repo.
+    P3_fails_low: |
+      Report n < 5 as "upstream ecosystem is well-calibrated" - still publishable.
+    P4_fails: |
+      Try Phi-3.5 Mini and Llama 3.3 70B (Groq free tier); report accuracy for
+      all 3 models. If all < 0.80, investigate RAG retrieval quality.
+    P5_fails: |
+      cached JSON fallback; report latency distribution.

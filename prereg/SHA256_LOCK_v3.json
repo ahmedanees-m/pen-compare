@@ -1,0 +1,11 @@
+{
+  "schema_version": "3.2",
+  "lock_date": "2026-05-26",
+  "locked_by": "Anees Ahmed Mahaboob Ali",
+  "files": {
+    "config/gates_v3.yaml": "23270f596b38fe928676feeba6f3cbb282bb553e407a455f1a13fee8466605c2",
+    "prereg/predictions_v3.yaml": "3b4693fee485f5f50ac339363c0f121608cf7355369eb69adeb3ad345ffae9ef",
+    "prereg/methodology_v3.md": "4d664ceb23c8949a91c9232e4daf96b9478f6057d582e7832a516b7801025064",
+    "data/unified_editor_universe.parquet": "1416231af307bbf64aa67a0f27194d738883c95e68f3e0d659926b39a20f4c19"
+  }
+}

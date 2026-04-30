@@ -1,0 +1,282 @@
+# prereg/llm_qa_benchmark_v1.0.yaml
+# PEN-COMPARE LLM RAG Benchmark - 50 factual questions
+# All answers are derivable from indexed documents in /workspace/pen-compare.
+# Scoring: answer is CORRECT if any gold_keyword appears (case-insensitive) in the LLM response.
+
+schema_version: "1.0"
+benchmark_date: "2026-05-26"
+n_questions: 50
+pass_threshold: 0.80
+model: "llama3.1:8b-instruct-q4_K_M"
+indexed_sources:
+  - "config/gates_v3.yaml"
+  - "prereg/predictions_v3.yaml"
+  - "prereg/methodology_v3.md"
+  - "results/CERTIFICATION_SUMMARY.md"
+  - "results/triangulation_report.md"
+  - "results/boundary_cases.md"
+  - "config/triangulation_rules_v3.yaml"
+
+questions:
+
+  # Gate thresholds & structure
+
+  - id: Q01
+    category: gates
+    question: "What is the G1 DSB Avoidance gate threshold for the S_DSB axis?"
+    gold_keywords: ["0.95"]
+
+  - id: Q02
+    category: gates
+    question: "Which axis score does gate G1 (DSB Avoidance) evaluate?"
+    gold_keywords: ["S_DSB", "s_dsb"]
+
+  - id: Q03
+    category: gates
+    question: "What is the S_Prog threshold for gate G2 Programmability?"
+    gold_keywords: ["0.95"]
+
+  - id: Q04
+    category: gates
+    question: "What is the S_Cargo threshold required to pass gate G3 Native Cargo?"
+    gold_keywords: ["0.90", "0.9"]
+
+  - id: Q05
+    category: gates
+    question: "What is the maximum protein size in amino acids for gate G4 Deliverability?"
+    gold_keywords: ["900"]
+
+  - id: Q06
+    category: gates
+    question: "How many qualifying gates must an editor pass to reach TRUE_WRITER tier?"
+    gold_keywords: ["4", "four", "all 4"]
+
+  - id: Q07
+    category: gates
+    question: "What type of evidence is required in addition to passing all qualifying gates for TRUE_WRITER certification?"
+    gold_keywords: ["cell_based", "cell-based", "cell based"]
+
+  - id: Q08
+    category: gates
+    question: "How many evidence sources must be present to pass gate G5 Evidence?"
+    gold_keywords: ["2", "two"]
+
+  - id: Q09
+    category: gates
+    question: "What tier is automatically assigned when an editor fails gate G1?"
+    gold_keywords: ["NOT_WRITER", "not_writer", "not writer"]
+
+  - id: Q10
+    category: gates
+    question: "Gate G1 is described as a necessary gate. What does this mean for editors that fail it?"
+    gold_keywords: ["NOT_WRITER", "auto-fail", "auto fail", "regardless"]
+
+  - id: Q11
+    category: gates
+    question: "What additional condition beyond S_Cargo >= 0.90 is required to pass gate G3?"
+    gold_keywords: ["intrinsic_cargo", "intrinsic cargo mechanism"]
+
+  - id: Q12
+    category: gates
+    question: "Name the four eligible evidence source types for gate G5."
+    gold_keywords: ["biochemical", "structural", "computational", "cell_based"]
+
+  - id: Q13
+    category: gates
+    question: "Why was gate G6 (energy/Walker A/B) removed in TrueWriterScore v3?"
+    gold_keywords: ["trivial", "CAST", "removed", "walker"]
+
+  - id: Q14
+    category: gates
+    question: "What does the EMERGING_WRITER tier require in terms of qualifying gate passes?"
+    gold_keywords: ["1", "2", "one or two", "1 or 2"]
+
+  - id: Q15
+    category: gates
+    question: "Which tier requires G1 to pass and exactly 0 qualifying gates to pass?"
+    gold_keywords: ["NOT_WRITER", "not_writer", "not writer"]
+
+  # Universe composition
+
+  - id: Q16
+    category: universe
+    question: "How many total entities are in the unified editor universe?"
+    gold_keywords: ["1058", "1,058"]
+
+  - id: Q17
+    category: universe
+    question: "How many natural editors are included in the unified editor universe?"
+    gold_keywords: ["29"]
+
+  - id: Q18
+    category: universe
+    question: "How many pen-assemble computational designs are in the unified editor universe?"
+    gold_keywords: ["1029", "1,029"]
+
+  - id: Q19
+    category: universe
+    question: "How many entities are classified TRUE_WRITER in the full universe?"
+    gold_keywords: ["1", "one"]
+
+  - id: Q20
+    category: universe
+    question: "How many entities are classified NOT_WRITER in the full universe?"
+    gold_keywords: ["16"]
+
+  - id: Q21
+    category: universe
+    question: "How many entities are classified PROBABLE_WRITER in the full universe?"
+    gold_keywords: ["4"]
+
+  - id: Q22
+    category: universe
+    question: "How many entities are classified EMERGING_WRITER in the full universe?"
+    gold_keywords: ["1037", "1,037"]
+
+  # Editor identities
+
+  - id: Q23
+    category: editors
+    question: "Which editor is the sole TRUE_WRITER in the universe?"
+    gold_keywords: ["ISCro4"]
+
+  - id: Q24
+    category: editors
+    question: "What is ISCro4's UniProt accession number?"
+    gold_keywords: ["D2TGM5"]
+
+  - id: Q25
+    category: editors
+    question: "What organism is the ISCro4 editor derived from?"
+    gold_keywords: ["Citrobacter rodentium", "Citrobacter"]
+
+  - id: Q26
+    category: editors
+    question: "What tier is IS621 classified as in the TrueWriterScore framework?"
+    gold_keywords: ["PROBABLE_WRITER", "probable_writer", "probable writer"]
+
+  - id: Q27
+    category: editors
+    question: "What tier is SpCas9 classified as?"
+    gold_keywords: ["NOT_WRITER", "not_writer", "not writer"]
+
+  - id: Q28
+    category: editors
+    question: "What is SpCas9's S_DSB score?"
+    gold_keywords: ["0.0", "zero", "0"]
+
+  - id: Q29
+    category: editors
+    question: "Which gate does Bxb1 fail, leading to its PROBABLE_WRITER classification?"
+    gold_keywords: ["gate_2", "G2", "programmability", "Programmability", "gate 2"]
+
+  - id: Q30
+    category: editors
+    question: "What is IS621's PenScore composite score?"
+    gold_keywords: ["0.9473", "0.947"]
+
+  - id: Q31
+    category: editors
+    question: "IS621 is classified PROBABLE_WRITER rather than TRUE_WRITER because it lacks what?"
+    gold_keywords: ["cell_based", "cell-based", "cell based", "human cell"]
+
+  - id: Q32
+    category: editors
+    question: "What is ISCro4's S_DSB axis score?"
+    gold_keywords: ["1.0", "1.00"]
+
+  # Pre-registered predictions
+
+  - id: Q33
+    category: predictions
+    question: "What does pre-registered prediction P1 state about natural TRUE_WRITER editors?"
+    gold_keywords: ["ISCro4", "1", "one", "exactly 1"]
+
+  - id: Q34
+    category: predictions
+    question: "Did prediction P1 pass or fail?"
+    gold_keywords: ["PASS", "pass"]
+
+  - id: Q35
+    category: predictions
+    question: "What does prediction P2 state about pen-assemble computational designs?"
+    gold_keywords: ["zero", "0", "TRUE_WRITER", "none"]
+
+  - id: Q36
+    category: predictions
+    question: "Did prediction P2 pass or fail?"
+    gold_keywords: ["PASS", "pass"]
+
+  - id: Q37
+    category: predictions
+    question: "What is the minimum number of discrepancies P3 predicts the triangulation will find?"
+    gold_keywords: ["5", "five", ">=5", ">= 5"]
+
+  - id: Q38
+    category: predictions
+    question: "How many discrepancy records were actually found in the triangulation analysis?"
+    gold_keywords: ["30"]
+
+  - id: Q39
+    category: predictions
+    question: "Did prediction P3 pass or fail?"
+    gold_keywords: ["PASS", "pass"]
+
+  - id: Q40
+    category: predictions
+    question: "What accuracy threshold must the RAG LLM achieve to satisfy prediction P4?"
+    gold_keywords: ["80", "0.80", "80%"]
+
+  - id: Q41
+    category: predictions
+    question: "What LLM model is specified in prediction P4?"
+    gold_keywords: ["llama3.1", "llama3", "Llama 3"]
+
+  - id: Q42
+    category: predictions
+    question: "How many hierarchical certification gates does TrueWriterScore v3.2 apply?"
+    gold_keywords: ["5", "five", "5-gate"]
+
+  - id: Q43
+    category: predictions
+    question: "How many total pre-registered predictions does PEN-COMPARE have?"
+    gold_keywords: ["4", "four"]
+
+  # Sensitivity analysis
+
+  - id: Q44
+    category: sensitivity
+    question: "How many threshold combinations are evaluated in the sensitivity analysis?"
+    gold_keywords: ["18000", "18,000"]
+
+  - id: Q45
+    category: sensitivity
+    question: "What is ISCro4's robustness score in the sensitivity analysis?"
+    gold_keywords: ["1.000", "1.0", "1.00"]
+
+  - id: Q46
+    category: sensitivity
+    question: "How many boundary cases (robustness below 0.50) were found?"
+    gold_keywords: ["0", "zero", "none"]
+
+  - id: Q47
+    category: sensitivity
+    question: "How many near-boundary cases (robustness between 50% and 80%) were found?"
+    gold_keywords: ["4", "four"]
+
+  - id: Q48
+    category: sensitivity
+    question: "What is the robustness score of Bxb1 in the sensitivity analysis?"
+    gold_keywords: ["0.562", "0.56"]
+
+  # Triangulation
+
+  - id: Q49
+    category: triangulation
+    question: "Which triangulation discrepancy category has the highest count in the results?"
+    gold_keywords: ["SIZE_INCONSISTENCY", "size_inconsistency", "size inconsistency"]
+
+  - id: Q50
+    category: triangulation
+    question: "Which editor has a CARGO_INCONSISTENCY discrepancy in the triangulation results?"
+    gold_keywords: ["evoCAST", "evocast"]

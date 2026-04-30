@@ -1,0 +1,25 @@
+OSF Pre-Registration Record
+===========================
+
+Project URL  : https://osf.io/4kdvy
+Visibility   : Public
+Deposit date : 2026-05-26
+Deposited by : Anees Ahmed Mahaboob Ali (ahmedaneesm@gmail.com)
+
+Files deposited
+---------------
+- prereg/methodology_v3.md     (methodology and gate definitions, SHA-256 locked)
+- prereg/predictions_v3.yaml   (pre-registered predictions P1-P4, SHA-256 locked)
+- config/gates_v3.yaml         (gate thresholds, SHA-256 locked)
+- prereg/SHA256_LOCK_v3.json   (integrity manifest)
+
+Integrity
+---------
+SHA-256 manifest: prereg/SHA256_LOCK_v3.json
+All locked files verified at deposit time (see SHA256_LOCK_v3.json).
+
+Note
+----
+IS621 PenScore lockpoint discrepancy: predictions_v3.yaml records 0.929 (value at
+pre-registration); post-lock pen-score v0.1.3 yields 0.9473. Does not affect P2
+outcome (criterion: n_design_TRUE==0). Disclosed in footnote.
