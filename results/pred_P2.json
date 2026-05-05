@@ -1,0 +1,8 @@
+{
+  "prediction": "P2",
+  "statement": "Zero pen-assemble designs will be TRUE_WRITER.",
+  "measurable_outcome": "n_design_TRUE == 0",
+  "observed_n_design_TRUE": 0,
+  "observed_design_TRUE_ids": [],
+  "PASS": true
+}

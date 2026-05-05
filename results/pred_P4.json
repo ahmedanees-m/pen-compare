@@ -1,0 +1,42 @@
+{
+  "prediction": "P4",
+  "statement": "Local-LLM RAG (llama3.1:8b-instruct-q4_K_M) correctly answers >= 80% of 50-question benchmark.",
+  "model": "llama3.1:8b-instruct-q4_K_M",
+  "n_questions": 50,
+  "n_correct": 44,
+  "accuracy": 0.88,
+  "threshold": 0.8,
+  "PASS": true,
+  "by_category": {
+    "gates": {
+      "correct": 13,
+      "total": 15,
+      "accuracy": 0.8667
+    },
+    "universe": {
+      "correct": 6,
+      "total": 7,
+      "accuracy": 0.8571
+    },
+    "editors": {
+      "correct": 9,
+      "total": 10,
+      "accuracy": 0.9
+    },
+    "predictions": {
+      "correct": 10,
+      "total": 11,
+      "accuracy": 0.9091
+    },
+    "sensitivity": {
+      "correct": 5,
+      "total": 5,
+      "accuracy": 1.0
+    },
+    "triangulation": {
+      "correct": 1,
+      "total": 2,
+      "accuracy": 0.5
+    }
+  }
+}

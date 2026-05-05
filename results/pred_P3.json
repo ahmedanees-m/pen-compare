@@ -1,0 +1,18 @@
+{
+  "prediction": "P3",
+  "statement": "Cross-pipeline triangulation flags \u2265 5 mechanism discrepancies.",
+  "measurable_outcome": "n_discrepancies >= 5",
+  "observed_n_discrepancies": 30,
+  "discrepancy_by_category": {
+    "SIZE_INCONSISTENCY": 13,
+    "MECH_VS_PFAM": 11,
+    "EVIDENCE_GAP": 5,
+    "CARGO_INCONSISTENCY": 1
+  },
+  "discrepancy_by_severity": {
+    "medium": 14,
+    "high": 11,
+    "low": 5
+  },
+  "PASS": true
+}

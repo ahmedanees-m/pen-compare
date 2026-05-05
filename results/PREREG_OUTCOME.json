@@ -1,0 +1,22 @@
+{
+  "n_pass": 4,
+  "n_total": 4,
+  "predictions": {
+    "P1": {
+      "PASS": true,
+      "statement": "Among natural editors, exactly 1 will be TRUE_WRITER (ISCro4)."
+    },
+    "P2": {
+      "PASS": true,
+      "statement": "Zero pen-assemble designs will be TRUE_WRITER."
+    },
+    "P3": {
+      "PASS": true,
+      "statement": "Cross-pipeline triangulation flags \u2265 5 mechanism discrepancies."
+    },
+    "P4": {
+      "PASS": true,
+      "statement": "Local-LLM RAG (llama3.1:8b-instruct-q4_K_M) correctly answers >= 80% of 50-question benchmark."
+    }
+  }
+}

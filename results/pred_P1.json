@@ -1,0 +1,10 @@
+{
+  "prediction": "P1",
+  "statement": "Among natural editors, exactly 1 will be TRUE_WRITER (ISCro4).",
+  "measurable_outcome": "n_natural_TRUE == 1 AND ISCro4 in true_writer_natural_editors",
+  "observed_n_natural_TRUE": 1,
+  "observed_true_writer_ids": [
+    "ISCro4"
+  ],
+  "PASS": true
+}

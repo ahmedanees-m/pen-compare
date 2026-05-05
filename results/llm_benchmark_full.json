@@ -1,0 +1,625 @@
+[
+  {
+    "id": "Q01",
+    "category": "gates",
+    "question": "What is the G1 DSB Avoidance gate threshold for the S_DSB axis?",
+    "gold_keywords": [
+      "0.95"
+    ],
+    "answer": "0.95",
+    "correct": true,
+    "latency_s": 189.16
+  },
+  {
+    "id": "Q02",
+    "category": "gates",
+    "question": "Which axis score does gate G1 (DSB Avoidance) evaluate?",
+    "gold_keywords": [
+      "S_DSB",
+      "s_dsb"
+    ],
+    "answer": "The axis score that gate G1 (DSB Avoidance) evaluates is S_DSB.",
+    "correct": true,
+    "latency_s": 2.8
+  },
+  {
+    "id": "Q03",
+    "category": "gates",
+    "question": "What is the S_Prog threshold for gate G2 Programmability?",
+    "gold_keywords": [
+      "0.95"
+    ],
+    "answer": "The S_Prog threshold for gate G2 Programmability is not explicitly mentioned in the provided code snippets. However, based on the `gate_2_programmability` function definition in the `pen_compare.core.gates` module, it appears that the default threshold for gate G2 (Programmability) is 1.0.\n\nHere's a snippet from the `gate_2_programmability` function:\n```python\ndef gate_2_programmability(s_prog: float, threshold: float | None = None) -> GateResult:\n    ...\n```\nIn this definition, the `threshold` parameter has a default value of `None`, which means that if no explicit threshold is provided when calling the function, it will use the default value. However, since the default value for `threshold` is not explicitly specified in the code snippet, we can infer that it might be 1.0 based on the context.\n\nTo confirm this, you would need to examine the rest of the codebase or consult with the developers who implemented the TrueWriterScore framework.",
+    "correct": false,
+    "latency_s": 6.07
+  },
+  {
+    "id": "Q04",
+    "category": "gates",
+    "question": "What is the S_Cargo threshold required to pass gate G3 Native Cargo?",
+    "gold_keywords": [
+      "0.90",
+      "0.9"
+    ],
+    "answer": "0.90",
+    "correct": true,
+    "latency_s": 1.92
+  },
+  {
+    "id": "Q05",
+    "category": "gates",
+    "question": "What is the maximum protein size in amino acids for gate G4 Deliverability?",
+    "gold_keywords": [
+      "900"
+    ],
+    "answer": "900",
+    "correct": true,
+    "latency_s": 2.09
+  },
+  {
+    "id": "Q06",
+    "category": "gates",
+    "question": "How many qualifying gates must an editor pass to reach TRUE_WRITER tier?",
+    "gold_keywords": [
+      "4",
+      "four",
+      "all 4"
+    ],
+    "answer": "Based on the provided code, it appears that the TrueWriterScore framework is designed to classify editors into different tiers based on their performance in five specific areas (gates). The necessary gate is DSB Avoidance, and the four qualifying gates are Programmability, Native Cargo, Deliverability, and Evidence.\n\nTo reach the TRUE_WRITER tier, an editor must pass all four qualifying gates. If they fail any of these gates, they will be classified as NOT_WRITER. However, if they pass three or more qualifying gates and have cell-based evidence, they will be classified as PROBABLE_WRITER. If they pass one or more qualifying gates, they will be classified as EMERGING_WRITER.\n\nTherefore, the answer to your question is: an editor must pass all four qualifying gates (Programmability, Native Cargo, Deliverability, and Evidence) to reach the TRUE_WRITER tier.",
+    "correct": true,
+    "latency_s": 5.48
+  },
+  {
+    "id": "Q07",
+    "category": "gates",
+    "question": "What type of evidence is required in addition to passing all qualifying gates for TRUE_WRITER certification?",
+    "gold_keywords": [
+      "cell_based",
+      "cell-based",
+      "cell based"
+    ],
+    "answer": "cell_based evidence.",
+    "correct": true,
+    "latency_s": 2.32
+  },
+  {
+    "id": "Q08",
+    "category": "gates",
+    "question": "How many evidence sources must be present to pass gate G5 Evidence?",
+    "gold_keywords": [
+      "2",
+      "two"
+    ],
+    "answer": "2 or more evidence sources must be present to pass gate G5 Evidence.",
+    "correct": true,
+    "latency_s": 2.52
+  },
+  {
+    "id": "Q09",
+    "category": "gates",
+    "question": "What tier is automatically assigned when an editor fails gate G1?",
+    "gold_keywords": [
+      "NOT_WRITER",
+      "not_writer",
+      "not writer"
+    ],
+    "answer": "NOT_WRITER",
+    "correct": true,
+    "latency_s": 2.05
+  },
+  {
+    "id": "Q10",
+    "category": "gates",
+    "question": "Gate G1 is described as a necessary gate. What does this mean for editors that fail it?",
+    "gold_keywords": [
+      "NOT_WRITER",
+      "auto-fail",
+      "auto fail",
+      "regardless"
+    ],
+    "answer": "Auto-classified as NOT_WRITER regardless of other gates.",
+    "correct": true,
+    "latency_s": 2.07
+  },
+  {
+    "id": "Q11",
+    "category": "gates",
+    "question": "What additional condition beyond S_Cargo >= 0.90 is required to pass gate G3?",
+    "gold_keywords": [
+      "intrinsic_cargo",
+      "intrinsic cargo mechanism"
+    ],
+    "answer": "intrinsic_catalog_inheritance",
+    "correct": false,
+    "latency_s": 2.36
+  },
+  {
+    "id": "Q12",
+    "category": "gates",
+    "question": "Name the four eligible evidence source types for gate G5.",
+    "gold_keywords": [
+      "biochemical",
+      "structural",
+      "computational",
+      "cell_based"
+    ],
+    "answer": "biochemical, structural, computational, cell_based",
+    "correct": true,
+    "latency_s": 2.43
+  },
+  {
+    "id": "Q13",
+    "category": "gates",
+    "question": "Why was gate G6 (energy/Walker A/B) removed in TrueWriterScore v3?",
+    "gold_keywords": [
+      "trivial",
+      "CAST",
+      "removed",
+      "walker"
+    ],
+    "answer": "The question is about the removal of gate G6 (energy/Walker A/B) in TrueWriterScore v3. According to the provided text, the reason for its removal is that the Walker A/B regex test was biochemically trivial. Additionally, it's mentioned that CAST family enzymes (evoCAST, CAST_VK, CAST_IF) are legitimate writer architectures and architecturally distinct from single-protein bridge recombinases, which were previously excluded by gate G6. Therefore, the removal of gate G6 in TrueWriterScore v3 was due to its triviality and the recognition that certain enzymes can be classified as writers despite not meeting the criteria set by gate G6.",
+    "correct": true,
+    "latency_s": 4.73
+  },
+  {
+    "id": "Q14",
+    "category": "gates",
+    "question": "What does the EMERGING_WRITER tier require in terms of qualifying gate passes?",
+    "gold_keywords": [
+      "1",
+      "2",
+      "one or two",
+      "1 or 2"
+    ],
+    "answer": "According to the provided text, the EMERGING_WRITER tier requires that:\n\n* The necessary gate (gate_1_dsb) passes\n* The editor passes 1-2 of the 4 qualifying gates.",
+    "correct": true,
+    "latency_s": 3.06
+  },
+  {
+    "id": "Q15",
+    "category": "gates",
+    "question": "Which tier requires G1 to pass and exactly 0 qualifying gates to pass?",
+    "gold_keywords": [
+      "NOT_WRITER",
+      "not_writer",
+      "not writer"
+    ],
+    "answer": "NOT_WRITER",
+    "correct": true,
+    "latency_s": 2.28
+  },
+  {
+    "id": "Q16",
+    "category": "universe",
+    "question": "How many total entities are in the unified editor universe?",
+    "gold_keywords": [
+      "1058",
+      "1,058"
+    ],
+    "answer": "18,000",
+    "correct": false,
+    "latency_s": 1.7
+  },
+  {
+    "id": "Q17",
+    "category": "universe",
+    "question": "How many natural editors are included in the unified editor universe?",
+    "gold_keywords": [
+      "29"
+    ],
+    "answer": "29",
+    "correct": true,
+    "latency_s": 1.74
+  },
+  {
+    "id": "Q18",
+    "category": "universe",
+    "question": "How many pen-assemble computational designs are in the unified editor universe?",
+    "gold_keywords": [
+      "1029",
+      "1,029"
+    ],
+    "answer": "1029",
+    "correct": true,
+    "latency_s": 2.16
+  },
+  {
+    "id": "Q19",
+    "category": "universe",
+    "question": "How many entities are classified TRUE_WRITER in the full universe?",
+    "gold_keywords": [
+      "1",
+      "one"
+    ],
+    "answer": "1",
+    "correct": true,
+    "latency_s": 1.96
+  },
+  {
+    "id": "Q20",
+    "category": "universe",
+    "question": "How many entities are classified NOT_WRITER in the full universe?",
+    "gold_keywords": [
+      "16"
+    ],
+    "answer": "16",
+    "correct": true,
+    "latency_s": 1.94
+  },
+  {
+    "id": "Q21",
+    "category": "universe",
+    "question": "How many entities are classified PROBABLE_WRITER in the full universe?",
+    "gold_keywords": [
+      "4"
+    ],
+    "answer": "4",
+    "correct": true,
+    "latency_s": 1.4
+  },
+  {
+    "id": "Q22",
+    "category": "universe",
+    "question": "How many entities are classified EMERGING_WRITER in the full universe?",
+    "gold_keywords": [
+      "1037",
+      "1,037"
+    ],
+    "answer": "1,037",
+    "correct": true,
+    "latency_s": 2.2
+  },
+  {
+    "id": "Q23",
+    "category": "editors",
+    "question": "Which editor is the sole TRUE_WRITER in the universe?",
+    "gold_keywords": [
+      "ISCro4"
+    ],
+    "answer": "ISCro4",
+    "correct": true,
+    "latency_s": 1.61
+  },
+  {
+    "id": "Q24",
+    "category": "editors",
+    "question": "What is ISCro4's UniProt accession number?",
+    "gold_keywords": [
+      "D2TGM5"
+    ],
+    "answer": "The UniProt accession number for ISCro4 is not explicitly mentioned in the provided text. However, based on the information given, it appears that ISCro4 is a type of integrase and its metadata can be accessed using the `get_editor_metadata` function from the `pen_score` module.\n\nTo find the UniProt accession number for ISCro4, you would need to use the `get_editor_metadata` function with \"ISCro4\" as the argument:\n\n```python\nmd = get_editor_metadata(\"ISCro4\")\nprint(md.uniprot_accession)\n```\n\nThis code snippet assumes that the `get_editor_metadata` function returns a dictionary-like object containing metadata for ISCro4, including its UniProt accession number.",
+    "correct": false,
+    "latency_s": 4.93
+  },
+  {
+    "id": "Q25",
+    "category": "editors",
+    "question": "What organism is the ISCro4 editor derived from?",
+    "gold_keywords": [
+      "Citrobacter rodentium",
+      "Citrobacter"
+    ],
+    "answer": "Citrobacter rodentium ICC168.",
+    "correct": true,
+    "latency_s": 2.2
+  },
+  {
+    "id": "Q26",
+    "category": "editors",
+    "question": "What tier is IS621 classified as in the TrueWriterScore framework?",
+    "gold_keywords": [
+      "PROBABLE_WRITER",
+      "probable_writer",
+      "probable writer"
+    ],
+    "answer": "PROBABLE_WRITER",
+    "correct": true,
+    "latency_s": 2.34
+  },
+  {
+    "id": "Q27",
+    "category": "editors",
+    "question": "What tier is SpCas9 classified as?",
+    "gold_keywords": [
+      "NOT_WRITER",
+      "not_writer",
+      "not writer"
+    ],
+    "answer": "NOT_WRITER",
+    "correct": true,
+    "latency_s": 2.35
+  },
+  {
+    "id": "Q28",
+    "category": "editors",
+    "question": "What is SpCas9's S_DSB score?",
+    "gold_keywords": [
+      "0.0",
+      "zero",
+      "0"
+    ],
+    "answer": "0.0",
+    "correct": true,
+    "latency_s": 2.35
+  },
+  {
+    "id": "Q29",
+    "category": "editors",
+    "question": "Which gate does Bxb1 fail, leading to its PROBABLE_WRITER classification?",
+    "gold_keywords": [
+      "gate_2",
+      "G2",
+      "programmability",
+      "Programmability",
+      "gate 2"
+    ],
+    "answer": "gate_2",
+    "correct": true,
+    "latency_s": 2.35
+  },
+  {
+    "id": "Q30",
+    "category": "editors",
+    "question": "What is IS621's PenScore composite score?",
+    "gold_keywords": [
+      "0.9473",
+      "0.947"
+    ],
+    "answer": "0.9473",
+    "correct": true,
+    "latency_s": 2.32
+  },
+  {
+    "id": "Q31",
+    "category": "editors",
+    "question": "IS621 is classified PROBABLE_WRITER rather than TRUE_WRITER because it lacks what?",
+    "gold_keywords": [
+      "cell_based",
+      "cell-based",
+      "cell based",
+      "human cell"
+    ],
+    "answer": "cell_based.",
+    "correct": true,
+    "latency_s": 2.34
+  },
+  {
+    "id": "Q32",
+    "category": "editors",
+    "question": "What is ISCro4's S_DSB axis score?",
+    "gold_keywords": [
+      "1.0",
+      "1.00"
+    ],
+    "answer": "The code snippet provided does not directly answer the question about ISCro4's S_DSB axis score. However, based on the context and the code, we can infer that the score is 1.0.\n\nIn the code snippet, there is a try-except block where it attempts to calculate the PenScore for ISCro4 using the `score` function from the `pen_score` module. The assertion statement checks if the S_DSB axis score is equal to 1.0:\n\n```python\nassert iscro4_score.axes[\"S_DSB\"] == 1.0, f\"S_DSB={iscro4_score.axes['S_DSB']}\"\n```\n\nIf the score is indeed 1.0, this assertion will pass, and the code will continue executing. If the score is not 1.0, an AssertionError will be raised.\n\nTherefore, based on this context, we can conclude that ISCro4's S_DSB axis score is 1.0.",
+    "correct": true,
+    "latency_s": 5.95
+  },
+  {
+    "id": "Q33",
+    "category": "predictions",
+    "question": "What does pre-registered prediction P1 state about natural TRUE_WRITER editors?",
+    "gold_keywords": [
+      "ISCro4",
+      "1",
+      "one",
+      "exactly 1"
+    ],
+    "answer": "Among natural (non-engineered) editors in the unified editor universe, exactly 1 will be classified TRUE_WRITER (ISCro4). No other natural editor will reach TRUE_WRITER tier under default thresholds.",
+    "correct": true,
+    "latency_s": 2.47
+  },
+  {
+    "id": "Q34",
+    "category": "predictions",
+    "question": "Did prediction P1 pass or fail?",
+    "gold_keywords": [
+      "PASS",
+      "pass"
+    ],
+    "answer": "PASS",
+    "correct": true,
+    "latency_s": 1.81
+  },
+  {
+    "id": "Q35",
+    "category": "predictions",
+    "question": "What does prediction P2 state about pen-assemble computational designs?",
+    "gold_keywords": [
+      "zero",
+      "0",
+      "TRUE_WRITER",
+      "none"
+    ],
+    "answer": "Zero pen-assemble designs will be TRUE_WRITER.",
+    "correct": true,
+    "latency_s": 1.79
+  },
+  {
+    "id": "Q36",
+    "category": "predictions",
+    "question": "Did prediction P2 pass or fail?",
+    "gold_keywords": [
+      "PASS",
+      "pass"
+    ],
+    "answer": "PASS.",
+    "correct": true,
+    "latency_s": 1.18
+  },
+  {
+    "id": "Q37",
+    "category": "predictions",
+    "question": "What is the minimum number of discrepancies P3 predicts the triangulation will find?",
+    "gold_keywords": [
+      "5",
+      "five",
+      ">=5",
+      ">= 5"
+    ],
+    "answer": "5",
+    "correct": true,
+    "latency_s": 1.99
+  },
+  {
+    "id": "Q38",
+    "category": "predictions",
+    "question": "How many discrepancy records were actually found in the triangulation analysis?",
+    "gold_keywords": [
+      "30"
+    ],
+    "answer": "30",
+    "correct": true,
+    "latency_s": 1.91
+  },
+  {
+    "id": "Q39",
+    "category": "predictions",
+    "question": "Did prediction P3 pass or fail?",
+    "gold_keywords": [
+      "PASS",
+      "pass"
+    ],
+    "answer": "P3 failed low (<5 discrepancies), but it is still publishable.",
+    "correct": false,
+    "latency_s": 2.25
+  },
+  {
+    "id": "Q40",
+    "category": "predictions",
+    "question": "What accuracy threshold must the RAG LLM achieve to satisfy prediction P4?",
+    "gold_keywords": [
+      "80",
+      "0.80",
+      "80%"
+    ],
+    "answer": "0.80",
+    "correct": true,
+    "latency_s": 23.43
+  },
+  {
+    "id": "Q41",
+    "category": "predictions",
+    "question": "What LLM model is specified in prediction P4?",
+    "gold_keywords": [
+      "llama3.1",
+      "llama3",
+      "Llama 3"
+    ],
+    "answer": "llama3.1:8b-instruct-q4_K_M",
+    "correct": true,
+    "latency_s": 1.94
+  },
+  {
+    "id": "Q42",
+    "category": "predictions",
+    "question": "How many hierarchical certification gates does TrueWriterScore v3.2 apply?",
+    "gold_keywords": [
+      "5",
+      "five",
+      "5-gate"
+    ],
+    "answer": "5",
+    "correct": true,
+    "latency_s": 1.98
+  },
+  {
+    "id": "Q43",
+    "category": "predictions",
+    "question": "How many total pre-registered predictions does PEN-COMPARE have?",
+    "gold_keywords": [
+      "4",
+      "four"
+    ],
+    "answer": "4",
+    "correct": true,
+    "latency_s": 1.93
+  },
+  {
+    "id": "Q44",
+    "category": "sensitivity",
+    "question": "How many threshold combinations are evaluated in the sensitivity analysis?",
+    "gold_keywords": [
+      "18000",
+      "18,000"
+    ],
+    "answer": "18,000",
+    "correct": true,
+    "latency_s": 1.84
+  },
+  {
+    "id": "Q45",
+    "category": "sensitivity",
+    "question": "What is ISCro4's robustness score in the sensitivity analysis?",
+    "gold_keywords": [
+      "1.000",
+      "1.0",
+      "1.00"
+    ],
+    "answer": "1.000",
+    "correct": true,
+    "latency_s": 1.8
+  },
+  {
+    "id": "Q46",
+    "category": "sensitivity",
+    "question": "How many boundary cases (robustness below 0.50) were found?",
+    "gold_keywords": [
+      "0",
+      "zero",
+      "none"
+    ],
+    "answer": "Zero.",
+    "correct": true,
+    "latency_s": 1.68
+  },
+  {
+    "id": "Q47",
+    "category": "sensitivity",
+    "question": "How many near-boundary cases (robustness between 50% and 80%) were found?",
+    "gold_keywords": [
+      "4",
+      "four"
+    ],
+    "answer": "4",
+    "correct": true,
+    "latency_s": 1.76
+  },
+  {
+    "id": "Q48",
+    "category": "sensitivity",
+    "question": "What is the robustness score of Bxb1 in the sensitivity analysis?",
+    "gold_keywords": [
+      "0.562",
+      "0.56"
+    ],
+    "answer": "0.562",
+    "correct": true,
+    "latency_s": 2.09
+  },
+  {
+    "id": "Q49",
+    "category": "triangulation",
+    "question": "Which triangulation discrepancy category has the highest count in the results?",
+    "gold_keywords": [
+      "SIZE_INCONSISTENCY",
+      "size_inconsistency",
+      "size inconsistency"
+    ],
+    "answer": "SIZE_INCONSISTENCY",
+    "correct": true,
+    "latency_s": 2.01
+  },
+  {
+    "id": "Q50",
+    "category": "triangulation",
+    "question": "Which editor has a CARGO_INCONSISTENCY discrepancy in the triangulation results?",
+    "gold_keywords": [
+      "evoCAST",
+      "evocast"
+    ],
+    "answer": "IS621",
+    "correct": false,
+    "latency_s": 1.62
+  }
+]
