@@ -1,0 +1,187 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quick Start &mdash; PEN-COMPARE 0.1.0</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=01f34227"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="TrueWriterScore Gates (v3.2)" href="framework/gates.html" />
+    <link rel="prev" title="Installation" href="installation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            PEN-COMPARE
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Quick Start</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#certify-a-single-editor">Certify a single editor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cli-usage">CLI usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#run-sensitivity-analysis">Run sensitivity analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#triangulation">Triangulation</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Framework</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="framework/gates.html">TrueWriterScore Gates (v3.2)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="framework/tier_ladder.html">Tier Ladder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MODEL_CARD.html">PEN-COMPARE Model Card</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/core.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/triangulation.html">Triangulation API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/rag.html">RAG Q&amp;A API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/server.html">Server &amp; Cache API</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Results</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="results/preregistration.html">Pre-Registration Outcomes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="results/sensitivity.html">Sensitivity Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="results/triangulation.html">Triangulation Report</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">PEN-COMPARE</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Quick Start</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/quickstart.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="quick-start">
+<h1>Quick Start<a class="headerlink" href="#quick-start" title="Link to this heading"></a></h1>
+<section id="certify-a-single-editor">
+<h2>Certify a single editor<a class="headerlink" href="#certify-a-single-editor" title="Link to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pen_compare.core.certify</span><span class="w"> </span><span class="kn">import</span> <span class="n">certify</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">certify</span><span class="p">(</span>
+    <span class="n">editor_id</span><span class="o">=</span><span class="s2">&quot;ISCro4&quot;</span><span class="p">,</span>
+    <span class="n">s_dsb</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">s_prog</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">s_cargo</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span>
+    <span class="n">length_aa</span><span class="o">=</span><span class="mi">326</span><span class="p">,</span>
+    <span class="n">evidence_sources</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;biochemical&quot;</span><span class="p">,</span> <span class="s2">&quot;structural&quot;</span><span class="p">,</span> <span class="s2">&quot;computational&quot;</span><span class="p">,</span> <span class="s2">&quot;cell_based&quot;</span><span class="p">],</span>
+    <span class="n">intrinsic_cargo_mechanism</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">tier</span><span class="p">)</span>              <span class="c1"># TRUE_WRITER</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">qualifying_gates_passed</span><span class="p">)</span>  <span class="c1"># 4</span>
+</pre></div>
+</div>
+</section>
+<section id="cli-usage">
+<h2>CLI usage<a class="headerlink" href="#cli-usage" title="Link to this heading"></a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pen-compare<span class="w"> </span>--version
+pen-compare<span class="w"> </span>compare<span class="w"> </span>ISCro4<span class="w"> </span>IS621
+pen-compare<span class="w"> </span>list-writers
+</pre></div>
+</div>
+</section>
+<section id="run-sensitivity-analysis">
+<h2>Run sensitivity analysis<a class="headerlink" href="#run-sensitivity-analysis" title="Link to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pen_compare.core.sensitivity</span><span class="w"> </span><span class="kn">import</span> <span class="n">run_sensitivity_parallel</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="n">universe</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="s2">&quot;data/unified_editor_universe.parquet&quot;</span><span class="p">)</span>
+<span class="n">scorecard</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="s2">&quot;results/truewriter_scorecard_v3.2.parquet&quot;</span><span class="p">)</span>
+<span class="n">sensitivity_df</span> <span class="o">=</span> <span class="n">run_sensitivity_parallel</span><span class="p">(</span><span class="n">universe</span><span class="p">,</span> <span class="n">scorecard</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sensitivity_df</span><span class="p">[</span><span class="n">sensitivity_df</span><span class="p">[</span><span class="s2">&quot;entity_id&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;ISCro4&quot;</span><span class="p">][[</span><span class="s2">&quot;robustness&quot;</span><span class="p">]])</span>
+</pre></div>
+</div>
+</section>
+<section id="triangulation">
+<h2>Triangulation<a class="headerlink" href="#triangulation" title="Link to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pen_compare.triangulation</span><span class="w"> </span><span class="kn">import</span> <span class="n">Triangulator</span>
+
+<span class="n">tri</span> <span class="o">=</span> <span class="n">Triangulator</span><span class="p">()</span>
+<span class="n">universe</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="s2">&quot;data/unified_editor_universe.parquet&quot;</span><span class="p">)</span>
+<span class="n">discrepancies</span> <span class="o">=</span> <span class="n">tri</span><span class="o">.</span><span class="n">run_full</span><span class="p">(</span><span class="n">universe</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">discrepancies</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;category&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">())</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="installation.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="framework/gates.html" class="btn btn-neutral float-right" title="TrueWriterScore Gates (v3.2)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Anees Ahmed Mahaboob Ali.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,205 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pen_compare.server.cache &mdash; PEN-COMPARE 0.1.0</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            PEN-COMPARE
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quick Start</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Framework</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../framework/gates.html">TrueWriterScore Gates (v3.2)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../framework/tier_ladder.html">Tier Ladder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../MODEL_CARD.html">PEN-COMPARE Model Card</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/core.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/triangulation.html">Triangulation API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/rag.html">RAG Q&amp;A API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/server.html">Server &amp; Cache API</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Results</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../results/preregistration.html">Pre-Registration Outcomes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../results/sensitivity.html">Sensitivity Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../results/triangulation.html">Triangulation Report</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">PEN-COMPARE</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">pen_compare.server.cache</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for pen_compare.server.cache</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Build JSON caches from parquets for Streamlit Community Cloud cold-start.&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="n">CACHE_DIR</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="s2">&quot;data&quot;</span> <span class="o">/</span> <span class="s2">&quot;cache&quot;</span>
+<span class="n">_SC</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="s2">&quot;results&quot;</span> <span class="o">/</span> <span class="s2">&quot;truewriter_scorecard_v3.2.parquet&quot;</span>
+<span class="p">)</span>
+<span class="n">_UN</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="s2">&quot;data&quot;</span> <span class="o">/</span> <span class="s2">&quot;unified_editor_universe.parquet&quot;</span>
+<span class="n">_DI</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span>
+    <span class="o">/</span> <span class="s2">&quot;results&quot;</span>
+    <span class="o">/</span> <span class="s2">&quot;triangulation_discrepancies.parquet&quot;</span>
+<span class="p">)</span>
+
+
+<div class="viewcode-block" id="build_caches">
+<a class="viewcode-back" href="../../../api/server.html#pen_compare.server.cache.build_caches">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">build_caches</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Build all JSON caches from parquets. Returns {filename: bytes} mapping.&quot;&quot;&quot;</span>
+    <span class="n">CACHE_DIR</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">written</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="n">scorecard</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="n">_SC</span><span class="p">)</span>
+    <span class="n">universe</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="n">_UN</span><span class="p">)</span>
+    <span class="n">disc</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="n">_DI</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_write</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">CACHE_DIR</span> <span class="o">/</span> <span class="n">name</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">written</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">stat</span><span class="p">()</span><span class="o">.</span><span class="n">st_size</span>
+
+    <span class="c1"># 1. Tier distribution</span>
+    <span class="n">_write</span><span class="p">(</span>
+        <span class="s2">&quot;tier_distribution.json&quot;</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">scorecard</span><span class="p">[</span><span class="s2">&quot;tier&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="c1"># 2. Full scorecard</span>
+    <span class="n">_write</span><span class="p">(</span><span class="s2">&quot;scorecard.json&quot;</span><span class="p">,</span> <span class="n">scorecard</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s2">&quot;records&quot;</span><span class="p">))</span>
+
+    <span class="c1"># 3. Natural editors merged with scorecard</span>
+    <span class="n">sc_cols</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">&quot;entity_id&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;tier&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;qualifying_passed&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;has_cell_based&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;g1_dsb_passes&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;g2_prog_passes&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;g3_cargo_passes&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;g4_size_passes&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;g5_evidence_passes&quot;</span><span class="p">,</span>
+    <span class="p">]</span>
+    <span class="n">sc_avail</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">sc_cols</span> <span class="k">if</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">scorecard</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+    <span class="n">nat_un</span> <span class="o">=</span> <span class="n">universe</span><span class="p">[</span><span class="n">universe</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;natural&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">nat_merged</span> <span class="o">=</span> <span class="n">nat_un</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">scorecard</span><span class="p">[</span><span class="n">sc_avail</span><span class="p">],</span> <span class="n">on</span><span class="o">=</span><span class="s2">&quot;entity_id&quot;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">)</span>
+    <span class="n">_write</span><span class="p">(</span><span class="s2">&quot;universe_natural.json&quot;</span><span class="p">,</span> <span class="n">nat_merged</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s2">&quot;records&quot;</span><span class="p">))</span>
+
+    <span class="c1"># 4. TRUE_WRITER list</span>
+    <span class="n">tw</span> <span class="o">=</span> <span class="n">scorecard</span><span class="p">[</span><span class="n">scorecard</span><span class="p">[</span><span class="s2">&quot;tier&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;TRUE_WRITER&quot;</span><span class="p">]</span>
+    <span class="n">_write</span><span class="p">(</span><span class="s2">&quot;true_writers.json&quot;</span><span class="p">,</span> <span class="n">tw</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s2">&quot;records&quot;</span><span class="p">))</span>
+
+    <span class="c1"># 5. Triangulation discrepancies</span>
+    <span class="n">_write</span><span class="p">(</span><span class="s2">&quot;triangulation_discrepancies.json&quot;</span><span class="p">,</span> <span class="n">disc</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s2">&quot;records&quot;</span><span class="p">))</span>
+
+    <span class="c1"># 6. Summary</span>
+    <span class="n">summary</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;n_entities&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">scorecard</span><span class="p">)),</span>
+        <span class="s2">&quot;n_natural&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">((</span><span class="n">scorecard</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;natural&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()),</span>
+        <span class="s2">&quot;n_designs&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">((</span><span class="n">scorecard</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;design&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()),</span>
+        <span class="s2">&quot;tier_distribution&quot;</span><span class="p">:</span> <span class="n">scorecard</span><span class="p">[</span><span class="s2">&quot;tier&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(),</span>
+        <span class="s2">&quot;n_discrepancies&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">disc</span><span class="p">)),</span>
+    <span class="p">}</span>
+    <span class="n">_write</span><span class="p">(</span><span class="s2">&quot;summary.json&quot;</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">summary</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">written</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Anees Ahmed Mahaboob Ali.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

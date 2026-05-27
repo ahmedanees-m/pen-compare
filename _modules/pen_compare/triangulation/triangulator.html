@@ -1,0 +1,357 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pen_compare.triangulation.triangulator &mdash; PEN-COMPARE 0.1.0</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            PEN-COMPARE
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quick Start</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Framework</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../framework/gates.html">TrueWriterScore Gates (v3.2)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../framework/tier_ladder.html">Tier Ladder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../MODEL_CARD.html">PEN-COMPARE Model Card</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/core.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/triangulation.html">Triangulation API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/rag.html">RAG Q&amp;A API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/server.html">Server &amp; Cache API</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Results</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../results/preregistration.html">Pre-Registration Outcomes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../results/sensitivity.html">Sensitivity Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../results/triangulation.html">Triangulation Report</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">PEN-COMPARE</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">pen_compare.triangulation.triangulator</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for pen_compare.triangulation.triangulator</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Triangulator: compare claims across the 4 PEN-STACK packages.</span>
+
+<span class="sd">Each discrepancy category corresponds to a rule in config/triangulation_rules_v3.yaml.</span>
+<span class="sd">Rules are applied to every row in the unified editor universe; results are returned</span>
+<span class="sd">as DiscrepancyRecord objects that can be serialised to a Parquet file.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Iterator</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">asdict</span><span class="p">,</span> <span class="n">dataclass</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">yaml</span>
+
+
+<div class="viewcode-block" id="DiscrepancyRecord">
+<a class="viewcode-back" href="../../../api/triangulation.html#pen_compare.triangulation.triangulator.DiscrepancyRecord">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">DiscrepancyRecord</span><span class="p">:</span>
+    <span class="n">entity_id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">source</span><span class="p">:</span> <span class="nb">str</span>  <span class="c1"># &quot;natural&quot; | &quot;design&quot;</span>
+    <span class="n">category</span><span class="p">:</span> <span class="nb">str</span>  <span class="c1"># matches a key in triangulation_rules_v3.yaml</span>
+    <span class="n">severity</span><span class="p">:</span> <span class="nb">str</span>  <span class="c1"># high | medium | low</span>
+    <span class="n">sources_involved</span><span class="p">:</span> <span class="nb">str</span>  <span class="c1"># pipe-separated source names</span>
+    <span class="n">details</span><span class="p">:</span> <span class="nb">str</span>  <span class="c1"># human-readable explanation of the discrepancy</span></div>
+
+
+
+<div class="viewcode-block" id="Triangulator">
+<a class="viewcode-back" href="../../../api/triangulation.html#pen_compare.triangulation.triangulator.Triangulator">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Triangulator</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">rules_path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;config/triangulation_rules_v3.yaml&quot;</span><span class="p">),</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rules</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">rules_path</span><span class="o">.</span><span class="n">read_text</span><span class="p">())</span>
+
+    <span class="c1"># ──────────────────────────────────────────────────────────────────────────</span>
+    <span class="c1"># Public API</span>
+    <span class="c1"># ──────────────────────────────────────────────────────────────────────────</span>
+
+<div class="viewcode-block" id="Triangulator.audit">
+<a class="viewcode-back" href="../../../api/triangulation.html#pen_compare.triangulation.triangulator.Triangulator.audit">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">audit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entity_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">universe</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">DiscrepancyRecord</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return all discrepancy records for one entity.&quot;&quot;&quot;</span>
+        <span class="n">rows</span> <span class="o">=</span> <span class="n">universe</span><span class="p">[</span><span class="n">universe</span><span class="p">[</span><span class="s2">&quot;entity_id&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">entity_id</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">rows</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span>
+        <span class="n">row</span> <span class="o">=</span> <span class="n">rows</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_apply_all_rules</span><span class="p">(</span><span class="n">row</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="Triangulator.run_full">
+<a class="viewcode-back" href="../../../api/triangulation.html#pen_compare.triangulation.triangulator.Triangulator.run_full">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run_full</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">universe</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Apply all rules to the full universe; return a flat DataFrame.&quot;&quot;&quot;</span>
+        <span class="n">records</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">universe</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">rec</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_apply_all_rules</span><span class="p">(</span><span class="n">row</span><span class="p">):</span>
+                <span class="n">records</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">asdict</span><span class="p">(</span><span class="n">rec</span><span class="p">))</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">records</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">DiscrepancyRecord</span><span class="o">.</span><span class="n">__dataclass_fields__</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">records</span><span class="p">)</span></div>
+
+
+    <span class="c1"># ──────────────────────────────────────────────────────────────────────────</span>
+    <span class="c1"># Rule implementations</span>
+    <span class="c1"># ──────────────────────────────────────────────────────────────────────────</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_apply_all_rules</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">DiscrepancyRecord</span><span class="p">]:</span>
+        <span class="k">yield from</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rule_axis_vs_tier</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+        <span class="k">yield from</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rule_mech_vs_pfam</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+        <span class="k">yield from</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rule_cargo_inconsistency</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+        <span class="k">yield from</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rule_evidence_gap</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+        <span class="k">yield from</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rule_size_inconsistency</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_rule_axis_vs_tier</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">DiscrepancyRecord</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;AXIS_VS_TIER (high): S_DSB contradicts mech-class tier_a_gate for natural editors.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">row</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;source&quot;</span><span class="p">)</span> <span class="o">!=</span> <span class="s2">&quot;natural&quot;</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="n">s_dsb</span> <span class="o">=</span> <span class="n">_float</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="s2">&quot;s_dsb&quot;</span><span class="p">)</span>
+        <span class="n">tier_a</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;tier_a_gate&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>
+        <span class="n">cfg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rules</span><span class="p">[</span><span class="s2">&quot;discrepancy_categories&quot;</span><span class="p">][</span><span class="s2">&quot;AXIS_VS_TIER&quot;</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">s_dsb</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">s_dsb</span> <span class="o">&gt;=</span> <span class="mf">0.95</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">tier_a</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">DiscrepancyRecord</span><span class="p">(</span>
+                <span class="n">entity_id</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;entity_id&quot;</span><span class="p">]),</span>
+                <span class="n">source</span><span class="o">=</span><span class="s2">&quot;natural&quot;</span><span class="p">,</span>
+                <span class="n">category</span><span class="o">=</span><span class="s2">&quot;AXIS_VS_TIER&quot;</span><span class="p">,</span>
+                <span class="n">severity</span><span class="o">=</span><span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;severity&quot;</span><span class="p">],</span>
+                <span class="n">sources_involved</span><span class="o">=</span><span class="s2">&quot;MECH_CLASS|PEN_SCORE&quot;</span><span class="p">,</span>
+                <span class="n">details</span><span class="o">=</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;S_DSB=</span><span class="si">{</span><span class="n">s_dsb</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ≥ 0.95 (pen-score: DSB-free) &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;but tier_a_gate=False (mech-class: not IS110 Tier-A). &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;pen-score and mech-class disagree on DSB-avoidance classification.&quot;</span>
+                <span class="p">),</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">s_dsb</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">s_dsb</span> <span class="o">&lt;</span> <span class="mf">0.80</span> <span class="ow">and</span> <span class="n">tier_a</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">DiscrepancyRecord</span><span class="p">(</span>
+                <span class="n">entity_id</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;entity_id&quot;</span><span class="p">]),</span>
+                <span class="n">source</span><span class="o">=</span><span class="s2">&quot;natural&quot;</span><span class="p">,</span>
+                <span class="n">category</span><span class="o">=</span><span class="s2">&quot;AXIS_VS_TIER&quot;</span><span class="p">,</span>
+                <span class="n">severity</span><span class="o">=</span><span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;severity&quot;</span><span class="p">],</span>
+                <span class="n">sources_involved</span><span class="o">=</span><span class="s2">&quot;MECH_CLASS|PEN_SCORE&quot;</span><span class="p">,</span>
+                <span class="n">details</span><span class="o">=</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;tier_a_gate=True (mech-class: IS110 Tier-A) &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;but S_DSB=</span><span class="si">{</span><span class="n">s_dsb</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> &lt; 0.80 (pen-score: unexpectedly low for IS110). &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;Possible OOD probe or scoring artefact.&quot;</span>
+                <span class="p">),</span>
+            <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_rule_mech_vs_pfam</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">DiscrepancyRecord</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;MECH_VS_PFAM (high): PFAM-based atlas classification disagrees with mech-class tier.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">row</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;source&quot;</span><span class="p">)</span> <span class="o">!=</span> <span class="s2">&quot;natural&quot;</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="n">atlas</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;atlas_system_present&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>
+        <span class="n">tier_a</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;tier_a_gate&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>
+        <span class="n">s_dsb</span> <span class="o">=</span> <span class="n">_float</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="s2">&quot;s_dsb&quot;</span><span class="p">)</span>
+        <span class="n">cfg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rules</span><span class="p">[</span><span class="s2">&quot;discrepancy_categories&quot;</span><span class="p">][</span><span class="s2">&quot;MECH_VS_PFAM&quot;</span><span class="p">]</span>
+
+        <span class="c1"># In atlas (PFAM evidence for DSB-free) but mech-class says NOT IS110</span>
+        <span class="k">if</span> <span class="n">atlas</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">tier_a</span> <span class="ow">and</span> <span class="n">s_dsb</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">s_dsb</span> <span class="o">&gt;=</span> <span class="mf">0.95</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">DiscrepancyRecord</span><span class="p">(</span>
+                <span class="n">entity_id</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;entity_id&quot;</span><span class="p">]),</span>
+                <span class="n">source</span><span class="o">=</span><span class="s2">&quot;natural&quot;</span><span class="p">,</span>
+                <span class="n">category</span><span class="o">=</span><span class="s2">&quot;MECH_VS_PFAM&quot;</span><span class="p">,</span>
+                <span class="n">severity</span><span class="o">=</span><span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;severity&quot;</span><span class="p">],</span>
+                <span class="n">sources_involved</span><span class="o">=</span><span class="s2">&quot;GENOME_ATLAS|MECH_CLASS&quot;</span><span class="p">,</span>
+                <span class="n">details</span><span class="o">=</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;atlas_system_present=True (genome-atlas has PFAM-based entry) &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;and S_DSB=</span><span class="si">{</span><span class="n">s_dsb</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> (pen-score: DSB-free), &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;but tier_a_gate=False (mech-class: not IS110 Tier-A). &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;PFAM evidence supports DSB-free mechanism; mech-class disagrees.&quot;</span>
+                <span class="p">),</span>
+            <span class="p">)</span>
+
+        <span class="c1"># mech-class says IS110 but no atlas entry — PFAM evidence absent</span>
+        <span class="k">if</span> <span class="n">tier_a</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">atlas</span> <span class="ow">and</span> <span class="n">s_dsb</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">s_dsb</span> <span class="o">&gt;=</span> <span class="mf">0.95</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">DiscrepancyRecord</span><span class="p">(</span>
+                <span class="n">entity_id</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;entity_id&quot;</span><span class="p">]),</span>
+                <span class="n">source</span><span class="o">=</span><span class="s2">&quot;natural&quot;</span><span class="p">,</span>
+                <span class="n">category</span><span class="o">=</span><span class="s2">&quot;MECH_VS_PFAM&quot;</span><span class="p">,</span>
+                <span class="n">severity</span><span class="o">=</span><span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;severity&quot;</span><span class="p">],</span>
+                <span class="n">sources_involved</span><span class="o">=</span><span class="s2">&quot;GENOME_ATLAS|MECH_CLASS&quot;</span><span class="p">,</span>
+                <span class="n">details</span><span class="o">=</span><span class="p">(</span>
+                    <span class="s2">&quot;tier_a_gate=True (mech-class: IS110 Tier-A) &quot;</span>
+                    <span class="s2">&quot;but atlas_system_present=False (genome-atlas has no entry). &quot;</span>
+                    <span class="s2">&quot;mech-class calls IS110 without supporting PFAM atlas record.&quot;</span>
+                <span class="p">),</span>
+            <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_rule_cargo_inconsistency</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">DiscrepancyRecord</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;CARGO_INCONSISTENCY (medium): intrinsic_cargo=True but S_Cargo &lt; 0.60.&quot;&quot;&quot;</span>
+        <span class="n">intrinsic</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;intrinsic_cargo_mechanism&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>
+        <span class="n">s_cargo</span> <span class="o">=</span> <span class="n">_float</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="s2">&quot;s_cargo&quot;</span><span class="p">)</span>
+        <span class="n">cfg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rules</span><span class="p">[</span><span class="s2">&quot;discrepancy_categories&quot;</span><span class="p">][</span><span class="s2">&quot;CARGO_INCONSISTENCY&quot;</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">intrinsic</span> <span class="ow">and</span> <span class="n">s_cargo</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">s_cargo</span> <span class="o">&lt;</span> <span class="mf">0.60</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">DiscrepancyRecord</span><span class="p">(</span>
+                <span class="n">entity_id</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;entity_id&quot;</span><span class="p">]),</span>
+                <span class="n">source</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;source&quot;</span><span class="p">,</span> <span class="s2">&quot;unknown&quot;</span><span class="p">)),</span>
+                <span class="n">category</span><span class="o">=</span><span class="s2">&quot;CARGO_INCONSISTENCY&quot;</span><span class="p">,</span>
+                <span class="n">severity</span><span class="o">=</span><span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;severity&quot;</span><span class="p">],</span>
+                <span class="n">sources_involved</span><span class="o">=</span><span class="s2">&quot;PEN_SCORE&quot;</span><span class="p">,</span>
+                <span class="n">details</span><span class="o">=</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;intrinsic_cargo_mechanism=True (metadata: native cargo delivery) &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;but S_Cargo=</span><span class="si">{</span><span class="n">s_cargo</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> &lt; 0.60 (pen-score: limited cargo demonstrated). &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;Metadata flag and cargo axis score are discordant.&quot;</span>
+                <span class="p">),</span>
+            <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_rule_evidence_gap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">DiscrepancyRecord</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;EVIDENCE_GAP (low): IS110 confirmed bridge recombinase with no cell-based evidence.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">row</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;source&quot;</span><span class="p">)</span> <span class="o">!=</span> <span class="s2">&quot;natural&quot;</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="n">tier_a</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;tier_a_gate&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>
+        <span class="n">s_dsb</span> <span class="o">=</span> <span class="n">_float</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="s2">&quot;s_dsb&quot;</span><span class="p">)</span>
+        <span class="n">cell</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;cell_based_evidence&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>
+        <span class="n">cfg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rules</span><span class="p">[</span><span class="s2">&quot;discrepancy_categories&quot;</span><span class="p">][</span><span class="s2">&quot;EVIDENCE_GAP&quot;</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">tier_a</span> <span class="ow">and</span> <span class="n">s_dsb</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">s_dsb</span> <span class="o">&gt;=</span> <span class="mf">0.95</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">cell</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">DiscrepancyRecord</span><span class="p">(</span>
+                <span class="n">entity_id</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;entity_id&quot;</span><span class="p">]),</span>
+                <span class="n">source</span><span class="o">=</span><span class="s2">&quot;natural&quot;</span><span class="p">,</span>
+                <span class="n">category</span><span class="o">=</span><span class="s2">&quot;EVIDENCE_GAP&quot;</span><span class="p">,</span>
+                <span class="n">severity</span><span class="o">=</span><span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;severity&quot;</span><span class="p">],</span>
+                <span class="n">sources_involved</span><span class="o">=</span><span class="s2">&quot;MECH_CLASS|PEN_SCORE&quot;</span><span class="p">,</span>
+                <span class="n">details</span><span class="o">=</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;tier_a_gate=True AND S_DSB=</span><span class="si">{</span><span class="n">s_dsb</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> (confirmed IS110 bridge recombinase) &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;but cell_based_evidence=False. The Molecular Pen hypothesis is untested &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;in mammalian cells for this IS110 member.&quot;</span>
+                <span class="p">),</span>
+            <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_rule_size_inconsistency</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">DiscrepancyRecord</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;SIZE_INCONSISTENCY (medium): atlas entry present but length_aa unknown in pen-score.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">row</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;source&quot;</span><span class="p">)</span> <span class="o">!=</span> <span class="s2">&quot;natural&quot;</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="n">atlas</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;atlas_system_present&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>
+        <span class="n">length_aa</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;length_aa&quot;</span><span class="p">)</span>
+        <span class="n">cfg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rules</span><span class="p">[</span><span class="s2">&quot;discrepancy_categories&quot;</span><span class="p">][</span><span class="s2">&quot;SIZE_INCONSISTENCY&quot;</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">atlas</span> <span class="ow">and</span> <span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">length_aa</span><span class="p">):</span>
+            <span class="k">yield</span> <span class="n">DiscrepancyRecord</span><span class="p">(</span>
+                <span class="n">entity_id</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;entity_id&quot;</span><span class="p">]),</span>
+                <span class="n">source</span><span class="o">=</span><span class="s2">&quot;natural&quot;</span><span class="p">,</span>
+                <span class="n">category</span><span class="o">=</span><span class="s2">&quot;SIZE_INCONSISTENCY&quot;</span><span class="p">,</span>
+                <span class="n">severity</span><span class="o">=</span><span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;severity&quot;</span><span class="p">],</span>
+                <span class="n">sources_involved</span><span class="o">=</span><span class="s2">&quot;GENOME_ATLAS|PEN_SCORE&quot;</span><span class="p">,</span>
+                <span class="n">details</span><span class="o">=</span><span class="p">(</span>
+                    <span class="s2">&quot;atlas_system_present=True (genome-atlas has entry with UniProt record) &quot;</span>
+                    <span class="s2">&quot;but length_aa=None in unified universe (pen-score EditorEntry does not &quot;</span>
+                    <span class="s2">&quot;expose sequence length). Gate 4 deliverability falls back to split_aav &quot;</span>
+                    <span class="s2">&quot;heuristic; cross-source length verification not possible.&quot;</span>
+                <span class="p">),</span>
+            <span class="p">)</span></div>
+
+
+
+<span class="c1"># ──────────────────────────────────────────────────────────────────────────────</span>
+<span class="c1"># Helpers</span>
+<span class="c1"># ──────────────────────────────────────────────────────────────────────────────</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_float</span><span class="p">(</span><span class="n">row</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">col</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">val</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">val</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="s2">&quot;__class__&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">val</span><span class="p">)):</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+    <span class="k">except</span> <span class="p">(</span><span class="ne">TypeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">None</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Anees Ahmed Mahaboob Ali.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

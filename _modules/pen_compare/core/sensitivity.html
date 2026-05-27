@@ -1,0 +1,264 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pen_compare.core.sensitivity &mdash; PEN-COMPARE 0.1.0</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            PEN-COMPARE
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quick Start</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Framework</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../framework/gates.html">TrueWriterScore Gates (v3.2)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../framework/tier_ladder.html">Tier Ladder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../MODEL_CARD.html">PEN-COMPARE Model Card</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/core.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/triangulation.html">Triangulation API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/rag.html">RAG Q&amp;A API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/server.html">Server &amp; Cache API</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Results</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../results/preregistration.html">Pre-Registration Outcomes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../results/sensitivity.html">Sensitivity Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../results/triangulation.html">Triangulation Report</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">PEN-COMPARE</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">pen_compare.core.sensitivity</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for pen_compare.core.sensitivity</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Sensitivity analysis — 18,000 threshold combinations per entity.</span>
+
+<span class="sd">Replaces fabricated-sigma bootstrap. Each entity is certified under every</span>
+<span class="sd">combination of the pre-registered sensitivity grid and a robustness fraction</span>
+<span class="sd">is reported: fraction of combinations that agree with the modal tier.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">itertools</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">Counter</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">joblib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Parallel</span><span class="p">,</span> <span class="n">delayed</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">pen_compare.core.certify</span><span class="w"> </span><span class="kn">import</span> <span class="n">certify</span>
+
+<span class="n">SENSITIVITY_GRID</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;g1_threshold&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">0.85</span><span class="p">,</span> <span class="mf">1.00</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span>  <span class="c1"># 15 values</span>
+    <span class="s2">&quot;g2_threshold&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">0.85</span><span class="p">,</span> <span class="mf">1.00</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span>  <span class="c1"># 15 values</span>
+    <span class="s2">&quot;g3_threshold&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">0.80</span><span class="p">,</span> <span class="mf">0.96</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span>  <span class="c1"># 16 values</span>
+    <span class="s2">&quot;g4_size_max&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">600</span><span class="p">,</span> <span class="mi">750</span><span class="p">,</span> <span class="mi">900</span><span class="p">,</span> <span class="mi">1050</span><span class="p">,</span> <span class="mi">1200</span><span class="p">],</span>  <span class="c1">#  5 values</span>
+<span class="p">}</span>
+<span class="c1"># 15 × 15 × 16 × 5 = 18,000 combinations per entity</span>
+
+
+<div class="viewcode-block" id="sensitivity_for_entity">
+<a class="viewcode-back" href="../../../api/core.html#pen_compare.core.sensitivity.sensitivity_for_entity">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">sensitivity_for_entity</span><span class="p">(</span><span class="n">row</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">grid</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="n">SENSITIVITY_GRID</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Run 18,000 certifications for one entity; return robustness metrics.&quot;&quot;&quot;</span>
+    <span class="n">combos</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="o">*</span><span class="n">grid</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+    <span class="n">keys</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">grid</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+    <span class="n">tiers</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">combo</span> <span class="ow">in</span> <span class="n">combos</span><span class="p">:</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">keys</span><span class="p">,</span> <span class="n">combo</span><span class="p">))</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">certify</span><span class="p">(</span>
+            <span class="n">editor_id</span><span class="o">=</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;entity_id&quot;</span><span class="p">],</span>
+            <span class="n">s_dsb</span><span class="o">=</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;s_dsb&quot;</span><span class="p">],</span>
+            <span class="n">s_prog</span><span class="o">=</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;s_prog&quot;</span><span class="p">],</span>
+            <span class="n">s_cargo</span><span class="o">=</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;s_cargo&quot;</span><span class="p">],</span>
+            <span class="n">length_aa</span><span class="o">=</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;length_aa_int&quot;</span><span class="p">],</span>
+            <span class="n">evidence_sources</span><span class="o">=</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;evidence_sources&quot;</span><span class="p">],</span>
+            <span class="n">intrinsic_cargo_mechanism</span><span class="o">=</span><span class="nb">bool</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;intrinsic_cargo_mechanism&quot;</span><span class="p">]),</span>
+            <span class="n">split_aav_eligible</span><span class="o">=</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;split_aav_eligible&quot;</span><span class="p">],</span>
+            <span class="n">g1_threshold</span><span class="o">=</span><span class="n">c</span><span class="p">[</span><span class="s2">&quot;g1_threshold&quot;</span><span class="p">],</span>
+            <span class="n">g2_threshold</span><span class="o">=</span><span class="n">c</span><span class="p">[</span><span class="s2">&quot;g2_threshold&quot;</span><span class="p">],</span>
+            <span class="n">g3_threshold</span><span class="o">=</span><span class="n">c</span><span class="p">[</span><span class="s2">&quot;g3_threshold&quot;</span><span class="p">],</span>
+            <span class="n">g4_size_max</span><span class="o">=</span><span class="n">c</span><span class="p">[</span><span class="s2">&quot;g4_size_max&quot;</span><span class="p">],</span>
+        <span class="p">)</span>
+        <span class="n">tiers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">tier</span><span class="p">)</span>
+
+    <span class="n">counts</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">tiers</span><span class="p">)</span>
+    <span class="n">modal</span><span class="p">,</span> <span class="n">modal_n</span> <span class="o">=</span> <span class="n">counts</span><span class="o">.</span><span class="n">most_common</span><span class="p">(</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">tiers</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;entity_id&quot;</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;entity_id&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;default_tier&quot;</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;default_tier&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;modal_tier&quot;</span><span class="p">:</span> <span class="n">modal</span><span class="p">,</span>
+        <span class="s2">&quot;robustness&quot;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">modal_n</span> <span class="o">/</span> <span class="n">total</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+        <span class="s2">&quot;n_combos&quot;</span><span class="p">:</span> <span class="n">total</span><span class="p">,</span>
+        <span class="s2">&quot;tier_dist&quot;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="n">counts</span><span class="p">),</span>
+        <span class="s2">&quot;is_robust&quot;</span><span class="p">:</span> <span class="p">(</span><span class="n">modal_n</span> <span class="o">/</span> <span class="n">total</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mf">0.80</span><span class="p">,</span>
+        <span class="s2">&quot;is_boundary&quot;</span><span class="p">:</span> <span class="p">(</span><span class="n">modal_n</span> <span class="o">/</span> <span class="n">total</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.50</span><span class="p">,</span>
+    <span class="p">}</span></div>
+
+
+
+<div class="viewcode-block" id="build_sensitivity_rows">
+<a class="viewcode-back" href="../../../api/core.html#pen_compare.core.sensitivity.build_sensitivity_rows">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">build_sensitivity_rows</span><span class="p">(</span><span class="n">universe</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">scorecard</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Merge universe + scorecard into flat dicts ready for sensitivity_for_entity.&quot;&quot;&quot;</span>
+    <span class="c1"># Rename has_cell_based from universe to avoid column-name collision with the</span>
+    <span class="c1"># scorecard parquet (which also has a has_cell_based column from certify output).</span>
+    <span class="c1"># Without renaming, pandas suffixes both to _x/_y and r.get(&quot;has_cell_based&quot;)</span>
+    <span class="c1"># silently returns NaN, dropping &quot;cell_based&quot; from every evidence list.</span>
+    <span class="n">universe_slice</span> <span class="o">=</span> <span class="n">universe</span><span class="p">[</span>
+        <span class="p">[</span>
+            <span class="s2">&quot;entity_id&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;s_dsb&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;s_prog&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;s_cargo&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;length_aa&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;intrinsic_cargo_mechanism&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;has_biochemical&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;has_structural&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;has_computational&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;has_cell_based&quot;</span><span class="p">,</span>
+        <span class="p">]</span>
+    <span class="p">]</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;has_cell_based&quot;</span><span class="p">:</span> <span class="s2">&quot;has_cell_based_ev&quot;</span><span class="p">})</span>
+
+    <span class="n">merged</span> <span class="o">=</span> <span class="n">scorecard</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">universe_slice</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s2">&quot;entity_id&quot;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">)</span>
+
+    <span class="n">rows</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">merged</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+        <span class="n">length_aa_int</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="s2">&quot;length_aa&quot;</span><span class="p">])</span> <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">notna</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="s2">&quot;length_aa&quot;</span><span class="p">])</span> <span class="k">else</span> <span class="mi">450</span>
+        <span class="n">evidence</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">src</span>
+            <span class="k">for</span> <span class="n">src</span><span class="p">,</span> <span class="n">col</span> <span class="ow">in</span> <span class="p">[</span>
+                <span class="p">(</span><span class="s2">&quot;biochemical&quot;</span><span class="p">,</span> <span class="s2">&quot;has_biochemical&quot;</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;structural&quot;</span><span class="p">,</span> <span class="s2">&quot;has_structural&quot;</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;computational&quot;</span><span class="p">,</span> <span class="s2">&quot;has_computational&quot;</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;cell_based&quot;</span><span class="p">,</span> <span class="s2">&quot;has_cell_based_ev&quot;</span><span class="p">),</span>
+            <span class="p">]</span>
+            <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;entity_id&quot;</span><span class="p">:</span> <span class="n">r</span><span class="p">[</span><span class="s2">&quot;entity_id&quot;</span><span class="p">],</span>
+                <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="n">r</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">],</span>
+                <span class="s2">&quot;default_tier&quot;</span><span class="p">:</span> <span class="n">r</span><span class="p">[</span><span class="s2">&quot;tier&quot;</span><span class="p">],</span>
+                <span class="s2">&quot;s_dsb&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="s2">&quot;s_dsb&quot;</span><span class="p">])</span> <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">notna</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="s2">&quot;s_dsb&quot;</span><span class="p">])</span> <span class="k">else</span> <span class="mf">0.0</span><span class="p">,</span>
+                <span class="s2">&quot;s_prog&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="s2">&quot;s_prog&quot;</span><span class="p">])</span> <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">notna</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="s2">&quot;s_prog&quot;</span><span class="p">])</span> <span class="k">else</span> <span class="mf">0.0</span><span class="p">,</span>
+                <span class="s2">&quot;s_cargo&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="s2">&quot;s_cargo&quot;</span><span class="p">])</span> <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">notna</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="s2">&quot;s_cargo&quot;</span><span class="p">])</span> <span class="k">else</span> <span class="mf">0.0</span><span class="p">,</span>
+                <span class="s2">&quot;length_aa_int&quot;</span><span class="p">:</span> <span class="n">length_aa_int</span><span class="p">,</span>
+                <span class="s2">&quot;split_aav_eligible&quot;</span><span class="p">:</span> <span class="n">length_aa_int</span> <span class="o">&lt;=</span> <span class="mi">1500</span><span class="p">,</span>
+                <span class="s2">&quot;intrinsic_cargo_mechanism&quot;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="s2">&quot;intrinsic_cargo_mechanism&quot;</span><span class="p">]),</span>
+                <span class="s2">&quot;evidence_sources&quot;</span><span class="p">:</span> <span class="n">evidence</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+    <span class="k">return</span> <span class="n">rows</span></div>
+
+
+
+<div class="viewcode-block" id="run_sensitivity_parallel">
+<a class="viewcode-back" href="../../../api/core.html#pen_compare.core.sensitivity.run_sensitivity_parallel">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">run_sensitivity_parallel</span><span class="p">(</span>
+    <span class="n">universe</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">scorecard</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">n_jobs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">24</span><span class="p">,</span>
+    <span class="n">grid</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="n">SENSITIVITY_GRID</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Run sensitivity analysis in parallel; return results DataFrame.&quot;&quot;&quot;</span>
+    <span class="n">rows</span> <span class="o">=</span> <span class="n">build_sensitivity_rows</span><span class="p">(</span><span class="n">universe</span><span class="p">,</span> <span class="n">scorecard</span><span class="p">)</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">Parallel</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">5</span><span class="p">)(</span>
+        <span class="n">delayed</span><span class="p">(</span><span class="n">sensitivity_for_entity</span><span class="p">)(</span><span class="n">r</span><span class="p">,</span> <span class="n">grid</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">rows</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">results</span><span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Anees Ahmed Mahaboob Ali.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

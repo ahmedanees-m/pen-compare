@@ -1,0 +1,504 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Core API &mdash; PEN-COMPARE 0.1.0</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Triangulation API" href="triangulation.html" />
+    <link rel="prev" title="PEN-COMPARE Model Card" href="../MODEL_CARD.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            PEN-COMPARE
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quick Start</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Framework</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../framework/gates.html">TrueWriterScore Gates (v3.2)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../framework/tier_ladder.html">Tier Ladder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../MODEL_CARD.html">PEN-COMPARE Model Card</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Core API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-pen_compare.core.certify">pen_compare.core.certify</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pen_compare.core.certify.TrueWriterResult"><code class="docutils literal notranslate"><span class="pre">TrueWriterResult</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pen_compare.core.certify.TrueWriterResult.editor_id"><code class="docutils literal notranslate"><span class="pre">TrueWriterResult.editor_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pen_compare.core.certify.TrueWriterResult.tier"><code class="docutils literal notranslate"><span class="pre">TrueWriterResult.tier</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pen_compare.core.certify.TrueWriterResult.necessary_gates_passed"><code class="docutils literal notranslate"><span class="pre">TrueWriterResult.necessary_gates_passed</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pen_compare.core.certify.TrueWriterResult.qualifying_gates_passed"><code class="docutils literal notranslate"><span class="pre">TrueWriterResult.qualifying_gates_passed</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pen_compare.core.certify.TrueWriterResult.has_cell_based_evidence"><code class="docutils literal notranslate"><span class="pre">TrueWriterResult.has_cell_based_evidence</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pen_compare.core.certify.TrueWriterResult.gate_results"><code class="docutils literal notranslate"><span class="pre">TrueWriterResult.gate_results</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pen_compare.core.certify.TrueWriterResult.auto_demoted"><code class="docutils literal notranslate"><span class="pre">TrueWriterResult.auto_demoted</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pen_compare.core.certify.TrueWriterResult.auto_demote_reason"><code class="docutils literal notranslate"><span class="pre">TrueWriterResult.auto_demote_reason</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#pen_compare.core.certify.certify"><code class="docutils literal notranslate"><span class="pre">certify()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-pen_compare.core.gates">pen_compare.core.gates</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pen_compare.core.gates.GateRole"><code class="docutils literal notranslate"><span class="pre">GateRole</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pen_compare.core.gates.GateRole.NECESSARY"><code class="docutils literal notranslate"><span class="pre">GateRole.NECESSARY</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pen_compare.core.gates.GateRole.QUALIFYING"><code class="docutils literal notranslate"><span class="pre">GateRole.QUALIFYING</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#pen_compare.core.gates.GateResult"><code class="docutils literal notranslate"><span class="pre">GateResult</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pen_compare.core.gates.GateResult.gate_id"><code class="docutils literal notranslate"><span class="pre">GateResult.gate_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pen_compare.core.gates.GateResult.name"><code class="docutils literal notranslate"><span class="pre">GateResult.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pen_compare.core.gates.GateResult.role"><code class="docutils literal notranslate"><span class="pre">GateResult.role</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pen_compare.core.gates.GateResult.passes"><code class="docutils literal notranslate"><span class="pre">GateResult.passes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pen_compare.core.gates.GateResult.observed_value"><code class="docutils literal notranslate"><span class="pre">GateResult.observed_value</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pen_compare.core.gates.GateResult.threshold"><code class="docutils literal notranslate"><span class="pre">GateResult.threshold</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pen_compare.core.gates.GateResult.rationale"><code class="docutils literal notranslate"><span class="pre">GateResult.rationale</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#pen_compare.core.gates.gate_1_dsb"><code class="docutils literal notranslate"><span class="pre">gate_1_dsb()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pen_compare.core.gates.gate_2_programmability"><code class="docutils literal notranslate"><span class="pre">gate_2_programmability()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pen_compare.core.gates.gate_3_native_cargo"><code class="docutils literal notranslate"><span class="pre">gate_3_native_cargo()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pen_compare.core.gates.gate_4_deliverability"><code class="docutils literal notranslate"><span class="pre">gate_4_deliverability()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pen_compare.core.gates.gate_5_evidence"><code class="docutils literal notranslate"><span class="pre">gate_5_evidence()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-pen_compare.core.sensitivity">pen_compare.core.sensitivity</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pen_compare.core.sensitivity.sensitivity_for_entity"><code class="docutils literal notranslate"><span class="pre">sensitivity_for_entity()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pen_compare.core.sensitivity.build_sensitivity_rows"><code class="docutils literal notranslate"><span class="pre">build_sensitivity_rows()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pen_compare.core.sensitivity.run_sensitivity_parallel"><code class="docutils literal notranslate"><span class="pre">run_sensitivity_parallel()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="triangulation.html">Triangulation API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rag.html">RAG Q&amp;A API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="server.html">Server &amp; Cache API</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Results</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../results/preregistration.html">Pre-Registration Outcomes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../results/sensitivity.html">Sensitivity Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../results/triangulation.html">Triangulation Report</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">PEN-COMPARE</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Core API</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/core.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="core-api">
+<h1>Core API<a class="headerlink" href="#core-api" title="Link to this heading"></a></h1>
+<section id="module-pen_compare.core.certify">
+<span id="pen-compare-core-certify"></span><h2>pen_compare.core.certify<a class="headerlink" href="#module-pen_compare.core.certify" title="Link to this heading"></a></h2>
+<p>Hierarchical TrueWriter tier classifier (v3.2).</p>
+<p>Applies the 5 TrueWriterScore gates per config/gates_v3.yaml (SHA-256 locked).
+G1 is the necessary gate: failing it auto-classifies as NOT_WRITER regardless
+of all other gates.  G2–G5 are qualifying gates; tier depends on how many pass
+and whether cell_based is in the evidence set.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pen_compare.core.certify.TrueWriterResult">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pen_compare.core.certify.</span></span><span class="sig-name descname"><span class="pre">TrueWriterResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">editor_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'str'</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tier</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'str'</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">necessary_gates_passed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'int'</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qualifying_gates_passed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'int'</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">has_cell_based_evidence</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'bool'</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gate_results</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'tuple[GateResult,</span> <span class="pre">...]'</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_demoted</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'bool'</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_demote_reason</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'str</span> <span class="pre">|</span> <span class="pre">None'</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pen_compare/core/certify.html#TrueWriterResult"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pen_compare.core.certify.TrueWriterResult" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>editor_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p></li>
+<li><p><strong>tier</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p></li>
+<li><p><strong>necessary_gates_passed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>)</p></li>
+<li><p><strong>qualifying_gates_passed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>)</p></li>
+<li><p><strong>has_cell_based_evidence</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>)</p></li>
+<li><p><strong>gate_results</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><em>tuple</em></a><em>[</em><a class="reference internal" href="#pen_compare.core.gates.GateResult" title="pen_compare.core.gates.GateResult"><em>GateResult</em></a><em>, </em><em>...</em><em>]</em>)</p></li>
+<li><p><strong>auto_demoted</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>)</p></li>
+<li><p><strong>auto_demote_reason</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pen_compare.core.certify.TrueWriterResult.editor_id">
+<span class="sig-name descname"><span class="pre">editor_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><a class="headerlink" href="#pen_compare.core.certify.TrueWriterResult.editor_id" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pen_compare.core.certify.TrueWriterResult.tier">
+<span class="sig-name descname"><span class="pre">tier</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><a class="headerlink" href="#pen_compare.core.certify.TrueWriterResult.tier" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pen_compare.core.certify.TrueWriterResult.necessary_gates_passed">
+<span class="sig-name descname"><span class="pre">necessary_gates_passed</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></em><a class="headerlink" href="#pen_compare.core.certify.TrueWriterResult.necessary_gates_passed" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pen_compare.core.certify.TrueWriterResult.qualifying_gates_passed">
+<span class="sig-name descname"><span class="pre">qualifying_gates_passed</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></em><a class="headerlink" href="#pen_compare.core.certify.TrueWriterResult.qualifying_gates_passed" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pen_compare.core.certify.TrueWriterResult.has_cell_based_evidence">
+<span class="sig-name descname"><span class="pre">has_cell_based_evidence</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></em><a class="headerlink" href="#pen_compare.core.certify.TrueWriterResult.has_cell_based_evidence" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pen_compare.core.certify.TrueWriterResult.gate_results">
+<span class="sig-name descname"><span class="pre">gate_results</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#pen_compare.core.gates.GateResult" title="pen_compare.core.gates.GateResult"><span class="pre">GateResult</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#pen_compare.core.certify.TrueWriterResult.gate_results" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pen_compare.core.certify.TrueWriterResult.auto_demoted">
+<span class="sig-name descname"><span class="pre">auto_demoted</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></em><a class="headerlink" href="#pen_compare.core.certify.TrueWriterResult.auto_demoted" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pen_compare.core.certify.TrueWriterResult.auto_demote_reason">
+<span class="sig-name descname"><span class="pre">auto_demote_reason</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></em><a class="headerlink" href="#pen_compare.core.certify.TrueWriterResult.auto_demote_reason" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pen_compare.core.certify.certify">
+<span class="sig-prename descclassname"><span class="pre">pen_compare.core.certify.</span></span><span class="sig-name descname"><span class="pre">certify</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">editor_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s_dsb</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s_prog</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s_cargo</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length_aa</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">evidence_sources</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intrinsic_cargo_mechanism</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">split_aav_eligible</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g1_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g2_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g3_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g4_size_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">900</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pen_compare/core/certify.html#certify"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pen_compare.core.certify.certify" title="Link to this definition"></a></dt>
+<dd><p>Apply 5-gate hierarchical certification.</p>
+<dl class="simple">
+<dt>Tier ladder (v3.2):</dt><dd><p>TRUE_WRITER    — G1 pass + all 4 qualifying pass + cell_based in evidence
+PROBABLE_WRITER — G1 pass + (4 qualifying, no cell_based) OR (3 qualifying + cell_based)
+EMERGING_WRITER — G1 pass + 1–2 qualifying pass
+NOT_WRITER     — G1 FAILS (auto-demote, final) OR 0 qualifying pass</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>editor_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p></li>
+<li><p><strong>s_dsb</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
+<li><p><strong>s_prog</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
+<li><p><strong>s_cargo</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
+<li><p><strong>length_aa</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em> | </em><em>None</em>)</p></li>
+<li><p><strong>evidence_sources</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>]</em>)</p></li>
+<li><p><strong>intrinsic_cargo_mechanism</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>)</p></li>
+<li><p><strong>split_aav_eligible</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>)</p></li>
+<li><p><strong>g1_threshold</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em> | </em><em>None</em>)</p></li>
+<li><p><strong>g2_threshold</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em> | </em><em>None</em>)</p></li>
+<li><p><strong>g3_threshold</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em> | </em><em>None</em>)</p></li>
+<li><p><strong>g4_size_max</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#pen_compare.core.certify.TrueWriterResult" title="pen_compare.core.certify.TrueWriterResult"><em>TrueWriterResult</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-pen_compare.core.gates">
+<span id="pen-compare-core-gates"></span><h2>pen_compare.core.gates<a class="headerlink" href="#module-pen_compare.core.gates" title="Link to this heading"></a></h2>
+<p>5 TrueWriterScore gate functions: 1 necessary + 4 qualifying.</p>
+<p>All thresholds come from config/gates_v3.yaml (SHA-256 locked at pre-registration).</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pen_compare.core.gates.GateRole">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pen_compare.core.gates.</span></span><span class="sig-name descname"><span class="pre">GateRole</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pen_compare/core/gates.html#GateRole"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pen_compare.core.gates.GateRole" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Enum" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></a></p>
+<p>An enumeration.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pen_compare.core.gates.GateRole.NECESSARY">
+<span class="sig-name descname"><span class="pre">NECESSARY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'necessary'</span></em><a class="headerlink" href="#pen_compare.core.gates.GateRole.NECESSARY" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pen_compare.core.gates.GateRole.QUALIFYING">
+<span class="sig-name descname"><span class="pre">QUALIFYING</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'qualifying'</span></em><a class="headerlink" href="#pen_compare.core.gates.GateRole.QUALIFYING" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pen_compare.core.gates.GateResult">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pen_compare.core.gates.</span></span><span class="sig-name descname"><span class="pre">GateResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gate_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'str'</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'str'</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">role</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'GateRole'</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'bool'</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">observed_value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'float</span> <span class="pre">|</span> <span class="pre">None'</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'float</span> <span class="pre">|</span> <span class="pre">None'</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rationale</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'str'</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pen_compare/core/gates.html#GateResult"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pen_compare.core.gates.GateResult" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gate_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p></li>
+<li><p><strong>role</strong> (<a class="reference internal" href="#pen_compare.core.gates.GateRole" title="pen_compare.core.gates.GateRole"><em>GateRole</em></a>)</p></li>
+<li><p><strong>passes</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>)</p></li>
+<li><p><strong>observed_value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em> | </em><em>None</em>)</p></li>
+<li><p><strong>threshold</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em> | </em><em>None</em>)</p></li>
+<li><p><strong>rationale</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pen_compare.core.gates.GateResult.gate_id">
+<span class="sig-name descname"><span class="pre">gate_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><a class="headerlink" href="#pen_compare.core.gates.GateResult.gate_id" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pen_compare.core.gates.GateResult.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><a class="headerlink" href="#pen_compare.core.gates.GateResult.name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pen_compare.core.gates.GateResult.role">
+<span class="sig-name descname"><span class="pre">role</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#pen_compare.core.gates.GateRole" title="pen_compare.core.gates.GateRole"><span class="pre">GateRole</span></a></em><a class="headerlink" href="#pen_compare.core.gates.GateResult.role" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pen_compare.core.gates.GateResult.passes">
+<span class="sig-name descname"><span class="pre">passes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></em><a class="headerlink" href="#pen_compare.core.gates.GateResult.passes" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pen_compare.core.gates.GateResult.observed_value">
+<span class="sig-name descname"><span class="pre">observed_value</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></em><a class="headerlink" href="#pen_compare.core.gates.GateResult.observed_value" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pen_compare.core.gates.GateResult.threshold">
+<span class="sig-name descname"><span class="pre">threshold</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></em><a class="headerlink" href="#pen_compare.core.gates.GateResult.threshold" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pen_compare.core.gates.GateResult.rationale">
+<span class="sig-name descname"><span class="pre">rationale</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><a class="headerlink" href="#pen_compare.core.gates.GateResult.rationale" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pen_compare.core.gates.gate_1_dsb">
+<span class="sig-prename descclassname"><span class="pre">pen_compare.core.gates.</span></span><span class="sig-name descname"><span class="pre">gate_1_dsb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s_dsb</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pen_compare/core/gates.html#gate_1_dsb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pen_compare.core.gates.gate_1_dsb" title="Link to this definition"></a></dt>
+<dd><p>NECESSARY gate — DSB Avoidance. Failing auto-classifies as NOT_WRITER.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>s_dsb</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
+<li><p><strong>threshold</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#pen_compare.core.gates.GateResult" title="pen_compare.core.gates.GateResult"><em>GateResult</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pen_compare.core.gates.gate_2_programmability">
+<span class="sig-prename descclassname"><span class="pre">pen_compare.core.gates.</span></span><span class="sig-name descname"><span class="pre">gate_2_programmability</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s_prog</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pen_compare/core/gates.html#gate_2_programmability"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pen_compare.core.gates.gate_2_programmability" title="Link to this definition"></a></dt>
+<dd><p>QUALIFYING gate — Programmability.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>s_prog</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
+<li><p><strong>threshold</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#pen_compare.core.gates.GateResult" title="pen_compare.core.gates.GateResult"><em>GateResult</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pen_compare.core.gates.gate_3_native_cargo">
+<span class="sig-prename descclassname"><span class="pre">pen_compare.core.gates.</span></span><span class="sig-name descname"><span class="pre">gate_3_native_cargo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s_cargo</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intrinsic_cargo_mechanism</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pen_compare/core/gates.html#gate_3_native_cargo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pen_compare.core.gates.gate_3_native_cargo" title="Link to this definition"></a></dt>
+<dd><p>QUALIFYING gate — Native Cargo Capability.</p>
+<p>Requires BOTH S_Cargo &gt;= threshold AND intrinsic_cargo_mechanism=True.
+HDR-template-based cargo (SpCas9) does not satisfy intrinsic_cargo_mechanism.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>s_cargo</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
+<li><p><strong>intrinsic_cargo_mechanism</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>)</p></li>
+<li><p><strong>threshold</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#pen_compare.core.gates.GateResult" title="pen_compare.core.gates.GateResult"><em>GateResult</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pen_compare.core.gates.gate_4_deliverability">
+<span class="sig-prename descclassname"><span class="pre">pen_compare.core.gates.</span></span><span class="sig-name descname"><span class="pre">gate_4_deliverability</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">length_aa</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">split_aav_eligible</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">900</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pen_compare/core/gates.html#gate_4_deliverability"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pen_compare.core.gates.gate_4_deliverability" title="Link to this definition"></a></dt>
+<dd><p>QUALIFYING gate — Deliverability (AAV-compatible size).</p>
+<p>Passes if length_aa &lt;= size_max OR split_aav_eligible.
+When length_aa is None (not yet annotated), passes if split_aav_eligible=True.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>length_aa</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em> | </em><em>None</em>)</p></li>
+<li><p><strong>split_aav_eligible</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>)</p></li>
+<li><p><strong>size_max</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#pen_compare.core.gates.GateResult" title="pen_compare.core.gates.GateResult"><em>GateResult</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pen_compare.core.gates.gate_5_evidence">
+<span class="sig-prename descclassname"><span class="pre">pen_compare.core.gates.</span></span><span class="sig-name descname"><span class="pre">gate_5_evidence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">evidence_sources</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pen_compare/core/gates.html#gate_5_evidence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pen_compare.core.gates.gate_5_evidence" title="Link to this definition"></a></dt>
+<dd><p>QUALIFYING gate — Evidence (≥ 2 eligible sources).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>evidence_sources</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>]</em>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#pen_compare.core.gates.GateResult" title="pen_compare.core.gates.GateResult"><em>GateResult</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-pen_compare.core.sensitivity">
+<span id="pen-compare-core-sensitivity"></span><h2>pen_compare.core.sensitivity<a class="headerlink" href="#module-pen_compare.core.sensitivity" title="Link to this heading"></a></h2>
+<p>Sensitivity analysis — 18,000 threshold combinations per entity.</p>
+<p>Replaces fabricated-sigma bootstrap. Each entity is certified under every
+combination of the pre-registered sensitivity grid and a robustness fraction
+is reported: fraction of combinations that agree with the modal tier.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="pen_compare.core.sensitivity.sensitivity_for_entity">
+<span class="sig-prename descclassname"><span class="pre">pen_compare.core.sensitivity.</span></span><span class="sig-name descname"><span class="pre">sensitivity_for_entity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">row</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{'g1_threshold':</span> <span class="pre">[0.85,</span> <span class="pre">0.86,</span> <span class="pre">0.87,</span> <span class="pre">0.88,</span> <span class="pre">0.89,</span> <span class="pre">0.9,</span> <span class="pre">0.91,</span> <span class="pre">0.92,</span> <span class="pre">0.93,</span> <span class="pre">0.94,</span> <span class="pre">0.95,</span> <span class="pre">0.96,</span> <span class="pre">0.97,</span> <span class="pre">0.98,</span> <span class="pre">0.99,</span> <span class="pre">1.0],</span> <span class="pre">'g2_threshold':</span> <span class="pre">[0.85,</span> <span class="pre">0.86,</span> <span class="pre">0.87,</span> <span class="pre">0.88,</span> <span class="pre">0.89,</span> <span class="pre">0.9,</span> <span class="pre">0.91,</span> <span class="pre">0.92,</span> <span class="pre">0.93,</span> <span class="pre">0.94,</span> <span class="pre">0.95,</span> <span class="pre">0.96,</span> <span class="pre">0.97,</span> <span class="pre">0.98,</span> <span class="pre">0.99,</span> <span class="pre">1.0],</span> <span class="pre">'g3_threshold':</span> <span class="pre">[0.8,</span> <span class="pre">0.81,</span> <span class="pre">0.82,</span> <span class="pre">0.83,</span> <span class="pre">0.84,</span> <span class="pre">0.85,</span> <span class="pre">0.86,</span> <span class="pre">0.87,</span> <span class="pre">0.88,</span> <span class="pre">0.89,</span> <span class="pre">0.9,</span> <span class="pre">0.91,</span> <span class="pre">0.92,</span> <span class="pre">0.93,</span> <span class="pre">0.94,</span> <span class="pre">0.95],</span> <span class="pre">'g4_size_max':</span> <span class="pre">[600,</span> <span class="pre">750,</span> <span class="pre">900,</span> <span class="pre">1050,</span> <span class="pre">1200]}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pen_compare/core/sensitivity.html#sensitivity_for_entity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pen_compare.core.sensitivity.sensitivity_for_entity" title="Link to this definition"></a></dt>
+<dd><p>Run 18,000 certifications for one entity; return robustness metrics.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>row</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a>)</p></li>
+<li><p><strong>grid</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pen_compare.core.sensitivity.build_sensitivity_rows">
+<span class="sig-prename descclassname"><span class="pre">pen_compare.core.sensitivity.</span></span><span class="sig-name descname"><span class="pre">build_sensitivity_rows</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">universe</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scorecard</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pen_compare/core/sensitivity.html#build_sensitivity_rows"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pen_compare.core.sensitivity.build_sensitivity_rows" title="Link to this definition"></a></dt>
+<dd><p>Merge universe + scorecard into flat dicts ready for sensitivity_for_entity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>universe</strong> (<em>DataFrame</em>)</p></li>
+<li><p><strong>scorecard</strong> (<em>DataFrame</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)">list</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)">dict</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pen_compare.core.sensitivity.run_sensitivity_parallel">
+<span class="sig-prename descclassname"><span class="pre">pen_compare.core.sensitivity.</span></span><span class="sig-name descname"><span class="pre">run_sensitivity_parallel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">universe</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scorecard</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">24</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{'g1_threshold':</span> <span class="pre">[0.85,</span> <span class="pre">0.86,</span> <span class="pre">0.87,</span> <span class="pre">0.88,</span> <span class="pre">0.89,</span> <span class="pre">0.9,</span> <span class="pre">0.91,</span> <span class="pre">0.92,</span> <span class="pre">0.93,</span> <span class="pre">0.94,</span> <span class="pre">0.95,</span> <span class="pre">0.96,</span> <span class="pre">0.97,</span> <span class="pre">0.98,</span> <span class="pre">0.99,</span> <span class="pre">1.0],</span> <span class="pre">'g2_threshold':</span> <span class="pre">[0.85,</span> <span class="pre">0.86,</span> <span class="pre">0.87,</span> <span class="pre">0.88,</span> <span class="pre">0.89,</span> <span class="pre">0.9,</span> <span class="pre">0.91,</span> <span class="pre">0.92,</span> <span class="pre">0.93,</span> <span class="pre">0.94,</span> <span class="pre">0.95,</span> <span class="pre">0.96,</span> <span class="pre">0.97,</span> <span class="pre">0.98,</span> <span class="pre">0.99,</span> <span class="pre">1.0],</span> <span class="pre">'g3_threshold':</span> <span class="pre">[0.8,</span> <span class="pre">0.81,</span> <span class="pre">0.82,</span> <span class="pre">0.83,</span> <span class="pre">0.84,</span> <span class="pre">0.85,</span> <span class="pre">0.86,</span> <span class="pre">0.87,</span> <span class="pre">0.88,</span> <span class="pre">0.89,</span> <span class="pre">0.9,</span> <span class="pre">0.91,</span> <span class="pre">0.92,</span> <span class="pre">0.93,</span> <span class="pre">0.94,</span> <span class="pre">0.95],</span> <span class="pre">'g4_size_max':</span> <span class="pre">[600,</span> <span class="pre">750,</span> <span class="pre">900,</span> <span class="pre">1050,</span> <span class="pre">1200]}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pen_compare/core/sensitivity.html#run_sensitivity_parallel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pen_compare.core.sensitivity.run_sensitivity_parallel" title="Link to this definition"></a></dt>
+<dd><p>Run sensitivity analysis in parallel; return results DataFrame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>universe</strong> (<em>DataFrame</em>)</p></li>
+<li><p><strong>scorecard</strong> (<em>DataFrame</em>)</p></li>
+<li><p><strong>n_jobs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>)</p></li>
+<li><p><strong>grid</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>DataFrame</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../MODEL_CARD.html" class="btn btn-neutral float-left" title="PEN-COMPARE Model Card" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="triangulation.html" class="btn btn-neutral float-right" title="Triangulation API" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Anees Ahmed Mahaboob Ali.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
