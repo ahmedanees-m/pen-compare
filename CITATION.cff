@@ -1,0 +1,63 @@
+cff-version: 1.2.0
+message: "If you use PEN-COMPARE, please cite:"
+type: software
+title: "PEN-COMPARE: Hierarchical Certification Framework for Non-Destructive Genome Editors"
+version: 0.1.0
+date-released: "2026-05-26"
+authors:
+  - family-names: Mahaboob Ali
+    given-names: Anees Ahmed
+    affiliation: "VIT University, Vellore"
+repository-code: "https://github.com/ahmedanees-m/pen-compare"
+url: "https://ahmedanees-m.github.io/pen-compare"
+license: MIT
+abstract: >
+  PEN-COMPARE (Programmable Editor Nominee - Comparative Outcome Metrics via
+  Pre-registration and Axis-based Ranking Evaluation) is the capstone of the
+  PEN-STACK framework. It applies a 5-gate hierarchical
+  TrueWriterScore certification system to a unified universe of 1,058 genome
+  editors and computational designs (29 natural IS110-family editors + 1,029
+  pen-assemble designs), integrating four upstream packages: GENOME-ATLAS,
+  MECH-CLASS, PEN-SCORE, and PEN-ASSEMBLE. The framework certifies editors
+  as TRUE_WRITER, PROBABLE_WRITER, EMERGING_WRITER, or NOT_WRITER. All five
+  pre-registered predictions (P1-P4) passed validation. ISCro4 is confirmed
+  as the sole TRUE_WRITER with robustness = 1.000 across 18,000 parameter
+  combinations. A local-LLM RAG Q&A system (88%
+  benchmark accuracy) deliver the results interactively.
+keywords:
+  - genome-engineering
+  - bridge-recombinase
+  - IS110
+  - writer-not-scissors
+  - PEN-STACK
+  - bioinformatics
+  - certification-framework
+  - true-writer
+  - molecular-pen
+  - RAG-LLM
+  - pre-registration
+references:
+  - type: software
+    title: "GENOME-ATLAS"
+    url: "https://github.com/ahmedanees-m/genome-atlas"
+    authors:
+      - family-names: Mahaboob Ali
+        given-names: Anees Ahmed
+  - type: software
+    title: "MECH-CLASS"
+    url: "https://github.com/ahmedanees-m/mech-class"
+    authors:
+      - family-names: Mahaboob Ali
+        given-names: Anees Ahmed
+  - type: software
+    title: "PEN-SCORE"
+    url: "https://github.com/ahmedanees-m/pen-score"
+    authors:
+      - family-names: Mahaboob Ali
+        given-names: Anees Ahmed
+  - type: software
+    title: "PEN-ASSEMBLE"
+    url: "https://github.com/ahmedanees-m/pen-assemble"
+    authors:
+      - family-names: Mahaboob Ali
+        given-names: Anees Ahmed

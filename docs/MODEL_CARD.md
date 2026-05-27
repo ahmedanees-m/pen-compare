@@ -1,0 +1,102 @@
+# PEN-COMPARE Model Card
+
+## Framework Identity
+
+**Name:** PEN-COMPARE TrueWriterScore v3.2  
+**Version:** 0.1.0  
+**Date:** 2026-05-26  
+**Authors:** Anees Ahmed Mahaboob Ali (ahmedaneesm@gmail.com)  
+**License:** MIT  
+**Pre-registration:** https://osf.io/4kdvy
+
+## Purpose
+
+PEN-COMPARE certifies genome editors as TRUE_WRITER, PROBABLE_WRITER,
+EMERGING_WRITER, or NOT_WRITER using a 5-gate hierarchical scoring system.
+The framework operationalizes the **Molecular Pen hypothesis**: that IS110
+bridge recombinases are non-destructive precision writers that avoid
+double-strand DNA breaks.
+
+## Inputs
+
+| Field | Type | Description |
+|---|---|---|
+| s_dsb | float [0,1] | DSB-avoidance axis score from pen-score |
+| s_prog | float [0,1] | Programmability axis score |
+| s_cargo | float [0,1] | Native cargo capability axis score |
+| length_aa | int or None | Protein length in amino acids |
+| evidence_sources | list[str] | Subset of {biochemical, structural, computational, cell_based} |
+| intrinsic_cargo_mechanism | bool | Whether native (non-template) cargo delivery is confirmed |
+| split_aav_eligible | bool | Whether split-AAV packaging has been demonstrated |
+
+## Outputs
+
+| Field | Description |
+|---|---|
+| tier | TRUE_WRITER / PROBABLE_WRITER / EMERGING_WRITER / NOT_WRITER |
+| qualifying_gates_passed | 0-4 |
+| has_cell_based_evidence | bool |
+| auto_demoted | bool (True only when G1 fails) |
+| gate_results | Per-gate pass/fail with observed value and threshold |
+
+## Tier Ladder
+
+```
+G1 FAIL  ->  NOT_WRITER (auto-demote, final)
+
+G1 PASS  +  4 qualifying  +  cell_based  ->  TRUE_WRITER
+G1 PASS  +  4 qualifying  +  no cell_based  ->  PROBABLE_WRITER
+G1 PASS  +  3 qualifying  +  cell_based  ->  PROBABLE_WRITER
+G1 PASS  +  1-2 qualifying  ->  EMERGING_WRITER
+G1 PASS  +  0 qualifying  ->  NOT_WRITER
+```
+
+## Training Data & Calibration
+
+The gates use **no statistical training** - all thresholds are mechanistically
+motivated and pre-registered. Calibration anchors:
+
+| Editor | Expected Tier | Verified |
+|---|---|---|
+| ISCro4 (D2TGM5) | TRUE_WRITER | |
+| IS621 (A0A2X3M8B0) | PROBABLE_WRITER | |
+| Bxb1 | PROBABLE_WRITER (G2 fails) | |
+| SpCas9 (Q99ZW2) | NOT_WRITER (G1 auto-demote) | |
+
+## Known Limitations
+
+1. **S_Mature > 1.0 pydantic bug:** pen-score clamps AxisScores before validation for SpCas9/PE2/etc.
+2. **length_aa = None:** 13 natural editors have no sequence length in pen-score; G4 falls back to split_aav heuristic.
+3. **IS621 PenScore discrepancy:** locked predictions_v3.yaml cites 0.929; actual value is 0.9473. Does not affect P2 outcome; must be disclosed.
+4. **Universe scope:** limited to editors scoreable by pen-score v0.1.3 and pen-assemble v0.5.2 catalog.
+
+## Sensitivity Analysis
+
+18,000-combination parameter sweep (15x15x16x5 grid):
+- ISCro4 robustness = **1.000** (stable under all threshold variations)
+- Zero boundary cases (robustness < 0.50)
+- 4 near-boundary editors (50-80%): Bxb1, eePASSIGE, eePASSIGE_v2, phiC31
+
+## Pre-Registration Outcomes
+
+All 5 predictions PASS (evaluated 2026-05-26):
+
+| ID | Statement | Result |
+|---|---|---|
+| P1 | ISCro4 sole TRUE_WRITER | PASS |
+| P2 | Zero designs TRUE_WRITER | PASS |
+| P3 | >=5 triangulation discrepancies | PASS (30) |
+| P4 | RAG LLM >=80% accuracy | PASS (88%) |
+
+## Citation
+
+```bibtex
+@software{pen_compare_2026,
+  author = {Mahaboob Ali, Anees Ahmed},
+  title = {PEN-COMPARE: Hierarchical Certification Framework for Non-Destructive Genome Editors},
+  version = {0.1.0},
+  year = {2026},
+  url = {https://github.com/ahmedanees-m/pen-compare},
+  note = {Pre-registration: https://osf.io/4kdvy}
+}
+```
