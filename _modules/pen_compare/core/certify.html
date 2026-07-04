@@ -96,7 +96,7 @@
 
 <span class="sd">Applies the 5 TrueWriterScore gates per config/gates_v3.yaml (SHA-256 locked).</span>
 <span class="sd">G1 is the necessary gate: failing it auto-classifies as NOT_WRITER regardless</span>
-<span class="sd">of all other gates.  G2–G5 are qualifying gates; tier depends on how many pass</span>
+<span class="sd">of all other gates.  G2-G5 are qualifying gates; tier depends on how many pass</span>
 <span class="sd">and whether cell_based is in the evidence set.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
@@ -141,7 +141,7 @@
     <span class="n">evidence_sources</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
     <span class="n">intrinsic_cargo_mechanism</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
     <span class="n">split_aav_eligible</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-    <span class="c1"># Threshold overrides for sensitivity analysis (Steps 14–16)</span>
+    <span class="c1"># Threshold overrides for sensitivity analysis</span>
     <span class="n">g1_threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">g2_threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">g3_threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -150,10 +150,10 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Apply 5-gate hierarchical certification.</span>
 
 <span class="sd">    Tier ladder (v3.2):</span>
-<span class="sd">      TRUE_WRITER    — G1 pass + all 4 qualifying pass + cell_based in evidence</span>
-<span class="sd">      PROBABLE_WRITER — G1 pass + (4 qualifying, no cell_based) OR (3 qualifying + cell_based)</span>
-<span class="sd">      EMERGING_WRITER — G1 pass + 1–2 qualifying pass</span>
-<span class="sd">      NOT_WRITER     — G1 FAILS (auto-demote, final) OR 0 qualifying pass</span>
+<span class="sd">      TRUE_WRITER    - G1 pass + all 4 qualifying pass + cell_based in evidence</span>
+<span class="sd">      PROBABLE_WRITER - G1 pass + (4 qualifying, no cell_based) OR (3 qualifying + cell_based)</span>
+<span class="sd">      EMERGING_WRITER - G1 pass + 1-2 qualifying pass</span>
+<span class="sd">      NOT_WRITER     - G1 FAILS (auto-demote, final) OR 0 qualifying pass</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">gate_results</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">GateResult</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
         <span class="n">gate_1_dsb</span><span class="p">(</span><span class="n">s_dsb</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="n">g1_threshold</span><span class="p">),</span>
@@ -181,7 +181,7 @@
             <span class="n">auto_demote_reason</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Necessary gate(s) failed: </span><span class="si">{</span><span class="n">failed</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">,</span>
         <span class="p">)</span>
 
-    <span class="c1"># All necessary gates passed — assign tier within writer category</span>
+    <span class="c1"># All necessary gates passed - assign tier within writer category</span>
     <span class="k">if</span> <span class="n">qualifying_passed</span> <span class="o">==</span> <span class="mi">4</span> <span class="ow">and</span> <span class="n">has_cell_based</span><span class="p">:</span>
         <span class="n">tier</span> <span class="o">=</span> <span class="s2">&quot;TRUE_WRITER&quot;</span>
     <span class="k">elif</span> <span class="n">qualifying_passed</span> <span class="o">==</span> <span class="mi">4</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">has_cell_based</span> <span class="ow">or</span> <span class="n">qualifying_passed</span> <span class="o">==</span> <span class="mi">3</span> <span class="ow">and</span> <span class="n">has_cell_based</span><span class="p">:</span>

@@ -25,13 +25,13 @@ based on the hierarchical gate outcomes (v3.2, pre-registered 2026-05-26).
      - Strong evidence, missing cell validation or one gate
    * - EMERGING_WRITER
      - PASS
-     - 1–2 / 4
+     - 1-2 / 4
      - Any
      - Partial evidence; further testing needed
    * - NOT_WRITER
      - FAIL or PASS + 0 qualifying
-     - —
-     - —
+     - -
+     - -
      - DSB-maker or insufficient evidence
 
 Pre-registered outcomes (2026-05-26)
@@ -40,7 +40,7 @@ Pre-registered outcomes (2026-05-26)
 * **P1 PASS:** ISCro4 is the sole TRUE_WRITER among natural editors
 * **P2 PASS:** Zero pen-assemble designs are TRUE_WRITER
 
-Universe composition (Step 5)
+Universe composition
 -------------------------------
 
 * 29 natural editors (all pen-score entries after S_Mature clamp fix)

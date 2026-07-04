@@ -179,7 +179,7 @@ double-strand DNA breaks.</p>
 <td><p>TRUE_WRITER / PROBABLE_WRITER / EMERGING_WRITER / NOT_WRITER</p></td>
 </tr>
 <tr class="row-odd"><td><p>qualifying_gates_passed</p></td>
-<td><p>0–4</p></td>
+<td><p>0-4</p></td>
 </tr>
 <tr class="row-even"><td><p>has_cell_based_evidence</p></td>
 <td><p>bool</p></td>
@@ -195,19 +195,19 @@ double-strand DNA breaks.</p>
 </section>
 <section id="tier-ladder">
 <h2>Tier Ladder<a class="headerlink" href="#tier-ladder" title="Link to this heading"></a></h2>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>G1 FAIL  →  NOT_WRITER (auto-demote, final)
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">G1</span> <span class="n">FAIL</span>  <span class="o">-&gt;</span>  <span class="n">NOT_WRITER</span> <span class="p">(</span><span class="n">auto</span><span class="o">-</span><span class="n">demote</span><span class="p">,</span> <span class="n">final</span><span class="p">)</span>
 
-G1 PASS  +  4 qualifying  +  cell_based  →  TRUE_WRITER
-G1 PASS  +  4 qualifying  +  no cell_based  →  PROBABLE_WRITER
-G1 PASS  +  3 qualifying  +  cell_based  →  PROBABLE_WRITER
-G1 PASS  +  1–2 qualifying  →  EMERGING_WRITER
-G1 PASS  +  0 qualifying  →  NOT_WRITER
+<span class="n">G1</span> <span class="n">PASS</span>  <span class="o">+</span>  <span class="mi">4</span> <span class="n">qualifying</span>  <span class="o">+</span>  <span class="n">cell_based</span>  <span class="o">-&gt;</span>  <span class="n">TRUE_WRITER</span>
+<span class="n">G1</span> <span class="n">PASS</span>  <span class="o">+</span>  <span class="mi">4</span> <span class="n">qualifying</span>  <span class="o">+</span>  <span class="n">no</span> <span class="n">cell_based</span>  <span class="o">-&gt;</span>  <span class="n">PROBABLE_WRITER</span>
+<span class="n">G1</span> <span class="n">PASS</span>  <span class="o">+</span>  <span class="mi">3</span> <span class="n">qualifying</span>  <span class="o">+</span>  <span class="n">cell_based</span>  <span class="o">-&gt;</span>  <span class="n">PROBABLE_WRITER</span>
+<span class="n">G1</span> <span class="n">PASS</span>  <span class="o">+</span>  <span class="mi">1</span><span class="o">-</span><span class="mi">2</span> <span class="n">qualifying</span>  <span class="o">-&gt;</span>  <span class="n">EMERGING_WRITER</span>
+<span class="n">G1</span> <span class="n">PASS</span>  <span class="o">+</span>  <span class="mi">0</span> <span class="n">qualifying</span>  <span class="o">-&gt;</span>  <span class="n">NOT_WRITER</span>
 </pre></div>
 </div>
 </section>
 <section id="training-data-calibration">
 <h2>Training Data &amp; Calibration<a class="headerlink" href="#training-data-calibration" title="Link to this heading"></a></h2>
-<p>The gates use <strong>no statistical training</strong> — all thresholds are mechanistically
+<p>The gates use <strong>no statistical training</strong> - all thresholds are mechanistically
 motivated and pre-registered. Calibration anchors:</p>
 <table class="docutils align-default">
 <thead>
@@ -219,19 +219,19 @@ motivated and pre-registered. Calibration anchors:</p>
 <tbody>
 <tr class="row-even"><td><p>ISCro4 (D2TGM5)</p></td>
 <td><p>TRUE_WRITER</p></td>
-<td><p>✅</p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p>IS621 (A0A2X3M8B0)</p></td>
 <td><p>PROBABLE_WRITER</p></td>
-<td><p>✅</p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p>Bxb1</p></td>
 <td><p>PROBABLE_WRITER (G2 fails)</p></td>
-<td><p>✅</p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p>SpCas9 (Q99ZW2)</p></td>
 <td><p>NOT_WRITER (G1 auto-demote)</p></td>
-<td><p>✅</p></td>
+<td><p></p></td>
 </tr>
 </tbody>
 </table>
@@ -241,17 +241,17 @@ motivated and pre-registered. Calibration anchors:</p>
 <ol class="arabic simple">
 <li><p><strong>S_Mature &gt; 1.0 pydantic bug:</strong> pen-score clamps AxisScores before validation for SpCas9/PE2/etc.</p></li>
 <li><p><strong>length_aa = None:</strong> 13 natural editors have no sequence length in pen-score; G4 falls back to split_aav heuristic.</p></li>
-<li><p><strong>IS621 PenScore discrepancy:</strong> locked predictions_v3.yaml cites 0.929; actual value is 0.9473. Does not affect P2 outcome; must be disclosed in manuscript.</p></li>
+<li><p><strong>IS621 PenScore discrepancy:</strong> locked predictions_v3.yaml cites 0.929; actual value is 0.9473. Does not affect P2 outcome; must be disclosed.</p></li>
 <li><p><strong>Universe scope:</strong> limited to editors scoreable by pen-score v0.1.3 and pen-assemble v0.5.2 catalog.</p></li>
 </ol>
 </section>
 <section id="sensitivity-analysis">
 <h2>Sensitivity Analysis<a class="headerlink" href="#sensitivity-analysis" title="Link to this heading"></a></h2>
-<p>18,000-combination parameter sweep (15×15×16×5 grid):</p>
+<p>18,000-combination parameter sweep (15x15x16x5 grid):</p>
 <ul class="simple">
 <li><p>ISCro4 robustness = <strong>1.000</strong> (stable under all threshold variations)</p></li>
 <li><p>Zero boundary cases (robustness &lt; 0.50)</p></li>
-<li><p>4 near-boundary editors (50–80%): Bxb1, eePASSIGE, eePASSIGE_v2, phiC31</p></li>
+<li><p>4 near-boundary editors (50-80%): Bxb1, eePASSIGE, eePASSIGE_v2, phiC31</p></li>
 </ul>
 </section>
 <section id="pre-registration-outcomes">
@@ -267,23 +267,23 @@ motivated and pre-registered. Calibration anchors:</p>
 <tbody>
 <tr class="row-even"><td><p>P1</p></td>
 <td><p>ISCro4 sole TRUE_WRITER</p></td>
-<td><p>✅ PASS</p></td>
+<td><p>PASS</p></td>
 </tr>
 <tr class="row-odd"><td><p>P2</p></td>
 <td><p>Zero designs TRUE_WRITER</p></td>
-<td><p>✅ PASS</p></td>
+<td><p>PASS</p></td>
 </tr>
 <tr class="row-even"><td><p>P3</p></td>
-<td><p>≥5 triangulation discrepancies</p></td>
-<td><p>✅ PASS (30)</p></td>
+<td><p>&gt;=5 triangulation discrepancies</p></td>
+<td><p>PASS (30)</p></td>
 </tr>
 <tr class="row-odd"><td><p>P4</p></td>
-<td><p>RAG LLM ≥80% accuracy</p></td>
-<td><p>✅ PASS (88%)</p></td>
+<td><p>RAG LLM &gt;=80% accuracy</p></td>
+<td><p>PASS (88%)</p></td>
 </tr>
 <tr class="row-even"><td><p>P5</p></td>
-<td><p>Webserver p95 ≤3s</p></td>
-<td><p>✅ PASS (0.01s)</p></td>
+<td><p>Webserver p95 &lt;=3s</p></td>
+<td><p>PASS (0.01s)</p></td>
 </tr>
 </tbody>
 </table>

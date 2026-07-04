@@ -129,9 +129,7 @@
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">rules</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">rules_path</span><span class="o">.</span><span class="n">read_text</span><span class="p">())</span>
 
-    <span class="c1"># ──────────────────────────────────────────────────────────────────────────</span>
     <span class="c1"># Public API</span>
-    <span class="c1"># ──────────────────────────────────────────────────────────────────────────</span>
 
 <div class="viewcode-block" id="Triangulator.audit">
 <a class="viewcode-back" href="../../../api/triangulation.html#pen_compare.triangulation.triangulator.Triangulator.audit">[docs]</a>
@@ -157,9 +155,7 @@
         <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">records</span><span class="p">)</span></div>
 
 
-    <span class="c1"># ──────────────────────────────────────────────────────────────────────────</span>
     <span class="c1"># Rule implementations</span>
-    <span class="c1"># ──────────────────────────────────────────────────────────────────────────</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_apply_all_rules</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">DiscrepancyRecord</span><span class="p">]:</span>
         <span class="k">yield from</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rule_axis_vs_tier</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
@@ -184,7 +180,7 @@
                 <span class="n">severity</span><span class="o">=</span><span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;severity&quot;</span><span class="p">],</span>
                 <span class="n">sources_involved</span><span class="o">=</span><span class="s2">&quot;MECH_CLASS|PEN_SCORE&quot;</span><span class="p">,</span>
                 <span class="n">details</span><span class="o">=</span><span class="p">(</span>
-                    <span class="sa">f</span><span class="s2">&quot;S_DSB=</span><span class="si">{</span><span class="n">s_dsb</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ≥ 0.95 (pen-score: DSB-free) &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;S_DSB=</span><span class="si">{</span><span class="n">s_dsb</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> &gt;= 0.95 (pen-score: DSB-free) &quot;</span>
                     <span class="sa">f</span><span class="s2">&quot;but tier_a_gate=False (mech-class: not IS110 Tier-A). &quot;</span>
                     <span class="sa">f</span><span class="s2">&quot;pen-score and mech-class disagree on DSB-avoidance classification.&quot;</span>
                 <span class="p">),</span>
@@ -229,7 +225,7 @@
                 <span class="p">),</span>
             <span class="p">)</span>
 
-        <span class="c1"># mech-class says IS110 but no atlas entry — PFAM evidence absent</span>
+        <span class="c1"># mech-class says IS110 but no atlas entry - PFAM evidence absent</span>
         <span class="k">if</span> <span class="n">tier_a</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">atlas</span> <span class="ow">and</span> <span class="n">s_dsb</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">s_dsb</span> <span class="o">&gt;=</span> <span class="mf">0.95</span><span class="p">:</span>
             <span class="k">yield</span> <span class="n">DiscrepancyRecord</span><span class="p">(</span>
                 <span class="n">entity_id</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;entity_id&quot;</span><span class="p">]),</span>
@@ -312,9 +308,7 @@
 
 
 
-<span class="c1"># ──────────────────────────────────────────────────────────────────────────────</span>
 <span class="c1"># Helpers</span>
-<span class="c1"># ──────────────────────────────────────────────────────────────────────────────</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_float</span><span class="p">(</span><span class="n">row</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">col</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>

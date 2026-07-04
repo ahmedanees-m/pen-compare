@@ -147,7 +147,7 @@
 <p>Hierarchical TrueWriter tier classifier (v3.2).</p>
 <p>Applies the 5 TrueWriterScore gates per config/gates_v3.yaml (SHA-256 locked).
 G1 is the necessary gate: failing it auto-classifies as NOT_WRITER regardless
-of all other gates.  G2–G5 are qualifying gates; tier depends on how many pass
+of all other gates.  G2-G5 are qualifying gates; tier depends on how many pass
 and whether cell_based is in the evidence set.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="pen_compare.core.certify.TrueWriterResult">
@@ -214,10 +214,10 @@ and whether cell_based is in the evidence set.</p>
 <span class="sig-prename descclassname"><span class="pre">pen_compare.core.certify.</span></span><span class="sig-name descname"><span class="pre">certify</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">editor_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s_dsb</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s_prog</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s_cargo</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length_aa</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">evidence_sources</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intrinsic_cargo_mechanism</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">split_aav_eligible</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g1_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g2_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g3_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g4_size_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">900</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pen_compare/core/certify.html#certify"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pen_compare.core.certify.certify" title="Link to this definition"></a></dt>
 <dd><p>Apply 5-gate hierarchical certification.</p>
 <dl class="simple">
-<dt>Tier ladder (v3.2):</dt><dd><p>TRUE_WRITER    — G1 pass + all 4 qualifying pass + cell_based in evidence
-PROBABLE_WRITER — G1 pass + (4 qualifying, no cell_based) OR (3 qualifying + cell_based)
-EMERGING_WRITER — G1 pass + 1–2 qualifying pass
-NOT_WRITER     — G1 FAILS (auto-demote, final) OR 0 qualifying pass</p>
+<dt>Tier ladder (v3.2):</dt><dd><p>TRUE_WRITER    - G1 pass + all 4 qualifying pass + cell_based in evidence
+PROBABLE_WRITER - G1 pass + (4 qualifying, no cell_based) OR (3 qualifying + cell_based)
+EMERGING_WRITER - G1 pass + 1-2 qualifying pass
+NOT_WRITER     - G1 FAILS (auto-demote, final) OR 0 qualifying pass</p>
 </dd>
 </dl>
 <dl class="field-list simple">
@@ -322,7 +322,7 @@ NOT_WRITER     — G1 FAILS (auto-demote, final) OR 0 qualifying pass</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="pen_compare.core.gates.gate_1_dsb">
 <span class="sig-prename descclassname"><span class="pre">pen_compare.core.gates.</span></span><span class="sig-name descname"><span class="pre">gate_1_dsb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s_dsb</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pen_compare/core/gates.html#gate_1_dsb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pen_compare.core.gates.gate_1_dsb" title="Link to this definition"></a></dt>
-<dd><p>NECESSARY gate — DSB Avoidance. Failing auto-classifies as NOT_WRITER.</p>
+<dd><p>NECESSARY gate - DSB Avoidance. Failing auto-classifies as NOT_WRITER.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -339,7 +339,7 @@ NOT_WRITER     — G1 FAILS (auto-demote, final) OR 0 qualifying pass</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="pen_compare.core.gates.gate_2_programmability">
 <span class="sig-prename descclassname"><span class="pre">pen_compare.core.gates.</span></span><span class="sig-name descname"><span class="pre">gate_2_programmability</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s_prog</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pen_compare/core/gates.html#gate_2_programmability"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pen_compare.core.gates.gate_2_programmability" title="Link to this definition"></a></dt>
-<dd><p>QUALIFYING gate — Programmability.</p>
+<dd><p>QUALIFYING gate - Programmability.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -356,7 +356,7 @@ NOT_WRITER     — G1 FAILS (auto-demote, final) OR 0 qualifying pass</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="pen_compare.core.gates.gate_3_native_cargo">
 <span class="sig-prename descclassname"><span class="pre">pen_compare.core.gates.</span></span><span class="sig-name descname"><span class="pre">gate_3_native_cargo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s_cargo</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intrinsic_cargo_mechanism</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pen_compare/core/gates.html#gate_3_native_cargo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pen_compare.core.gates.gate_3_native_cargo" title="Link to this definition"></a></dt>
-<dd><p>QUALIFYING gate — Native Cargo Capability.</p>
+<dd><p>QUALIFYING gate - Native Cargo Capability.</p>
 <p>Requires BOTH S_Cargo &gt;= threshold AND intrinsic_cargo_mechanism=True.
 HDR-template-based cargo (SpCas9) does not satisfy intrinsic_cargo_mechanism.</p>
 <dl class="field-list simple">
@@ -376,7 +376,7 @@ HDR-template-based cargo (SpCas9) does not satisfy intrinsic_cargo_mechanism.</p
 <dl class="py function">
 <dt class="sig sig-object py" id="pen_compare.core.gates.gate_4_deliverability">
 <span class="sig-prename descclassname"><span class="pre">pen_compare.core.gates.</span></span><span class="sig-name descname"><span class="pre">gate_4_deliverability</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">length_aa</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">split_aav_eligible</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">900</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pen_compare/core/gates.html#gate_4_deliverability"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pen_compare.core.gates.gate_4_deliverability" title="Link to this definition"></a></dt>
-<dd><p>QUALIFYING gate — Deliverability (AAV-compatible size).</p>
+<dd><p>QUALIFYING gate - Deliverability (AAV-compatible size).</p>
 <p>Passes if length_aa &lt;= size_max OR split_aav_eligible.
 When length_aa is None (not yet annotated), passes if split_aav_eligible=True.</p>
 <dl class="field-list simple">
@@ -396,7 +396,7 @@ When length_aa is None (not yet annotated), passes if split_aav_eligible=True.</
 <dl class="py function">
 <dt class="sig sig-object py" id="pen_compare.core.gates.gate_5_evidence">
 <span class="sig-prename descclassname"><span class="pre">pen_compare.core.gates.</span></span><span class="sig-name descname"><span class="pre">gate_5_evidence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">evidence_sources</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pen_compare/core/gates.html#gate_5_evidence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pen_compare.core.gates.gate_5_evidence" title="Link to this definition"></a></dt>
-<dd><p>QUALIFYING gate — Evidence (≥ 2 eligible sources).</p>
+<dd><p>QUALIFYING gate - Evidence (&gt;= 2 eligible sources).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>evidence_sources</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>]</em>)</p>
@@ -410,7 +410,7 @@ When length_aa is None (not yet annotated), passes if split_aav_eligible=True.</
 </section>
 <section id="module-pen_compare.core.sensitivity">
 <span id="pen-compare-core-sensitivity"></span><h2>pen_compare.core.sensitivity<a class="headerlink" href="#module-pen_compare.core.sensitivity" title="Link to this heading"></a></h2>
-<p>Sensitivity analysis — 18,000 threshold combinations per entity.</p>
+<p>Sensitivity analysis - 18,000 threshold combinations per entity.</p>
 <p>Replaces fabricated-sigma bootstrap. Each entity is certified under every
 combination of the pre-registered sensitivity grid and a robustness fraction
 is reported: fraction of combinations that agree with the modal tier.</p>

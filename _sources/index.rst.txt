@@ -1,7 +1,7 @@
 PEN-COMPARE Documentation
 ==========================
 
-**PEN-COMPARE** is the capstone of the PEN-STACK framework — a hierarchical certification
+**PEN-COMPARE** is the capstone of the PEN-STACK framework - a hierarchical certification
 system that classifies genome editors as TRUE_WRITER, PROBABLE_WRITER, EMERGING_WRITER,
 or NOT_WRITER using five pre-registered gates (v3.2).
 

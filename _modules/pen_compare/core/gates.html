@@ -136,7 +136,7 @@
 <div class="viewcode-block" id="gate_1_dsb">
 <a class="viewcode-back" href="../../../api/core.html#pen_compare.core.gates.gate_1_dsb">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">gate_1_dsb</span><span class="p">(</span><span class="n">s_dsb</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GateResult</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;NECESSARY gate — DSB Avoidance. Failing auto-classifies as NOT_WRITER.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;NECESSARY gate - DSB Avoidance. Failing auto-classifies as NOT_WRITER.&quot;&quot;&quot;</span>
     <span class="n">cfg</span> <span class="o">=</span> <span class="n">CONFIG</span><span class="p">[</span><span class="s2">&quot;necessary_gates&quot;</span><span class="p">][</span><span class="s2">&quot;gate_1_dsb&quot;</span><span class="p">]</span>
     <span class="n">t</span> <span class="o">=</span> <span class="n">threshold</span> <span class="k">if</span> <span class="n">threshold</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">float</span><span class="p">(</span><span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;threshold&quot;</span><span class="p">])</span>
     <span class="n">passes</span> <span class="o">=</span> <span class="n">s_dsb</span> <span class="o">&gt;=</span> <span class="n">t</span>
@@ -147,7 +147,7 @@
         <span class="n">passes</span><span class="o">=</span><span class="n">passes</span><span class="p">,</span>
         <span class="n">observed_value</span><span class="o">=</span><span class="n">s_dsb</span><span class="p">,</span>
         <span class="n">threshold</span><span class="o">=</span><span class="n">t</span><span class="p">,</span>
-        <span class="n">rationale</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;S_DSB=</span><span class="si">{</span><span class="n">s_dsb</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">&#39;≥&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">passes</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;&lt;&#39;</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">t</span><span class="si">}</span><span class="s2"> (NECESSARY)&quot;</span><span class="p">,</span>
+        <span class="n">rationale</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;S_DSB=</span><span class="si">{</span><span class="n">s_dsb</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">&#39;&gt;=&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">passes</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;&lt;&#39;</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">t</span><span class="si">}</span><span class="s2"> (NECESSARY)&quot;</span><span class="p">,</span>
     <span class="p">)</span></div>
 
 
@@ -155,7 +155,7 @@
 <div class="viewcode-block" id="gate_2_programmability">
 <a class="viewcode-back" href="../../../api/core.html#pen_compare.core.gates.gate_2_programmability">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">gate_2_programmability</span><span class="p">(</span><span class="n">s_prog</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GateResult</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;QUALIFYING gate — Programmability.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;QUALIFYING gate - Programmability.&quot;&quot;&quot;</span>
     <span class="n">cfg</span> <span class="o">=</span> <span class="n">CONFIG</span><span class="p">[</span><span class="s2">&quot;qualifying_gates&quot;</span><span class="p">][</span><span class="s2">&quot;gate_2_programmability&quot;</span><span class="p">]</span>
     <span class="n">t</span> <span class="o">=</span> <span class="n">threshold</span> <span class="k">if</span> <span class="n">threshold</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">float</span><span class="p">(</span><span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;threshold&quot;</span><span class="p">])</span>
     <span class="n">passes</span> <span class="o">=</span> <span class="n">s_prog</span> <span class="o">&gt;=</span> <span class="n">t</span>
@@ -166,7 +166,7 @@
         <span class="n">passes</span><span class="o">=</span><span class="n">passes</span><span class="p">,</span>
         <span class="n">observed_value</span><span class="o">=</span><span class="n">s_prog</span><span class="p">,</span>
         <span class="n">threshold</span><span class="o">=</span><span class="n">t</span><span class="p">,</span>
-        <span class="n">rationale</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;S_Prog=</span><span class="si">{</span><span class="n">s_prog</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">&#39;≥&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">passes</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;&lt;&#39;</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">t</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">rationale</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;S_Prog=</span><span class="si">{</span><span class="n">s_prog</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">&#39;&gt;=&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">passes</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;&lt;&#39;</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">t</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
     <span class="p">)</span></div>
 
 
@@ -178,7 +178,7 @@
     <span class="n">intrinsic_cargo_mechanism</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
     <span class="n">threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GateResult</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;QUALIFYING gate — Native Cargo Capability.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;QUALIFYING gate - Native Cargo Capability.</span>
 
 <span class="sd">    Requires BOTH S_Cargo &gt;= threshold AND intrinsic_cargo_mechanism=True.</span>
 <span class="sd">    HDR-template-based cargo (SpCas9) does not satisfy intrinsic_cargo_mechanism.</span>
@@ -195,7 +195,7 @@
         <span class="n">threshold</span><span class="o">=</span><span class="n">t</span><span class="p">,</span>
         <span class="n">rationale</span><span class="o">=</span><span class="p">(</span>
             <span class="sa">f</span><span class="s2">&quot;S_Cargo=</span><span class="si">{</span><span class="n">s_cargo</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">, intrinsic=</span><span class="si">{</span><span class="n">intrinsic_cargo_mechanism</span><span class="si">}</span><span class="s2">; &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;need S_Cargo≥</span><span class="si">{</span><span class="n">t</span><span class="si">}</span><span class="s2"> AND intrinsic cargo mechanism&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;need S_Cargo&gt;=</span><span class="si">{</span><span class="n">t</span><span class="si">}</span><span class="s2"> AND intrinsic cargo mechanism&quot;</span>
         <span class="p">),</span>
     <span class="p">)</span></div>
 
@@ -208,7 +208,7 @@
     <span class="n">split_aav_eligible</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">size_max</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">900</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GateResult</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;QUALIFYING gate — Deliverability (AAV-compatible size).</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;QUALIFYING gate - Deliverability (AAV-compatible size).</span>
 
 <span class="sd">    Passes if length_aa &lt;= size_max OR split_aav_eligible.</span>
 <span class="sd">    When length_aa is None (not yet annotated), passes if split_aav_eligible=True.</span>
@@ -237,7 +237,7 @@
 <div class="viewcode-block" id="gate_5_evidence">
 <a class="viewcode-back" href="../../../api/core.html#pen_compare.core.gates.gate_5_evidence">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">gate_5_evidence</span><span class="p">(</span><span class="n">evidence_sources</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">GateResult</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;QUALIFYING gate — Evidence (≥ 2 eligible sources).&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;QUALIFYING gate - Evidence (&gt;= 2 eligible sources).&quot;&quot;&quot;</span>
     <span class="n">cfg</span> <span class="o">=</span> <span class="n">CONFIG</span><span class="p">[</span><span class="s2">&quot;qualifying_gates&quot;</span><span class="p">][</span><span class="s2">&quot;gate_5_evidence&quot;</span><span class="p">]</span>
     <span class="n">provided</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">evidence_sources</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">ELIGIBLE_EVIDENCE</span>
     <span class="n">passes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">provided</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span>
@@ -248,7 +248,7 @@
         <span class="n">passes</span><span class="o">=</span><span class="n">passes</span><span class="p">,</span>
         <span class="n">observed_value</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">provided</span><span class="p">)),</span>
         <span class="n">threshold</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span>
-        <span class="n">rationale</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;sources=</span><span class="si">{</span><span class="nb">sorted</span><span class="p">(</span><span class="n">provided</span><span class="p">)</span><span class="si">}</span><span class="s2"> (need ≥2 of </span><span class="si">{</span><span class="nb">sorted</span><span class="p">(</span><span class="n">ELIGIBLE_EVIDENCE</span><span class="p">)</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">,</span>
+        <span class="n">rationale</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;sources=</span><span class="si">{</span><span class="nb">sorted</span><span class="p">(</span><span class="n">provided</span><span class="p">)</span><span class="si">}</span><span class="s2"> (need &gt;=2 of </span><span class="si">{</span><span class="nb">sorted</span><span class="p">(</span><span class="n">ELIGIBLE_EVIDENCE</span><span class="p">)</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">,</span>
     <span class="p">)</span></div>
 
 </pre></div>

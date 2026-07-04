@@ -23,21 +23,21 @@ Results summary
      - Result
    * - P1
      - Among natural editors, exactly 1 will be TRUE_WRITER (ISCro4)
-     - ✅ PASS
+     - PASS
    * - P2
      - Zero pen-assemble designs will be TRUE_WRITER
-     - ✅ PASS
+     - PASS
    * - P3
-     - Cross-pipeline triangulation flags ≥ 5 mechanism discrepancies (found: 30)
-     - ✅ PASS
+     - Cross-pipeline triangulation flags >= 5 mechanism discrepancies (found: 30)
+     - PASS
    * - P4
-     - Local-LLM RAG accuracy ≥ 80% on 50-question benchmark (achieved: 88%)
-     - ✅ PASS
+     - Local-LLM RAG accuracy >= 80% on 50-question benchmark (achieved: 88%)
+     - PASS
    * - P5
-     - Webserver p95 latency ≤ 3.0 s (achieved: 0.01 s)
-     - ✅ PASS
+     - Webserver p95 latency <= 3.0 s (achieved: 0.01 s)
+     - PASS
 
 Publication path
 ----------------
 
-5/5 PASS → **NAR Webserver Issue** (stretch goal)
+5/5 PASS -> **NAR Webserver Issue** (stretch goal)

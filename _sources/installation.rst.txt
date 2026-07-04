@@ -4,7 +4,7 @@ Installation
 Requirements
 ------------
 
-* Python ≥ 3.10
+* Python >= 3.10
 * The four upstream PEN-STACK packages (pinned versions):
 
   * ``genome-atlas>=0.7.2,<0.8.0``
