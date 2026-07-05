@@ -19,7 +19,7 @@ From source
 
    git clone https://github.com/ahmedanees-m/pen-compare.git
    cd pen-compare
-   pip install -e ".[webserver,rag]"
+   pip install -e ".[rag]"
 
 Docker (recommended for full pipeline)
 ---------------------------------------
@@ -31,9 +31,3 @@ Docker (recommended for full pipeline)
      -p 8501:8501 \
      pen-stack/compare:0.1.0
 
-Streamlit Community Cloud
---------------------------
-
-The Streamlit app is deployed at the repository's GitHub URL. It uses pre-computed
-JSON caches in ``data/cache/`` and requires only the packages listed in
-``requirements.txt``.

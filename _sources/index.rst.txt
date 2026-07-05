@@ -27,7 +27,6 @@ or NOT_WRITER using five pre-registered gates (v3.2).
    api/core
    api/triangulation
    api/rag
-   api/server
 
 .. toctree::
    :maxdepth: 1

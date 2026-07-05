@@ -51,7 +51,6 @@
 <li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#from-source">From source</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#docker-recommended-for-full-pipeline">Docker (recommended for full pipeline)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#streamlit-community-cloud">Streamlit Community Cloud</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick Start</a></li>
@@ -67,7 +66,6 @@
 <li class="toctree-l1"><a class="reference internal" href="api/core.html">Core API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api/triangulation.html">Triangulation API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api/rag.html">RAG Q&amp;A API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api/server.html">Server &amp; Cache API</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Results</span></p>
 <ul>
@@ -120,7 +118,7 @@
 <h2>From source<a class="headerlink" href="#from-source" title="Link to this heading"></a></h2>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/ahmedanees-m/pen-compare.git
 <span class="nb">cd</span><span class="w"> </span>pen-compare
-pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;.[webserver,rag]&quot;</span>
+pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;.[rag]&quot;</span>
 </pre></div>
 </div>
 </section>
@@ -132,12 +130,6 @@ pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </s
 <span class="w">  </span>pen-stack/compare:0.1.0
 </pre></div>
 </div>
-</section>
-<section id="streamlit-community-cloud">
-<h2>Streamlit Community Cloud<a class="headerlink" href="#streamlit-community-cloud" title="Link to this heading"></a></h2>
-<p>The Streamlit app is deployed at the repository’s GitHub URL. It uses pre-computed
-JSON caches in <code class="docutils literal notranslate"><span class="pre">data/cache/</span></code> and requires only the packages listed in
-<code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code>.</p>
 </section>
 </section>
 

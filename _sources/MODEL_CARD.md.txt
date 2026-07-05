@@ -87,7 +87,6 @@ All 5 predictions PASS (evaluated 2026-05-26):
 | P2 | Zero designs TRUE_WRITER | PASS |
 | P3 | >=5 triangulation discrepancies | PASS (30) |
 | P4 | RAG LLM >=80% accuracy | PASS (88%) |
-| P5 | Webserver p95 <=3s | PASS (0.01s) |
 
 ## Citation
 
