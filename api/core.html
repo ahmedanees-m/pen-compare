@@ -144,7 +144,7 @@
 <section id="module-pen_compare.core.certify">
 <span id="pen-compare-core-certify"></span><h2>pen_compare.core.certify<a class="headerlink" href="#module-pen_compare.core.certify" title="Link to this heading"></a></h2>
 <p>Hierarchical TrueWriter tier classifier (v3.2).</p>
-<p>Applies the 5 TrueWriterScore gates per config/gates_v3.yaml (SHA-256 locked).
+<p>Applies the 5 TrueWriterScore gates per config/gates_v3.yaml (pre-registered).
 G1 is the necessary gate: failing it auto-classifies as NOT_WRITER regardless
 of all other gates.  G2-G5 are qualifying gates; tier depends on how many pass
 and whether cell_based is in the evidence set.</p>
@@ -246,7 +246,7 @@ NOT_WRITER     - G1 FAILS (auto-demote, final) OR 0 qualifying pass</p>
 <section id="module-pen_compare.core.gates">
 <span id="pen-compare-core-gates"></span><h2>pen_compare.core.gates<a class="headerlink" href="#module-pen_compare.core.gates" title="Link to this heading"></a></h2>
 <p>5 TrueWriterScore gate functions: 1 necessary + 4 qualifying.</p>
-<p>All thresholds come from config/gates_v3.yaml (SHA-256 locked at pre-registration).</p>
+<p>All thresholds come from config/gates_v3.yaml (pre-registered).</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="pen_compare.core.gates.GateRole">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pen_compare.core.gates.</span></span><span class="sig-name descname"><span class="pre">GateRole</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pen_compare/core/gates.html#GateRole"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pen_compare.core.gates.GateRole" title="Link to this definition"></a></dt>

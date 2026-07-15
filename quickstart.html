@@ -122,13 +122,18 @@
 <section id="cli-usage">
 <h2>CLI usage<a class="headerlink" href="#cli-usage" title="Link to this heading"></a></h2>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pen-compare<span class="w"> </span>--version
-pen-compare<span class="w"> </span>compare<span class="w"> </span>ISCro4<span class="w"> </span>IS621
-pen-compare<span class="w"> </span>list-writers
+pen-compare<span class="w"> </span>compare<span class="w"> </span>ISCro4<span class="w"> </span>IS621<span class="w">   </span><span class="c1"># (not yet implemented)</span>
+pen-compare<span class="w"> </span>list-writers<span class="w">           </span><span class="c1"># (not yet implemented)</span>
 </pre></div>
 </div>
 </section>
 <section id="run-sensitivity-analysis">
 <h2>Run sensitivity analysis<a class="headerlink" href="#run-sensitivity-analysis" title="Link to this heading"></a></h2>
+<p>The universe and scorecard Parquet files are generated locally (both are gitignored and not shipped):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>pen_compare.core.universe
+python<span class="w"> </span>scripts/11_apply_truewriter.py
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pen_compare.core.sensitivity</span><span class="w"> </span><span class="kn">import</span> <span class="n">run_sensitivity_parallel</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 
@@ -141,6 +146,10 @@ pen-compare<span class="w"> </span>list-writers
 </section>
 <section id="triangulation">
 <h2>Triangulation<a class="headerlink" href="#triangulation" title="Link to this heading"></a></h2>
+<p>Generate the unified universe Parquet first (it is gitignored and not shipped):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>pen_compare.core.universe
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pen_compare.triangulation</span><span class="w"> </span><span class="kn">import</span> <span class="n">Triangulator</span>
 
 <span class="n">tri</span> <span class="o">=</span> <span class="n">Triangulator</span><span class="p">()</span>

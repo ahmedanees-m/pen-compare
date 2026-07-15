@@ -9,7 +9,6 @@ Pre-registration record
 
 * **OSF project:** https://osf.io/4kdvy (public 2026-05-26)
 * **Tag:** ``prereg-v3.2``
-* **SHA-256 lock:** ``SHA256_LOCK_v3.json``
 
 Results summary
 ---------------

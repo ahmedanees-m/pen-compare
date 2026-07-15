@@ -2,7 +2,7 @@ TrueWriterScore Gates (v3.2)
 ============================
 
 The certification framework applies five pre-registered gates from
-``config/gates_v3.yaml`` (SHA-256 locked at pre-registration).
+``config/gates_v3.yaml``.
 
 Gate 1 - DSB Avoidance (Necessary)
 ------------------------------------
@@ -24,7 +24,7 @@ Gate 3 - Native Cargo Capability (Qualifying)
 -----------------------------------------------
 
 * **Type:** Qualifying
-* **Threshold:** S_Cargo >= 0.85 AND intrinsic_cargo_mechanism = True
+* **Threshold:** S_Cargo >= 0.90 AND intrinsic_cargo_mechanism = True
 * **Rationale:** Both a high cargo score AND a mechanistic flag for intrinsic (non-template)
   cargo delivery are required
 

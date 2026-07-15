@@ -67,7 +67,7 @@ motivated and pre-registered. Calibration anchors:
 
 1. **S_Mature > 1.0 pydantic bug:** pen-score clamps AxisScores before validation for SpCas9/PE2/etc.
 2. **length_aa = None:** 13 natural editors have no sequence length in pen-score; G4 falls back to split_aav heuristic.
-3. **IS621 PenScore discrepancy:** locked predictions_v3.yaml cites 0.929; actual value is 0.9473. Does not affect P2 outcome; must be disclosed.
+3. **IS621 PenScore discrepancy:** pre-registered predictions_v3.yaml cites 0.929; actual value is 0.9473. Does not affect P2 outcome; must be disclosed.
 4. **Universe scope:** limited to editors scoreable by pen-score v0.1.3 and pen-assemble v0.5.2 catalog.
 
 ## Sensitivity Analysis
@@ -79,7 +79,7 @@ motivated and pre-registered. Calibration anchors:
 
 ## Pre-Registration Outcomes
 
-All 5 predictions PASS (evaluated 2026-05-26):
+All 4 predictions PASS (evaluated 2026-05-26):
 
 | ID | Statement | Result |
 |---|---|---|
