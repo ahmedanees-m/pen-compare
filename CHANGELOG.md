@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added - Framework
 - 5-gate TrueWriterScore certification framework v3.2 (`pen_compare/core/gates.py`, `certify.py`)
 - Unified editor universe assembly: 1,058 entities (29 natural + 1,029 pen-assemble designs)
-- Pre-registration YAMLs deposited at [OSF/4kdvy](https://osf.io/4kdvy); SHA-256 lock in `SHA256_LOCK_v3.json`
+- Pre-registration YAMLs deposited at [OSF/4kdvy](https://osf.io/4kdvy)
 - Full scorecard: 1 TRUE_WRITER, 4 PROBABLE_WRITER, 1,037 EMERGING_WRITER, 16 NOT_WRITER
 - P1 PASS: ISCro4 (D2TGM5) is the sole TRUE_WRITER among natural editors
 - P2 PASS: Zero computational designs are TRUE_WRITER
@@ -31,18 +31,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - P4 PASS: 44/50 benchmark questions correct (88% accuracy, threshold >= 80%)
 
 
-### Added - Tests, Docs, Release (Part H)
-- 155 unit tests across 8 test modules; 98.8% code coverage
+### Added - Tests, Docs, Release
+- 139 unit tests across 9 test modules; 98.8% code coverage
 - Sphinx documentation with API autodoc, framework description, and MODEL_CARD
 - GitHub Pages deployment via `.github/workflows/docs.yml`
 - PyPI release: `pip install pen-compare`; tag `v0.1.0`
 - CI: ruff lint + pytest unit tests + codecov upload
-
-### Fixed
-- `pred_P4.json` statement field had incorrect value (was category string); corrected to full statement
-- `test_version.py`: bumped expected version from `0.1.0a1` to `0.1.0`
-- S_Mature > 1.0 pydantic validation bug for SpCas9/PE2: clamped in `AxisScores.__init__`
-- `has_cell_based` column collision in sensitivity merge: renamed to `has_cell_based_ev`
 
 ## [Unreleased -> 0.1.0a1] - 2026-05-26 (scaffolding)
 

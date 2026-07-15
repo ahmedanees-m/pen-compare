@@ -86,7 +86,7 @@ else:
             "**note:** This is a confirmed cross-pipeline discordance. It does not",
             "invalidate the TrueWriterScore classification (which uses the pre-registered",
             "gate rules, not the triangulation result) but should be disclosed in the",
-            "and flagged for future upstream package review.",
+            "manuscript and flagged for future upstream package review.",
             "",
         ]
 

@@ -1,6 +1,6 @@
 """Apply 5-gate TrueWriter certification to full unified universe.
 
-Reads data/unified_editor_universe.parquet (SHA-256 locked at pre-registration).
+Reads data/unified_editor_universe.parquet (pre-registered).
 Writes results/truewriter_scorecard_v3.2.parquet.
 
 NOTE on length_aa: Natural editors have length_aa=None in the current universe

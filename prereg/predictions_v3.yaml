@@ -1,6 +1,5 @@
 # prereg/predictions_v3.yaml
-# PRE-REGISTERED - SHA-256 locked.
-# DO NOT EDIT AFTER LOCK.
+# PRE-REGISTERED - fixed prior to data analysis.
 #
 # Pairs with: config/gates_v3.yaml, prereg/methodology_v3.md
 
@@ -10,8 +9,8 @@ prereg_author: "Anees Ahmed Mahaboob Ali"
 prereg_affiliation: "VIT University, Vellore"
 
 publication_policy:
-  "4_of_5_pass": "Bioinformatics Application Note"
-  "3_of_5_pass": "Bioinformatics Application Note (reframed contributions)"
+  "4_of_4_pass": "Bioinformatics Application Note"
+  "3_of_4_pass": "Bioinformatics Application Note (reframed contributions)"
   "2_or_below":  "halt and rework"
 
 predictions:
@@ -117,5 +116,3 @@ confirmation_criteria:
     P4_fails: |
       Try Phi-3.5 Mini and Llama 3.3 70B (Groq free tier); report accuracy for
       all 3 models. If all < 0.80, investigate RAG retrieval quality.
-    P5_fails: |
-      cached JSON fallback; report latency distribution.

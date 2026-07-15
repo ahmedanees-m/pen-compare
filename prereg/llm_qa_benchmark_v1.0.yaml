@@ -12,7 +12,6 @@ indexed_sources:
   - "config/gates_v3.yaml"
   - "prereg/predictions_v3.yaml"
   - "prereg/methodology_v3.md"
-  - "results/CERTIFICATION_SUMMARY.md"
   - "results/triangulation_report.md"
   - "results/boundary_cases.md"
   - "config/triangulation_rules_v3.yaml"

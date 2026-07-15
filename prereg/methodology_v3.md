@@ -24,7 +24,7 @@ the number of passes.
 | pen-score | v0.1.3 | (from PREFLIGHT_SHA_RECORD_v3.json) | 8-axis values per editor, PenScore composite, get_editor_metadata() booleans |
 | pen-assemble | v0.5.2 | (from PREFLIGHT_SHA_RECORD_v3.json) | 1,029-design catalog with intrinsic_cargo + cell_based fields |
 
-**Commitment:** No upstream changes after SHA lock. If a bug is
+**Commitment:** No upstream changes after pre-registration. If a bug is
 discovered in upstream packages, it is documented as a finding; the models
 are NOT retrained or re-patched after lock.
 
@@ -33,28 +33,27 @@ are NOT retrained or re-patched after lock.
 ## Analytical procedure (36 steps, 12 weeks)
 
 1. **Steps 1-3:** Repository scaffolding; Docker container; cross-package smoke test.
-2. **Steps 4-8:** Source-universe inventory; unified editor universe assembly; write pre-registration YAMLs; OSF deposit; SHA-256 lock.
+2. **Steps 4-8:** Source-universe inventory; unified editor universe assembly; write pre-registration YAMLs; OSF deposit.
 3. **Steps 9-13:** 5-gate functions implemented; TrueWriter classifier; full universe certified; P1 and P2 evaluated.
 4. **Steps 14-16:** Sensitivity analysis: 18,000 threshold-combination grid x ~60 editors = 1.08M certifications; robustness fractions computed per editor.
 5. **Steps 17-20:** Literature evidence cache built from PFAM, DOI, and mech-class outputs; triangulation runs; P3 evaluated.
 6. **Steps 21-24:** Ollama local LLM set up; RAG index built from Papers 1-4 docs (~150 sources); 50-question benchmark curated and evaluated; P4 evaluated.
-8. **Steps 31-33 (Part H):** Test suite >= 85% coverage; Sphinx docs; GitHub Actions CI; PyPI release.
-9. **Steps 34-36 (Part I):** drafted (Bioinformatics Application Note); bioRxiv preprint; journal submission.
+7. **Steps 31-33:** Test suite >= 85% coverage; Sphinx docs; GitHub Actions CI; PyPI release.
+8. **Steps 34-36:** drafted (Bioinformatics Application Note); bioRxiv preprint; journal submission.
 
 ---
 
 ## What is pre-registered
 
-- Gate thresholds and tier rules (`config/gates_v3.yaml`, SHA-locked)
-- 5 predictions with measurable outcomes (`prereg/predictions_v3.yaml`, SHA-locked)
-- This methodology document (`prereg/methodology_v3.md`, SHA-locked)
-- Upstream package SHAs (`prereg/SHA256_LOCK_v3.json`)
-- The unified editor universe (`data/unified_editor_universe.parquet`, SHA-locked)
+- Gate thresholds and tier rules (`config/gates_v3.yaml`)
+- 4 predictions with measurable outcomes (`prereg/predictions_v3.yaml`)
+- This methodology document (`prereg/methodology_v3.md`)
+- Upstream package versions (frozen at pre-registration)
+- The unified editor universe (`data/unified_editor_universe.parquet`)
 
 ## What is NOT pre-registered
 
-- text
-- LLM benchmark exact wording - 50 questions drafted are SHA-locked then
+- LLM benchmark exact wording (only the 50-question count and the 80% accuracy threshold are pre-registered)
 - Sphinx documentation organization
 - Figure layout and captions
 
@@ -68,7 +67,7 @@ are NOT retrained or re-patched after lock.
 | P2 fails (n_design_TRUE > 0) | Investigate pen-assemble v0.5.2 bug; file issue |
 | P3 fails low (< 5 discrepancies) | Report as "ecosystem well-calibrated"; reframe contribution |
 | P4 fails (< 80%) | Evaluate Phi-3.5 Mini and Llama 3.3 70B; report all 3 |
-| <= 2/5 PASS | Halt and rework before submission |
+| <= 2/4 PASS | Halt and rework before submission |
 
 ---
 

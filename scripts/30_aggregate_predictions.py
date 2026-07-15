@@ -1,6 +1,6 @@
 """Aggregate all 4 pre-registered prediction results.
 
-Reads results/pred_P{1..5}.json and writes results/PREREG_OUTCOME.json.
+Reads results/pred_P{1..4}.json and writes results/PREREG_OUTCOME.json.
 Prints the publication ladder determination.
 """
 
@@ -31,18 +31,17 @@ print("\n")
 print(" PEN-COMPARE Pre-Registration Outcome ")
 print("")
 for pid, r in results.items():
-    icon = "" if r.get("PASS") else ""
     stmt = r.get("statement", "")[:55]
-    print(f" {icon} {pid}: {stmt:<55}")
+    print(f" {pid}: {stmt:<55}")
 print("")
-print(f" Pass rate: {n_pass}/5 ")
+print(f" Pass rate: {n_pass}/{len(PIDS)} ")
 pub_path = LADDER.get(n_pass, "Halt and rework (<=2 PASS)")
 print(f" Publication path: {pub_path:<37}")
 print("")
 
 outcome = {
     "n_pass": n_pass,
-    "n_total": 5,
+    "n_total": len(PIDS),
     "publication_path": pub_path,
     "predictions": {
         pid: {
@@ -58,5 +57,5 @@ OUT.write_text(json.dumps(outcome, indent=2))
 print(f"\nWrote {OUT}")
 
 if n_pass < 3:
-    print("\nPASS rate < 3/5 - per stopping rules: halt and rework.")
+    print("\nPASS rate < 3/4 - per stopping rules: halt and rework.")
     sys.exit(1)

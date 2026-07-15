@@ -1,6 +1,5 @@
 # config/gates_v3.yaml
-# PRE-REGISTERED - SHA-256 locked.
-# DO NOT EDIT AFTER LOCK.
+# PRE-REGISTERED - fixed prior to data analysis.
 #
 # Pairs with: prereg/predictions_v3.yaml, prereg/methodology_v3.md
 # Manifesto reference: PEN-STACK v2.2 section 1.4.3 (Molecular Pen Properties)

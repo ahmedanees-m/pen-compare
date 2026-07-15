@@ -105,7 +105,7 @@ PEN-COMPARE sits at the end of the PEN-STACK evidence chain. Each upstream packa
 | NOT_WRITER | 16 |
 | ISCro4 robustness | **1.000** across 18,000 threshold combinations |
 | LLM RAG accuracy | **88%** (44/50 questions, llama3.1:8b) |
-| Pre-registered predictions | **5 / 5 PASS** |
+| Pre-registered predictions | **4 / 4 PASS** |
 
 ---
 
@@ -128,7 +128,7 @@ Certification flows through one **necessary** gate and four **qualifying** gates
 |------|------|-----------|-----------|
 | **G1 - DSB Avoidance** | **Necessary** | S_DSB axis (pen-score) | >= 0.95 |
 | **G2 - Programmability** | Qualifying | S_Prog axis (pen-score) | >= 0.95 |
-| **G3 - Native Cargo** | Qualifying | S_Cargo AND intrinsic_cargo_mechanism | >= 0.85 AND True |
+| **G3 - Native Cargo** | Qualifying | S_Cargo AND intrinsic_cargo_mechanism | >= 0.90 AND True |
 | **G4 - Deliverability** | Qualifying | Protein length (pen-score) | <= 900 aa OR split-AAV |
 | **G5 - Evidence** | Qualifying | Multi-source experimental support | >= 2 sources |
 
@@ -149,7 +149,7 @@ Certification flows through one **necessary** gate and four **qualifying** gates
       └── 0/4 qualifying  ────────────────────────►  NOT_WRITER
 ```
 
-All thresholds were SHA-256 locked before analysis in `SHA256_LOCK_v3.json` and deposited at [OSF/4kdvy](https://osf.io/4kdvy).
+All thresholds were pre-registered before analysis and deposited at [OSF/4kdvy](https://osf.io/4kdvy).
 
 ---
 
@@ -222,17 +222,6 @@ pip install "pen-compare[rag,literature]"
 
 **Requires Python >= 3.10.** All four upstream PEN-STACK packages are installed automatically.
 
-### Docker (recommended for full pipeline)
-
-```bash
-docker run --rm \
-  -v ~/pen-assemble:/workspace/pen-assemble \
-  -p 8501:8501 \
-  pen-stack/compare:0.1.0
-```
-
-The Docker image bundles Ollama (llama3.1:8b + phi3.5:3.8b) and a pre-built ChromaDB vector index.
-
 ---
 
 ## Quick Start
@@ -261,11 +250,17 @@ print(result.has_cell_based_evidence) # True
 
 ```bash
 pen-compare --version
-pen-compare compare ISCro4 IS621
-pen-compare list-writers
+pen-compare compare ISCro4 IS621   # (not yet implemented)
+pen-compare list-writers           # (not yet implemented)
 ```
 
 ### Triangulate an editor
+
+The unified universe Parquet is generated locally (it is gitignored and not shipped):
+
+```bash
+python -m pen_compare.core.universe
+```
 
 ```python
 import pandas as pd
@@ -302,11 +297,9 @@ pen-compare/
 │   │   └── triangulator.py   # 5 cross-pipeline discrepancy rules
 │   ├── rag/
 │   │   └── qa.py             # PenStackQA: ChromaDB + Ollama RAG pipeline
-│   ├── server/
-│   │   └── cache.py          # JSON cache builder for Cloud deployment
 │   └── cli.py                # `pen-compare` CLI entry point
 ├── config/
-│   ├── gates_v3.yaml         # Pre-registered gate thresholds (SHA-256 locked)
+│   ├── gates_v3.yaml         # Pre-registered gate thresholds
 │   └── triangulation_rules_v3.yaml
 ├── prereg/
 │   ├── predictions_v3.yaml   # 4 pre-registered predictions
@@ -315,19 +308,18 @@ pen-compare/
 ├── results/
 │   ├── truewriter_scorecard_v3.2.parquet
 │   ├── triangulation_discrepancies.parquet
-│   ├── pred_P{1..5}.json     # Per-prediction outcomes
+│   ├── pred_P{1..4}.json     # Per-prediction outcomes
 │   └── PREREG_OUTCOME.json   # 4/4 PASS summary
 ├── data/
 │   ├── unified_editor_universe.parquet
 ├── tests/
-│   ├── unit/                 # 155 tests, 98.8% coverage
+│   ├── unit/                 # 139 tests, 98.8% coverage
 │   └── integration/          # Calibration anchors + smoke tests (require Docker)
 ├── docs/                     # Sphinx source → https://ahmedanees-m.github.io/pen-compare
 ├── scripts/                  # Numbered execution scripts
 ├── .github/workflows/
 │   ├── ci.yml                # Lint + unit tests + PyPI release
 │   └── docs.yml              # Sphinx → GitHub Pages
-├── SHA256_LOCK_v3.json       # Pre-registration integrity record
 └── pyproject.toml
 ```
 
@@ -382,13 +374,12 @@ All key biological identifiers were independently verified on 2026-05-26:
 | Artefact | Location |
 |----------|----------|
 | Pre-registration | [OSF/4kdvy](https://osf.io/4kdvy) (public 2026-05-26) |
-| SHA-256 lock | `SHA256_LOCK_v3.json` |
 | Pre-reg tag | [`prereg-v3.2`](https://github.com/ahmedanees-m/pen-compare/releases/tag/prereg-v3.2) |
 | v0.1.0 release | [`v0.1.0`](https://github.com/ahmedanees-m/pen-compare/releases/tag/v0.1.0) |
 | Sensitivity grid | `pen_compare/core/sensitivity.py` (SENSITIVITY_GRID constant) |
 | Biological ID verification | `memory/project_pen_compare.md` (session log) |
 
-All thresholds in `config/gates_v3.yaml` are SHA-256 locked prior to data analysis. Scores are computed using frozen upstream package versions (`pen-score==0.1.3`, `pen-assemble==0.5.2`, `genome-atlas==0.7.2`, `mech-class==0.5.4`).
+All thresholds in `config/gates_v3.yaml` were pre-registered prior to data analysis. Scores are computed using frozen upstream package versions (`pen-score==0.1.3`, `pen-assemble==0.5.2`, `genome-atlas==0.7.2`, `mech-class==0.5.4`).
 
 ---
 

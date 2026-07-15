@@ -44,7 +44,7 @@ findings (pre-registration policy).
 **note:** This is a confirmed cross-pipeline discordance. It does not
 invalidate the TrueWriterScore classification (which uses the pre-registered
 gate rules, not the triangulation result) but should be disclosed in the
-and flagged for future upstream package review.
+manuscript and flagged for future upstream package review.
 
 ### CAST_VK - MECH_VS_PFAM
 
@@ -56,7 +56,7 @@ and flagged for future upstream package review.
 **note:** This is a confirmed cross-pipeline discordance. It does not
 invalidate the TrueWriterScore classification (which uses the pre-registered
 gate rules, not the triangulation result) but should be disclosed in the
-and flagged for future upstream package review.
+manuscript and flagged for future upstream package review.
 
 ### IS621 - MECH_VS_PFAM
 
@@ -68,7 +68,7 @@ and flagged for future upstream package review.
 **note:** This is a confirmed cross-pipeline discordance. It does not
 invalidate the TrueWriterScore classification (which uses the pre-registered
 gate rules, not the triangulation result) but should be disclosed in the
-and flagged for future upstream package review.
+manuscript and flagged for future upstream package review.
 
 ### Cre - MECH_VS_PFAM
 
@@ -80,7 +80,7 @@ and flagged for future upstream package review.
 **note:** This is a confirmed cross-pipeline discordance. It does not
 invalidate the TrueWriterScore classification (which uses the pre-registered
 gate rules, not the triangulation result) but should be disclosed in the
-and flagged for future upstream package review.
+manuscript and flagged for future upstream package review.
 
 ### Bxb1 - MECH_VS_PFAM
 
@@ -92,7 +92,7 @@ and flagged for future upstream package review.
 **note:** This is a confirmed cross-pipeline discordance. It does not
 invalidate the TrueWriterScore classification (which uses the pre-registered
 gate rules, not the triangulation result) but should be disclosed in the
-and flagged for future upstream package review.
+manuscript and flagged for future upstream package review.
 
 ### Lambda_Int - MECH_VS_PFAM
 
@@ -104,7 +104,7 @@ and flagged for future upstream package review.
 **note:** This is a confirmed cross-pipeline discordance. It does not
 invalidate the TrueWriterScore classification (which uses the pre-registered
 gate rules, not the triangulation result) but should be disclosed in the
-and flagged for future upstream package review.
+manuscript and flagged for future upstream package review.
 
 ### phiC31 - MECH_VS_PFAM
 
@@ -116,7 +116,7 @@ and flagged for future upstream package review.
 **note:** This is a confirmed cross-pipeline discordance. It does not
 invalidate the TrueWriterScore classification (which uses the pre-registered
 gate rules, not the triangulation result) but should be disclosed in the
-and flagged for future upstream package review.
+manuscript and flagged for future upstream package review.
 
 ### IscB - MECH_VS_PFAM
 
@@ -128,7 +128,7 @@ and flagged for future upstream package review.
 **note:** This is a confirmed cross-pipeline discordance. It does not
 invalidate the TrueWriterScore classification (which uses the pre-registered
 gate rules, not the triangulation result) but should be disclosed in the
-and flagged for future upstream package review.
+manuscript and flagged for future upstream package review.
 
 ### CAST_IF - MECH_VS_PFAM
 
@@ -140,7 +140,7 @@ and flagged for future upstream package review.
 **note:** This is a confirmed cross-pipeline discordance. It does not
 invalidate the TrueWriterScore classification (which uses the pre-registered
 gate rules, not the triangulation result) but should be disclosed in the
-and flagged for future upstream package review.
+manuscript and flagged for future upstream package review.
 
 ### eePASSIGE_v2 - MECH_VS_PFAM
 
@@ -152,7 +152,7 @@ and flagged for future upstream package review.
 **note:** This is a confirmed cross-pipeline discordance. It does not
 invalidate the TrueWriterScore classification (which uses the pre-registered
 gate rules, not the triangulation result) but should be disclosed in the
-and flagged for future upstream package review.
+manuscript and flagged for future upstream package review.
 
 ### IS621_2 - MECH_VS_PFAM
 
@@ -164,7 +164,7 @@ and flagged for future upstream package review.
 **note:** This is a confirmed cross-pipeline discordance. It does not
 invalidate the TrueWriterScore classification (which uses the pre-registered
 gate rules, not the triangulation result) but should be disclosed in the
-and flagged for future upstream package review.
+manuscript and flagged for future upstream package review.
 
 ---
 

@@ -8,15 +8,9 @@ Deposited by : Anees Ahmed Mahaboob Ali (ahmedaneesm@gmail.com)
 
 Files deposited
 ---------------
-- prereg/methodology_v3.md     (methodology and gate definitions, SHA-256 locked)
-- prereg/predictions_v3.yaml   (pre-registered predictions P1-P4, SHA-256 locked)
-- config/gates_v3.yaml         (gate thresholds, SHA-256 locked)
-- prereg/SHA256_LOCK_v3.json   (integrity manifest)
-
-Integrity
----------
-SHA-256 manifest: prereg/SHA256_LOCK_v3.json
-All locked files verified at deposit time (see SHA256_LOCK_v3.json).
+- prereg/methodology_v3.md     (methodology and gate definitions)
+- prereg/predictions_v3.yaml   (pre-registered predictions P1-P4)
+- config/gates_v3.yaml         (gate thresholds)
 
 Note
 ----

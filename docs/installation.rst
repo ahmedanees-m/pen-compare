@@ -21,13 +21,3 @@ From source
    cd pen-compare
    pip install -e ".[rag]"
 
-Docker (recommended for full pipeline)
----------------------------------------
-
-.. code-block:: bash
-
-   docker run --rm \
-     -v ~/pen-assemble:/workspace/pen-assemble \
-     -p 8501:8501 \
-     pen-stack/compare:0.1.0
-

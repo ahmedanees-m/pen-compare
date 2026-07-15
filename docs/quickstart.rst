@@ -26,11 +26,18 @@ CLI usage
 .. code-block:: bash
 
    pen-compare --version
-   pen-compare compare ISCro4 IS621
-   pen-compare list-writers
+   pen-compare compare ISCro4 IS621   # (not yet implemented)
+   pen-compare list-writers           # (not yet implemented)
 
 Run sensitivity analysis
 ------------------------
+
+The universe and scorecard Parquet files are generated locally (both are gitignored and not shipped):
+
+.. code-block:: bash
+
+   python -m pen_compare.core.universe
+   python scripts/11_apply_truewriter.py
 
 .. code-block:: python
 
@@ -44,6 +51,12 @@ Run sensitivity analysis
 
 Triangulation
 -------------
+
+Generate the unified universe Parquet first (it is gitignored and not shipped):
+
+.. code-block:: bash
+
+   python -m pen_compare.core.universe
 
 .. code-block:: python
 

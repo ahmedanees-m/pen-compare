@@ -1,6 +1,6 @@
 """Hierarchical TrueWriter tier classifier (v3.2).
 
-Applies the 5 TrueWriterScore gates per config/gates_v3.yaml (SHA-256 locked).
+Applies the 5 TrueWriterScore gates per config/gates_v3.yaml (pre-registered).
 G1 is the necessary gate: failing it auto-classifies as NOT_WRITER regardless
 of all other gates.  G2-G5 are qualifying gates; tier depends on how many pass
 and whether cell_based is in the evidence set.

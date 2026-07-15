@@ -1,6 +1,6 @@
 """5 TrueWriterScore gate functions: 1 necessary + 4 qualifying.
 
-All thresholds come from config/gates_v3.yaml (SHA-256 locked at pre-registration).
+All thresholds come from config/gates_v3.yaml (pre-registered).
 """
 
 from __future__ import annotations
