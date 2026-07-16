@@ -93,7 +93,7 @@
   <h1>Source code for pen_compare.triangulation.triangulator</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Triangulator: compare claims across the 4 PEN-STACK packages.</span>
 
-<span class="sd">Each discrepancy category corresponds to a rule in config/triangulation_rules_v3.yaml.</span>
+<span class="sd">Each discrepancy category corresponds to a rule in pen_compare/config/triangulation_rules_v3.yaml.</span>
 <span class="sd">Rules are applied to every row in the unified editor universe; results are returned</span>
 <span class="sd">as DiscrepancyRecord objects that can be serialised to a Parquet file.</span>
 <span class="sd">&quot;&quot;&quot;</span>
@@ -119,14 +119,17 @@
 
 
 
+<span class="n">_RULES_PATH</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="s2">&quot;config&quot;</span> <span class="o">/</span> <span class="s2">&quot;triangulation_rules_v3.yaml&quot;</span>
+
+
 <div class="viewcode-block" id="Triangulator">
 <a class="viewcode-back" href="../../../api/triangulation.html#pen_compare.triangulation.triangulator.Triangulator">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Triangulator</span><span class="p">:</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">rules_path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;config/triangulation_rules_v3.yaml&quot;</span><span class="p">),</span>
+        <span class="n">rules_path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">rules</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">rules_path</span><span class="o">.</span><span class="n">read_text</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rules</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">((</span><span class="n">rules_path</span> <span class="ow">or</span> <span class="n">_RULES_PATH</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">())</span>
 
     <span class="c1"># Public API</span>
 

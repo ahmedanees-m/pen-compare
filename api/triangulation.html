@@ -117,7 +117,7 @@
 <section id="module-pen_compare.triangulation.triangulator">
 <span id="pen-compare-triangulation"></span><h2>pen_compare.triangulation<a class="headerlink" href="#module-pen_compare.triangulation.triangulator" title="Link to this heading"></a></h2>
 <p>Triangulator: compare claims across the 4 PEN-STACK packages.</p>
-<p>Each discrepancy category corresponds to a rule in config/triangulation_rules_v3.yaml.
+<p>Each discrepancy category corresponds to a rule in pen_compare/config/triangulation_rules_v3.yaml.
 Rules are applied to every row in the unified editor universe; results are returned
 as DiscrepancyRecord objects that can be serialised to a Parquet file.</p>
 <dl class="py class">
@@ -170,11 +170,11 @@ as DiscrepancyRecord objects that can be serialised to a Parquet file.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="pen_compare.triangulation.triangulator.Triangulator">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pen_compare.triangulation.triangulator.</span></span><span class="sig-name descname"><span class="pre">Triangulator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rules_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">PosixPath('config/triangulation_rules_v3.yaml')</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pen_compare/triangulation/triangulator.html#Triangulator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pen_compare.triangulation.triangulator.Triangulator" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pen_compare.triangulation.triangulator.</span></span><span class="sig-name descname"><span class="pre">Triangulator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rules_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pen_compare/triangulation/triangulator.html#Triangulator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pen_compare.triangulation.triangulator.Triangulator" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>rules_path</strong> (<a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.14)"><em>Path</em></a>)</p>
+<dd class="field-odd"><p><strong>rules_path</strong> (<a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.14)"><em>Path</em></a><em> | </em><em>None</em>)</p>
 </dd>
 </dl>
 <dl class="py method">
