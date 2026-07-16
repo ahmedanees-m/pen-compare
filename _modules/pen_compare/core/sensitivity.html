@@ -91,7 +91,7 @@
            <div itemprop="articleBody">
              
   <h1>Source code for pen_compare.core.sensitivity</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Sensitivity analysis - 18,000 threshold combinations per entity.</span>
+<span></span><span class="sd">&quot;&quot;&quot;Sensitivity analysis - 20,480 threshold combinations per entity.</span>
 
 <span class="sd">Replaces fabricated-sigma bootstrap. Each entity is certified under every</span>
 <span class="sd">combination of the pre-registered sensitivity grid and a robustness fraction</span>
@@ -108,18 +108,18 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">pen_compare.core.certify</span><span class="w"> </span><span class="kn">import</span> <span class="n">certify</span>
 
 <span class="n">SENSITIVITY_GRID</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;g1_threshold&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">0.85</span><span class="p">,</span> <span class="mf">1.00</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span>  <span class="c1"># 15 values</span>
-    <span class="s2">&quot;g2_threshold&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">0.85</span><span class="p">,</span> <span class="mf">1.00</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span>  <span class="c1"># 15 values</span>
+    <span class="s2">&quot;g1_threshold&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">0.85</span><span class="p">,</span> <span class="mf">1.00</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span>  <span class="c1"># 16 values</span>
+    <span class="s2">&quot;g2_threshold&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">0.85</span><span class="p">,</span> <span class="mf">1.00</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span>  <span class="c1"># 16 values</span>
     <span class="s2">&quot;g3_threshold&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">0.80</span><span class="p">,</span> <span class="mf">0.96</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span>  <span class="c1"># 16 values</span>
     <span class="s2">&quot;g4_size_max&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">600</span><span class="p">,</span> <span class="mi">750</span><span class="p">,</span> <span class="mi">900</span><span class="p">,</span> <span class="mi">1050</span><span class="p">,</span> <span class="mi">1200</span><span class="p">],</span>  <span class="c1">#  5 values</span>
 <span class="p">}</span>
-<span class="c1"># 15 x 15 x 16 x 5 = 18,000 combinations per entity</span>
+<span class="c1"># 16 x 16 x 16 x 5 = 20,480 combinations per entity</span>
 
 
 <div class="viewcode-block" id="sensitivity_for_entity">
 <a class="viewcode-back" href="../../../api/core.html#pen_compare.core.sensitivity.sensitivity_for_entity">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">sensitivity_for_entity</span><span class="p">(</span><span class="n">row</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">grid</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="n">SENSITIVITY_GRID</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Run 18,000 certifications for one entity; return robustness metrics.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Run 20,480 certifications for one entity; return robustness metrics.&quot;&quot;&quot;</span>
     <span class="n">combos</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="o">*</span><span class="n">grid</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
     <span class="n">keys</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">grid</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
 
