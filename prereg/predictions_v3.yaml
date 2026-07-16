@@ -1,7 +1,7 @@
 # prereg/predictions_v3.yaml
 # PRE-REGISTERED - fixed prior to data analysis.
 #
-# Pairs with: config/gates_v3.yaml, prereg/methodology_v3.md
+# Pairs with: pen_compare/config/gates_v3.yaml, prereg/methodology_v3.md
 
 schema_version: "3.2"
 prereg_date: "2026-05-26"

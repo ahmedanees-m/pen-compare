@@ -1,6 +1,6 @@
 """5 TrueWriterScore gate functions: 1 necessary + 4 qualifying.
 
-All thresholds come from config/gates_v3.yaml (pre-registered).
+All thresholds come from pen_compare/config/gates_v3.yaml (pre-registered).
 """
 
 from __future__ import annotations
@@ -11,7 +11,7 @@ from pathlib import Path
 
 import yaml
 
-_CONFIG_PATH = Path(__file__).parent.parent.parent / "config" / "gates_v3.yaml"
+_CONFIG_PATH = Path(__file__).resolve().parent.parent / "config" / "gates_v3.yaml"
 CONFIG = yaml.safe_load(_CONFIG_PATH.read_text())
 
 ELIGIBLE_EVIDENCE = frozenset(CONFIG["qualifying_gates"]["gate_5_evidence"]["eligible_sources"])

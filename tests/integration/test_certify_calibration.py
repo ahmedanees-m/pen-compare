@@ -1,6 +1,6 @@
 """Calibration anchor tests - these MUST pass for v3.2 framework integrity.
 
-The 4 calibration anchors are defined in config/gates_v3.yaml and must produce
+The 4 calibration anchors are defined in pen_compare/config/gates_v3.yaml and must produce
 their pre-registered expected tiers.  Any failure here is a framework bug,
 not a scientific finding.
 """

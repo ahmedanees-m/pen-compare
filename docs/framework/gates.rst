@@ -2,7 +2,7 @@ TrueWriterScore Gates (v3.2)
 ============================
 
 The certification framework applies five pre-registered gates from
-``config/gates_v3.yaml``.
+``pen_compare/config/gates_v3.yaml``.
 
 Gate 1 - DSB Avoidance (Necessary)
 ------------------------------------

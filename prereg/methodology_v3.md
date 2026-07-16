@@ -2,14 +2,14 @@
 
 **Pre-registration date:** 2026-05-26
 **Author:** Anees Ahmed Mahaboob Ali (VIT University, Vellore)
-**Pairs with:** `config/gates_v3.yaml`, `prereg/predictions_v3.yaml`
+**Pairs with:** `pen_compare/config/gates_v3.yaml`, `prereg/predictions_v3.yaml`
 
 ---
 
 ## Hypothesis under test
 
 **H1:** The 5-gate hierarchical TrueWriterScore framework as specified in
-`config/gates_v3.yaml` will satisfy all 4 pre-registered predictions in
+`pen_compare/config/gates_v3.yaml` will satisfy all 4 pre-registered predictions in
 `prereg/predictions_v3.yaml`, with publication-ladder outcomes determined by
 the number of passes.
 
@@ -45,7 +45,7 @@ are NOT retrained or re-patched after lock.
 
 ## What is pre-registered
 
-- Gate thresholds and tier rules (`config/gates_v3.yaml`)
+- Gate thresholds and tier rules (`pen_compare/config/gates_v3.yaml`)
 - 4 predictions with measurable outcomes (`prereg/predictions_v3.yaml`)
 - This methodology document (`prereg/methodology_v3.md`)
 - Upstream package versions (frozen at pre-registration)

@@ -9,12 +9,12 @@ n_questions: 50
 pass_threshold: 0.80
 model: "llama3.1:8b-instruct-q4_K_M"
 indexed_sources:
-  - "config/gates_v3.yaml"
+  - "pen_compare/config/gates_v3.yaml"
   - "prereg/predictions_v3.yaml"
   - "prereg/methodology_v3.md"
   - "results/triangulation_report.md"
   - "results/boundary_cases.md"
-  - "config/triangulation_rules_v3.yaml"
+  - "pen_compare/config/triangulation_rules_v3.yaml"
 
 questions:
 

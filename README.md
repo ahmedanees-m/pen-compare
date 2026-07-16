@@ -171,12 +171,12 @@ All four predictions were registered at [OSF/4kdvy](https://osf.io/4kdvy) on 202
 
 PEN-COMPARE depends on all four prior PEN-STACK papers. Each is independently installable and documented:
 
-| Package | PyPI | GitHub | Role in PEN-COMPARE |
-|---------|------|--------|---------------------|
-| [**GENOME-ATLAS**](https://github.com/ahmedanees-m/genome-atlas) | `pip install genome-atlas` | [ahmedanees-m/genome-atlas](https://github.com/ahmedanees-m/genome-atlas) | Provides `atlas_system_present` PFAM evidence flag for Gate 5 and SIZE_INCONSISTENCY triangulation |
-| [**MECH-CLASS**](https://github.com/ahmedanees-m/mech-class) | `pip install mech-class` | [ahmedanees-m/mech-class](https://github.com/ahmedanees-m/mech-class) | Provides `tier_a_gate` (IS110 Tier-A classification) used in Gate 1 interpretation and AXIS_VS_TIER + MECH_VS_PFAM triangulation rules |
-| [**PEN-SCORE**](https://github.com/ahmedanees-m/pen-score) | `pip install pen-score` | [ahmedanees-m/pen-score](https://github.com/ahmedanees-m/pen-score) | Provides all 8 axis scores (S_DSB, S_Prog, S_Cargo ...) for Gates 1-3, `get_editor_metadata()` for cell-based evidence and intrinsic cargo flags |
-| [**PEN-ASSEMBLE**](https://github.com/ahmedanees-m/pen-assemble) | `pip install pen-assemble` | [ahmedanees-m/pen-assemble](https://github.com/ahmedanees-m/pen-assemble) | Contributes 1,029 computational IS110 designs to the unified universe; catalog inherits cargo/cell-based flags from pen-score |
+| Package | Install | GitHub | Role in PEN-COMPARE |
+|---------|---------|--------|---------------------|
+| [**GENOME-ATLAS**](https://github.com/ahmedanees-m/genome-atlas) | from source | [ahmedanees-m/genome-atlas](https://github.com/ahmedanees-m/genome-atlas) | Provides `atlas_system_present` PFAM evidence flag for Gate 5 and SIZE_INCONSISTENCY triangulation |
+| [**MECH-CLASS**](https://github.com/ahmedanees-m/mech-class) | from source | [ahmedanees-m/mech-class](https://github.com/ahmedanees-m/mech-class) | Provides `tier_a_gate` (IS110 Tier-A classification) used in Gate 1 interpretation and AXIS_VS_TIER + MECH_VS_PFAM triangulation rules |
+| [**PEN-SCORE**](https://github.com/ahmedanees-m/pen-score) | from source | [ahmedanees-m/pen-score](https://github.com/ahmedanees-m/pen-score) | Provides all 8 axis scores (S_DSB, S_Prog, S_Cargo ...) for Gates 1-3, `get_editor_metadata()` for cell-based evidence and intrinsic cargo flags |
+| [**PEN-ASSEMBLE**](https://github.com/ahmedanees-m/pen-assemble) | from source | [ahmedanees-m/pen-assemble](https://github.com/ahmedanees-m/pen-assemble) | Contributes 1,029 computational IS110 designs to the unified universe; catalog inherits cargo/cell-based flags from pen-score |
 
 ### Cross-Pipeline Triangulation - What Was Found
 
@@ -209,18 +209,23 @@ To quantify how robust the tier assignments are to threshold choices, every enti
 
 ## Installation
 
+The pinned upstream PEN-STACK versions are not yet published to PyPI, so install from source:
+
 ```bash
+git clone https://github.com/ahmedanees-m/pen-compare.git
+cd pen-compare
+
 # Minimal (certification core only)
-pip install pen-compare
+pip install -e .
 
 # With local LLM RAG Q&A
-pip install "pen-compare[rag]"
+pip install -e ".[rag]"
 
 # Full (all extras)
-pip install "pen-compare[rag,literature]"
+pip install -e ".[rag,literature]"
 ```
 
-**Requires Python >= 3.10.** All four upstream PEN-STACK packages are installed automatically.
+**Requires Python >= 3.10.** The four upstream packages must be installed from their own repositories at the pinned versions (`genome-atlas>=0.7.2`, `mech-class>=0.5.4`, `pen-score>=0.1.3`, `pen-assemble>=0.5.2`). The versions currently on PyPI are earlier placeholders.
 
 ---
 
@@ -379,7 +384,7 @@ All key biological identifiers were independently verified on 2026-05-26:
 | Sensitivity grid | `pen_compare/core/sensitivity.py` (SENSITIVITY_GRID constant) |
 | Biological ID verification | `memory/project_pen_compare.md` (session log) |
 
-All thresholds in `config/gates_v3.yaml` were pre-registered prior to data analysis. Scores are computed using frozen upstream package versions (`pen-score==0.1.3`, `pen-assemble==0.5.2`, `genome-atlas==0.7.2`, `mech-class==0.5.4`).
+All thresholds in `pen_compare/config/gates_v3.yaml` were pre-registered prior to data analysis. Scores are computed using frozen upstream package versions (`pen-score==0.1.3`, `pen-assemble==0.5.2`, `genome-atlas==0.7.2`, `mech-class==0.5.4`).
 
 ---
 

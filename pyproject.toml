@@ -93,6 +93,9 @@ build-backend = "setuptools.build_meta"
 [tool.setuptools.packages.find]
 include = ["pen_compare*"]
 
+[tool.setuptools.package-data]
+pen_compare = ["config/*.yaml"]
+
 [tool.ruff]
 line-length = 100
 target-version = "py310"

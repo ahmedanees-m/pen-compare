@@ -1,4 +1,4 @@
-# config/triangulation_rules_v3.yaml
+# pen_compare/config/triangulation_rules_v3.yaml
 # Cross-pipeline triangulation rules for PEN-COMPARE v3.2.
 # Each rule defines a discrepancy category: what data sources are involved,
 # what logical condition triggers the discrepancy, and its severity.

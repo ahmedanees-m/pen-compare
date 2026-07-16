@@ -1,6 +1,6 @@
 """Triangulator: compare claims across the 4 PEN-STACK packages.
 
-Each discrepancy category corresponds to a rule in config/triangulation_rules_v3.yaml.
+Each discrepancy category corresponds to a rule in pen_compare/config/triangulation_rules_v3.yaml.
 Rules are applied to every row in the unified editor universe; results are returned
 as DiscrepancyRecord objects that can be serialised to a Parquet file.
 """
@@ -23,12 +23,15 @@ class DiscrepancyRecord:
     details: str  # human-readable explanation of the discrepancy
 
 
+_RULES_PATH = Path(__file__).resolve().parent.parent / "config" / "triangulation_rules_v3.yaml"
+
+
 class Triangulator:
     def __init__(
         self,
-        rules_path: Path = Path("config/triangulation_rules_v3.yaml"),
+        rules_path: Path | None = None,
     ) -> None:
-        self.rules = yaml.safe_load(rules_path.read_text())
+        self.rules = yaml.safe_load((rules_path or _RULES_PATH).read_text())
 
     # Public API
 
