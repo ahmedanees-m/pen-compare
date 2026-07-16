@@ -72,7 +72,7 @@ motivated and pre-registered. Calibration anchors:
 
 ## Sensitivity Analysis
 
-18,000-combination parameter sweep (15x15x16x5 grid):
+20,480-combination parameter sweep (16x16x16x5 grid):
 - ISCro4 robustness = **1.000** (stable under all threshold variations)
 - Zero boundary cases (robustness < 0.50)
 - 4 near-boundary editors (50-80%): Bxb1, eePASSIGE, eePASSIGE_v2, phiC31

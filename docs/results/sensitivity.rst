@@ -1,8 +1,8 @@
 Sensitivity Analysis
 ====================
 
-Sensitivity analysis evaluated robustness of all tier assignments across an 18,000-combination
-parameter grid (15x15x16x5 threshold variations).
+Sensitivity analysis evaluated robustness of all tier assignments across an 20,480-combination
+parameter grid (16x16x16x5 threshold variations).
 
 Grid definition
 ---------------
@@ -29,7 +29,7 @@ Grid definition
 Key findings
 ------------
 
-* **ISCro4 robustness = 1.000** - TRUE_WRITER under all 18,000 combinations
+* **ISCro4 robustness = 1.000** - TRUE_WRITER under all 20,480 combinations
 * **Zero boundary cases** (robustness < 0.50) - no tier is genuinely ambiguous
 * **4 near-boundary editors** (50-80% robustness): Bxb1 (0.5625), eePASSIGE (0.5625),
   eePASSIGE_v2 (0.5625), phiC31 (0.75)

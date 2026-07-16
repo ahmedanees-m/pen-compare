@@ -1,4 +1,4 @@
-"""Sensitivity analysis - 18,000 threshold combinations per entity.
+"""Sensitivity analysis - 20,480 threshold combinations per entity.
 
 Replaces fabricated-sigma bootstrap. Each entity is certified under every
 combination of the pre-registered sensitivity grid and a robustness fraction
@@ -15,16 +15,16 @@ from joblib import Parallel, delayed
 from pen_compare.core.certify import certify
 
 SENSITIVITY_GRID = {
-    "g1_threshold": np.round(np.arange(0.85, 1.00, 0.01), 2).tolist(),  # 15 values
-    "g2_threshold": np.round(np.arange(0.85, 1.00, 0.01), 2).tolist(),  # 15 values
+    "g1_threshold": np.round(np.arange(0.85, 1.00, 0.01), 2).tolist(),  # 16 values
+    "g2_threshold": np.round(np.arange(0.85, 1.00, 0.01), 2).tolist(),  # 16 values
     "g3_threshold": np.round(np.arange(0.80, 0.96, 0.01), 2).tolist(),  # 16 values
     "g4_size_max": [600, 750, 900, 1050, 1200],  #  5 values
 }
-# 15 x 15 x 16 x 5 = 18,000 combinations per entity
+# 16 x 16 x 16 x 5 = 20,480 combinations per entity
 
 
 def sensitivity_for_entity(row: dict, grid: dict = SENSITIVITY_GRID) -> dict:
-    """Run 18,000 certifications for one entity; return robustness metrics."""
+    """Run 20,480 certifications for one entity; return robustness metrics."""
     combos = list(itertools.product(*grid.values()))
     keys = list(grid.keys())
 

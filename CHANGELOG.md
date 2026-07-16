@@ -16,7 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - P2 PASS: Zero computational designs are TRUE_WRITER
 
 ### Added - Sensitivity Analysis
-- `pen_compare/core/sensitivity.py`: 18,000-combo threshold grid (15x15x16x5)
+- `pen_compare/core/sensitivity.py`: 20,480-combo threshold grid (16x16x16x5)
 - ISCro4 robustness = 1.000 across all combinations; zero boundary cases
 - 4 near-boundary editors: Bxb1, eePASSIGE, eePASSIGE_v2, phiC31
 

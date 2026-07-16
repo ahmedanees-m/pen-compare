@@ -1,6 +1,6 @@
 # Boundary Case Investigation - TrueWriterScore v3.2
 
-**Boundary (robustness < 0.50):** fewer than half of the 18,000 threshold
+**Boundary (robustness < 0.50):** fewer than half of the 20,480 threshold
 combinations agree on the modal tier - tier assignment is genuinely ambiguous.
 
 **Near-boundary (robustness 50-80%):** majority agree on modal tier but a
@@ -31,8 +31,8 @@ but a substantial minority flips the tier. Reported transparently; no action tak
 
 - **Default tier:** EMERGING_WRITER
 - **Modal tier:** PROBABLE_WRITER
-- **Robustness:** 0.562 (10125/18,000 combos)
-- **Tier distribution:** EMERGING_WRITER=8960.0, NOT_WRITER=None, PROBABLE_WRITER=11520.0, TRUE_WRITER=None
+- **Robustness:** 0.562 (11520/20,480 combos)
+- **Tier distribution:** EMERGING_WRITER=8960, PROBABLE_WRITER=11520
 
 **Key axis values:**
 - S_Cargo = 0.883
@@ -47,8 +47,8 @@ Default threshold (0.90) places this editor just at the EMERGING/PROBABLE bounda
 
 - **Default tier:** EMERGING_WRITER
 - **Modal tier:** PROBABLE_WRITER
-- **Robustness:** 0.562 (10125/18,000 combos)
-- **Tier distribution:** EMERGING_WRITER=8960.0, NOT_WRITER=None, PROBABLE_WRITER=11520.0, TRUE_WRITER=None
+- **Robustness:** 0.562 (11520/20,480 combos)
+- **Tier distribution:** EMERGING_WRITER=8960, PROBABLE_WRITER=11520
 
 **Key axis values:**
 - S_Cargo = 0.883
@@ -63,8 +63,8 @@ Default threshold (0.90) places this editor just at the EMERGING/PROBABLE bounda
 
 - **Default tier:** EMERGING_WRITER
 - **Modal tier:** PROBABLE_WRITER
-- **Robustness:** 0.562 (10125/18,000 combos)
-- **Tier distribution:** EMERGING_WRITER=8960.0, NOT_WRITER=None, PROBABLE_WRITER=11520.0, TRUE_WRITER=None
+- **Robustness:** 0.562 (11520/20,480 combos)
+- **Tier distribution:** EMERGING_WRITER=8960, PROBABLE_WRITER=11520
 
 **Key axis values:**
 - S_Cargo = 0.883
@@ -79,8 +79,8 @@ Default threshold (0.90) places this editor just at the EMERGING/PROBABLE bounda
 
 - **Default tier:** EMERGING_WRITER
 - **Modal tier:** EMERGING_WRITER
-- **Robustness:** 0.750 (13500/18,000 combos)
-- **Tier distribution:** EMERGING_WRITER=15360.0, NOT_WRITER=None, PROBABLE_WRITER=5120.0, TRUE_WRITER=None
+- **Robustness:** 0.750 (15360/20,480 combos)
+- **Tier distribution:** EMERGING_WRITER=15360, PROBABLE_WRITER=5120
 
 **Key axis values:**
 - S_Cargo = 0.833

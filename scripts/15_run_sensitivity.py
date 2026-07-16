@@ -1,6 +1,6 @@
 """Run sensitivity analysis on the full 1,058-entity universe.
 
-18,000 threshold combinations x 1,058 entities = 19,044,000 certifications.
+20,480 threshold combinations x 1,058 entities = 21,667,840 certifications.
 Parallelised with joblib across 24 CPU cores (~1 hour wall time on VM).
 
 Outputs
@@ -8,6 +8,7 @@ Outputs
 results/sensitivity_analysis_v3.2.parquet
 """
 
+import json
 import sys
 from pathlib import Path
 
@@ -25,8 +26,13 @@ scorecard = pd.read_parquet(SCORECARD)
 print(f"  Universe : {len(universe):,} entities")
 print(f"  Scorecard: {len(scorecard):,} entities")
 
-print("\nRunning sensitivity analysis (18,000 combos per entity) ...")
+print("\nRunning sensitivity analysis (20,480 combos per entity) ...")
 sens = run_sensitivity_parallel(universe, scorecard, n_jobs=24)
+
+# Serialise the per-tier count dict as JSON so it round-trips through Parquet as a
+# single string. Writing a column of varying-key dicts unions the keys across rows
+# and fills the gaps with nulls, which corrupts the per-entity distribution.
+sens["tier_dist"] = sens["tier_dist"].apply(json.dumps)
 
 sens.to_parquet(OUTPUT, index=False)
 print(f"\nSaved -> {OUTPUT}")

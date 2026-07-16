@@ -21,7 +21,7 @@ abstract: >
   MECH-CLASS, PEN-SCORE, and PEN-ASSEMBLE. The framework certifies editors
   as TRUE_WRITER, PROBABLE_WRITER, EMERGING_WRITER, or NOT_WRITER. All four
   pre-registered predictions (P1-P4) passed validation. ISCro4 is confirmed
-  as the sole TRUE_WRITER with robustness = 1.000 across 18,000 parameter
+  as the sole TRUE_WRITER with robustness = 1.000 across 20,480 parameter
   combinations. A local-LLM RAG Q&A system (88%
   benchmark accuracy) deliver the results interactively.
 keywords:

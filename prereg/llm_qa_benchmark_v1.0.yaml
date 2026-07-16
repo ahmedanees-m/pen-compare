@@ -246,7 +246,7 @@ questions:
   - id: Q44
     category: sensitivity
     question: "How many threshold combinations are evaluated in the sensitivity analysis?"
-    gold_keywords: ["18000", "18,000"]
+    gold_keywords: ["20480", "20,480"]
 
   - id: Q45
     category: sensitivity

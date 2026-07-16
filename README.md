@@ -83,7 +83,7 @@ PEN-COMPARE sits at the end of the PEN-STACK evidence chain. Each upstream packa
 │          │    ┌────────────┴──────────────┐        │                │
 │          │    ▼                           ▼        │                │
 │          │  Sensitivity Analysis    Cross-Pipeline │                │
-│          │  18,000 combos/entity    Triangulation  │                │
+│          │  20,480 combos/entity    Triangulation  │                │
 │          │  ISCro4 robustness=1.0   30 discrepancies│               │
 │          │    ┌────────────┴──────────────┘        │                │
 │          │    ▼                                    │                │
@@ -103,7 +103,7 @@ PEN-COMPARE sits at the end of the PEN-STACK evidence chain. Each upstream packa
 | PROBABLE_WRITER | 4 (IS621, Bxb1, phiC31, eePASSIGE_v2) |
 | EMERGING_WRITER | 1,037 |
 | NOT_WRITER | 16 |
-| ISCro4 robustness | **1.000** across 18,000 threshold combinations |
+| ISCro4 robustness | **1.000** across 20,480 threshold combinations |
 | LLM RAG accuracy | **88%** (44/50 questions, llama3.1:8b) |
 | Pre-registered predictions | **4 / 4 PASS** |
 
@@ -194,7 +194,7 @@ By comparing claims across all four packages, PEN-COMPARE identified 30 discrepa
 
 ## Sensitivity Analysis
 
-To quantify how robust the tier assignments are to threshold choices, every entity was re-certified across **18,000 parameter combinations** (15 x 15 x 16 x 5 grid):
+To quantify how robust the tier assignments are to threshold choices, every entity was re-certified across **20,480 parameter combinations** (16 x 16 x 16 x 5 grid):
 
 | Parameter | Range | Values |
 |-----------|-------|--------|
@@ -296,7 +296,7 @@ pen-compare/
 │   ├── core/
 │   │   ├── gates.py          # 5 gate functions (G1-G5), threshold-locked
 │   │   ├── certify.py        # TrueWriterResult classifier
-│   │   ├── sensitivity.py    # 18,000-combo sensitivity grid
+│   │   ├── sensitivity.py    # 20,480-combo sensitivity grid
 │   │   └── universe.py       # Unified editor universe assembly
 │   ├── triangulation/
 │   │   └── triangulator.py   # 5 cross-pipeline discrepancy rules
